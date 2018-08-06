@@ -10,7 +10,7 @@ Route::group(['middleware' => 'web', 'namespace' => 'Modules\Admin\Http\Controll
 Route::group(['middleware' => 'api','prefix' => 'api', 'namespace' => 'Modules\Admin\Http\Controllers'], function()
 {
 	Route::group(['prefix' => 'login', 'namespace' => 'Login'], function(){
-		Route::post('/index', 'IndexController@index');
+		Route::post('index', 'IndexController@index');
 
         Route::resource('merchants', 'MerchantController');
 	});

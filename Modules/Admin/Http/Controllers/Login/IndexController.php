@@ -5,16 +5,15 @@ namespace Modules\Admin\Http\Controllers\Login;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use App\Models\User;
+use Modules\Admin\Http\Controllers\AdminController;
 
-class IndexController extends Controller
+class IndexController extends AdminController
 {
 
-	public function __construct(
-        User $user
-    )
+	public function __construct()
     {
-        $this->user = $user;
+        parent::__construct();
+
     }
 
     /**
@@ -23,10 +22,9 @@ class IndexController extends Controller
      */
     public function index()
     {
-		$userInfo =  $this->user->find(1);
+		
 
-		dd($userInfo);
-        //return view('admin::index',compact('userInfo'));
+		dd('sdfsd');
     }
 
     /**
