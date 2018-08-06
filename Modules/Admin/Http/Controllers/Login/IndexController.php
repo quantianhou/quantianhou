@@ -24,7 +24,7 @@ class IndexController extends AdminController
     {
 		
 
-		dd('sdfsd');
+		dd($this->admin);
     }
 
     /**

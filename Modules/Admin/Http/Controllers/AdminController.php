@@ -5,16 +5,16 @@ namespace Modules\Admin\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
 {
-	protected $adminInfo;
+	protected $admin;
 
     public function __construct()
     {
-        parent::__construct();
         $this->middleware(function ($request, $next) {
-            $this->adminInfo = Session::get('admin');
+            $this->admin = Session::get('admin');
             return $next($request);
         });
     }
