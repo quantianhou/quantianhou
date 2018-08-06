@@ -432,7 +432,7 @@
                         <label class="label-control"><span style="color:red">*</span>商品原价：</label>
                     </td>
                     <td>
-                        <input type="text" name="original_price" placeholder="例：19.99" data-rule="required"><span></span>
+                        <input type="text" value="2016-10-01 10:01:01" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
                     </td>
                 </tr>
 
