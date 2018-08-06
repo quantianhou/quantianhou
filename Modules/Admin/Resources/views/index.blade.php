@@ -185,7 +185,7 @@ $(function(){
             <div class="tabsPageHeader">
                 <div class="tabsPageHeaderContent">
                     <ul class="navtab-tab nav nav-tabs" id="mainTabUl">
-                        <li data-url="welcome"><a href="javascript:;"><span><i class="fa fa-home"></i> #maintab#</span></a></li>
+                        <li data-url="merchant"><a href="javascript:;"><span><i class="fa fa-home"></i> #maintab#</span></a></li>
                     </ul>
                 </div>
                 <div class="tabsLeft"><i class="fa fa-angle-double-left"></i></div>
