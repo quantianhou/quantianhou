@@ -14,7 +14,7 @@ class AdminController extends Controller
     {
         parent::__construct();
         $this->middleware(function ($request, $next) {
-            $this->userInfo = Session::get('admin');
+            $this->adminInfo = Session::get('admin');
             return $next($request);
         });
     }
