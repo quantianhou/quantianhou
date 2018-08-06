@@ -11,5 +11,7 @@ Route::group(['middleware' => 'api','prefix' => 'api', 'namespace' => 'Modules\A
 {
 	Route::group(['prefix' => 'login', 'namespace' => 'Login'], function(){
 		Route::post('/index', 'IndexController@index');
+
+        Route::resource('merchants', 'MerchantController');
 	});
 });
