@@ -153,8 +153,8 @@
 <script type="text/javascript">
     $(function () {
         $("#login_ok").click(function () {
-            var data = {user_name: $('#js_username').val(), password: $('#js_password').val()};
-            if (!data.user_name || !data.password) {
+            var data = {username: $('#js_username').val(), password: $('#js_password').val()};
+            if (!data.username || !data.password) {
                 layer.alert('用户名或密码为空');
                 return false;
             }
@@ -168,7 +168,7 @@
                     if (result.error > 0) {
                         return layer.alert(result.info);
                     }
-                    window.location.href = '/index.html';
+                    window.location.href = '/index';
                 },
                 timeout: 30000
             });
