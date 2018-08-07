@@ -1,20 +1,27 @@
 <?php
 
-namespace App\Http\Controllers\Merchant;
+namespace Modules\Admin\Http\Controllers\Merchant;
 
+use App\Repositories\Merchant\MerchantRepository;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Modules\Admin\Http\Controllers\BaseController;
 
-class MerchantController extends Controller
+class MerchantController extends BaseController
 {
+    private $merchants;
+
+    public function __construct(MerchantRepository $merchants)
+    {
+        $this->merchants = $merchants;
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        dd(2323);
+
     }
 
     /**
@@ -35,7 +42,7 @@ class MerchantController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
