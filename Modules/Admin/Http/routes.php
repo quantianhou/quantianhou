@@ -3,16 +3,18 @@
 Route::group(['middleware' => 'web', 'namespace' => 'Modules\Admin\Http\Controllers'], function()
 {
     Route::get('/{tmp?}', function($tmp = 'index'){
-		return view("admin::".$tmp);
+        $provinces = app(\App\Repositories\Area\AreaRepository::class)->getAreas();
+		return view("admin::".$tmp)->with(compact('provinces'));
 	});
 });
 
 Route::group(['middleware' => 'web','prefix' => 'api', 'namespace' => 'Modules\Admin\Http\Controllers'], function()
 {
-    //登陆
-    Route::group(['prefix' => 'login', 'namespace' => 'Login'], function(){
-        Route::post('index', 'IndexController@index');
+	Route::group(['prefix' => 'login', 'namespace' => 'Login'], function(){
+		Route::any('index', 'IndexController@index');
+	});
 
+	Route::group(['namespace' => 'Merchant'], function () {
         Route::resource('merchants', 'MerchantController');
     });
 
@@ -20,4 +22,12 @@ Route::group(['middleware' => 'web','prefix' => 'api', 'namespace' => 'Modules\A
     Route::group(['prefix' => 'rbac', 'namespace' => 'Rbac'], function(){
         Route::post('menu', 'RbacController@menu');
     });
+
+    Route::group(['namespace' => 'Area'], function () {
+        Route::resource('areas', 'AreaController');
+        Route::post('areas/list', 'AreaController@getList');
+    });
+
 });
+
+Route::get('/upload/policy', 'Modules\Admin\Http\Controllers\UploadController@policy')->name('upload-policy');

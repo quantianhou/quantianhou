@@ -54,6 +54,12 @@
 <!-- dragsort -->
 <script src="/B-JUI/BJUI/plugins/dragsort/jquery.dragsort-0.5.1.min.js"></script>
 
+<!--layer   -->
+<script src="/layer/layer.js"></script>
+    <!-- toastr -->
+<script src="/js/toastr.min.js"></script>
+    <!-- 文件上传oos -->
+<script src="/js/vue_upload.js"></script>
 
 <!-- init -->
 <script type="text/javascript">
@@ -207,4 +213,6 @@ $(function(){
     <footer id="bjui-footer"></footer>
     </div>
 </body>
+
+<link rel="stylesheet" href="/css/toastr.min.css">
 </html>
