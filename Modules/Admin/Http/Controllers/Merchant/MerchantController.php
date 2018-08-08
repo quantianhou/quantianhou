@@ -41,10 +41,11 @@ class MerchantController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MerchantRequest $request)
     {
         $data = $this->makeData($request);
-        dd($data);
+        $result = $this->merchants->create($data);
+        return $this->success($result, 0);
     }
 
     private function makeData(Request $request)
@@ -69,7 +70,7 @@ class MerchantController extends BaseController
             'business_license_num' => $request->get('business_license_num'),
             'is_third_party' => $request->get('is_third_party', 2),
             'is_virtual' => $request->get('is_virtual', 2),
-            'address_detail' => $request->get('address_detail'),
+            'address_detail' => $request->get('address_detail', ''),
             'address_district' => $request->get('address_district'),
             'address_city' => $request->get('address_city'),
             'address_province' => $request->get('address_province'),
@@ -99,10 +100,15 @@ class MerchantController extends BaseController
             'quality_person' => $request->get('quality_person'),
             'institution_num' => $request->get('institution_num'),
             'tax_register_num' => $request->get('tax_register_num'),
-            'merchant_code' => $request->get('merchant_code'),
+            'merchant_code' => $this->makeMerchantCode()
         ];
 
         return $data;
+    }
+
+    private function makeMerchantCode()
+    {
+        return md5(time() . rand(0, 999999));
     }
 
     /**

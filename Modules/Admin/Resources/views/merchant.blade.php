@@ -142,7 +142,8 @@
                         <label class="label-control"><span style="color:red">*</span>是否虚拟：</label>
                     </td>
                     <td>
-                        <input type="checkbox" name="is_virtual" id="" value="1"> 第三方
+                        <input type="radio" name="is_virtual" id="" checked value="1"> 是
+                        <input type="radio" name="is_virtual" id="" value="2"> 不是
                     </td>
                 </tr>
 
@@ -151,7 +152,8 @@
                         <label class="label-control"><span style="color:red">*</span>是否第三方：</label>
                     </td>
                     <td>
-                        <input type="checkbox" name="is_third_party" id="" value="1"> 加强
+                        <input type="radio" name="is_third_party" id="" checked value="1"> 是
+                        <input type="radio" name="is_third_party" id="" value="2"> 不是
                     </td>
                 </tr>
 
