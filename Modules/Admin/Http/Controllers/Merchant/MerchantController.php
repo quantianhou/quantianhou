@@ -45,7 +45,7 @@ class MerchantController extends BaseController
     {
         $data = $this->makeData($request);
         $result = $this->merchants->create($data);
-        return $this->success($result, 0);
+        return $this->success($result, 200, '添加成功');
     }
 
     private function makeData(Request $request)
@@ -100,7 +100,8 @@ class MerchantController extends BaseController
             'quality_person' => $request->get('quality_person'),
             'institution_num' => $request->get('institution_num'),
             'tax_register_num' => $request->get('tax_register_num'),
-            'merchant_code' => $this->makeMerchantCode()
+            'merchant_code' => $this->makeMerchantCode(),
+            'legal_person_img' => $this->formatImgUrl($request, 'legal_person_img')
         ];
 
         return $data;

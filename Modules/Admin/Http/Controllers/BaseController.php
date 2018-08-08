@@ -17,9 +17,9 @@ class BaseController extends Controller
     public function success($data, $status, $msg = '')
     {
         return [
-            'err' => $status,
+            'statusCode' => $status,
             'data' => $data,
-            'msg' => $msg,
+            'message' => $msg,
         ];
     }
 
