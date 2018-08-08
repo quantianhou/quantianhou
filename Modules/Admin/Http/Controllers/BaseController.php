@@ -22,4 +22,13 @@ class BaseController extends Controller
             'msg' => $msg,
         ];
     }
+
+    protected function formatImgUrl($request, $field)
+    {
+        $image = $request->get($field, []);
+        if (empty($image)) {
+            return '';
+        }
+        return implode('|', $image);
+    }
 }

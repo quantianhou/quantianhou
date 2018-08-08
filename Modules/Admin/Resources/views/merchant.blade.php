@@ -1,14 +1,17 @@
 
 <script type="text/javascript">
 
-    $.CurrentNavtab.find('#confirm').on('click',function(){
+    $.CurrentNavtab.find('.formarea').on('submit',function(){
         var post_data = $.CurrentNavtab.find('.formarea').serialize();
         var oo = {
             url : '/api/merchants',
             loadingmask:true,
             data : post_data,
             callback:function(res){
-                if(res.error) return $(this).alertmsg('error', res.info), !1;
+                if(res.errors) {
+                    alert(2323);
+                    return $(this).alertmsg('error', res.message), !1;
+                }
                 $(this).alertmsg('info', res.info, {
                     autoClose:false,
                     okCall: function () {
@@ -16,7 +19,7 @@
                         $.CurrentNavtab.navtab('close');
                     }
                 });
-            }
+            },
         };
 
         $(document).bjuiajax('doAjax', oo);
@@ -27,7 +30,7 @@
 <div class="bjui-pageContent">
 
     <div style="margin:10px 0px 0px 17px;">
-        <form class="formarea">
+        <form class="formarea" data-toggle="validate">
             <input type="hidden" name="id" />
             <table class="table" border="0" width="60%">
 
@@ -38,6 +41,23 @@
                     <td>
                         <input type="radio" name="merchant_type" id="" checked value="1"> 公司:
                         <input type="radio" name="merchant_type" id="" value="2"> 个人
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" width="300px;">
+                        <label class="label-control"><span style="color:red">*</span>商家联系人：</label>
+                    </td>
+                    <td>
+                        <input type="text" placeholder="请填写名称" name="merchant_contacts" size="30" data-rule="required"><span></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td align="right" width="300px;">
+                        <label class="label-control"><span style="color:red">*</span>商家联系电话：</label>
+                    </td>
+                    <td>
+                        <input type="text" placeholder="请填写名称" name="merchant_phone" size="30" data-rule="required"><span></span>
                     </td>
                 </tr>
                 <tr>
@@ -338,7 +358,7 @@
 
                 <tr>
                     <td align="left" colspan="2">
-                        <button type="button" id="confirm" class="btn btn-green">生成</button>
+                        <button type="submit" id="confirm" class="btn btn-green">生成</button>
                         <button type="button" onclick="$.CurrentNavtab.navtab('refresh');" class="btn btn-green">取消</button>
                     </td>
                 </tr>
