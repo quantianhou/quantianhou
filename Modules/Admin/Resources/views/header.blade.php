@@ -38,7 +38,7 @@
     //菜单加载
     $.ajax({
         type: 'POST',
-        url: '/api/index/menu',
+        url: '/api/rbac/menu',
         data: {},
         dataType: 'json',
         success: function (result) {
@@ -96,7 +96,7 @@
                 if (result) {
                     $('#userInfo').html(result);
                 } else {
-                    window.location.href = '/login.html';
+                    window.location.href = '/login';
                 }
             },
             error: function () {

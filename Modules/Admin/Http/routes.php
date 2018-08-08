@@ -8,7 +8,7 @@ Route::group(['middleware' => 'web', 'namespace' => 'Modules\Admin\Http\Controll
 	});
 });
 
-Route::group(['middleware' => 'api','prefix' => 'api', 'namespace' => 'Modules\Admin\Http\Controllers'], function()
+Route::group(['middleware' => 'web','prefix' => 'api', 'namespace' => 'Modules\Admin\Http\Controllers'], function()
 {
 	Route::group(['prefix' => 'login', 'namespace' => 'Login'], function(){
 		Route::any('index', 'IndexController@index');
@@ -16,6 +16,11 @@ Route::group(['middleware' => 'api','prefix' => 'api', 'namespace' => 'Modules\A
 
 	Route::group(['namespace' => 'Merchant'], function () {
         Route::resource('merchants', 'MerchantController');
+    });
+
+    //权限系统
+    Route::group(['prefix' => 'rbac', 'namespace' => 'Rbac'], function(){
+        Route::post('menu', 'RbacController@menu');
     });
 
     Route::group(['namespace' => 'Area'], function () {
