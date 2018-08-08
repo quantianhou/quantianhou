@@ -47,7 +47,7 @@
                 if (!(i >= 0)) {
                     continue;
                 }
-                appendStr += '<li><a data-toggle="slidebar"><i class="fa fa-database"></i> ' + result.data[i].title + '</a>\
+                appendStr += '<li><a data-toggle="slidebar"><i class="fa fa-database"></i> ' + result.data[i].name + '</a>\
                         <div class="items hide" data-noinit="true">\
                             <ul id="bjui-hnav-tree' + (i + 1) + '" class="ztree ztree_main" data-toggle="ztree" data-on-click="MainMenuClick" data-expand-all="true" data-faicon="plane">';
                 mix = result.data[i].child;
@@ -55,7 +55,7 @@
                     if (!(j >= 0)) {
                         continue;
                     }
-                    appendStr += '<li data-id="' + mix[j].id + '" data-pid="0" data-url="' + mix[j].link_url + '" data-faicon="folder-open-o" data-faicon-close="folder-o">' + mix[j].title + '</li>';
+                    appendStr += '<li data-id="' + mix[j].id + '" data-pid="0" data-url="' + mix[j].route + '" data-faicon="folder-open-o" data-faicon-close="folder-o">' + mix[j].name + '</li>';
 
                 }
                 appendStr += '</ul></div></li>';

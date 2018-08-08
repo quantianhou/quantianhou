@@ -10,6 +10,7 @@ Route::group(['middleware' => 'web', 'namespace' => 'Modules\Admin\Http\Controll
 
 Route::group(['middleware' => 'web','prefix' => 'api', 'namespace' => 'Modules\Admin\Http\Controllers'], function()
 {
+    //登陆接口
 	Route::group(['prefix' => 'login', 'namespace' => 'Login'], function(){
 		Route::any('index', 'IndexController@index');
 	});

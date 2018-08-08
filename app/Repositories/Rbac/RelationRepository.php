@@ -11,7 +11,7 @@ namespace App\Repositories\Rbac;
 use App\Models\Rbac\RelationModel;
 use App\Repositories\EloquentRepository;
 
-class AdminRepository extends EloquentRepository
+class RelationRepository extends EloquentRepository
 {
     public function __construct(RelationModel $relationModel)
     {

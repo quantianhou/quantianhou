@@ -11,7 +11,7 @@ namespace App\Repositories\Rbac;
 use App\Models\Rbac\RoleModel;
 use App\Repositories\EloquentRepository;
 
-class AdminRepository extends EloquentRepository
+class RoleRepository extends EloquentRepository
 {
     public function __construct(RoleModel $roleModel)
     {

@@ -11,7 +11,7 @@ namespace App\Repositories\Rbac;
 use App\Models\Rbac\AccessModel;
 use App\Repositories\EloquentRepository;
 
-class AdminRepository extends EloquentRepository
+class AccessRepository extends EloquentRepository
 {
     public function __construct(AccessModel $accessModel)
     {

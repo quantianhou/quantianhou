@@ -33,7 +33,7 @@ class IndexController extends AdminController
                 'error' => 2001,
                 'info' => '缺少参数',
                 'code' => 2001
-            ]);;
+            ]);
         }
         $userInfo = $this->adminRepository->findWhere([
             ['username','=',$username],
@@ -45,7 +45,7 @@ class IndexController extends AdminController
                 'error' => 2002,
                 'info' => '用户名或密码错误',
                 'code' => 2002
-            ]);;
+            ]);
         }
 
         $userInfo->last_login = time();
@@ -56,7 +56,7 @@ class IndexController extends AdminController
             'data' => 200,
             'info' => '登陆成功',
             'code' => 200
-        ]);;
+        ]);
 
 
     }

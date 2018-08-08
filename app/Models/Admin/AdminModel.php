@@ -2,6 +2,7 @@
 namespace App\Models\Admin;
 
 use App\Models\BaseModel;
+use App\Models\Rbac\RoleModel;
 
 class AdminModel extends BaseModel {
 
@@ -24,5 +25,14 @@ class AdminModel extends BaseModel {
     protected $hidden = [
         'password'
     ];
+
+    /**
+     * role
+     * 获取用户角色信息
+     */
+
+    public function role(){
+        return $this->belongsToMany(RoleModel::class, 'a_rbac_admin_role', 'admin_id', 'role_id');
+    }
 
 }
