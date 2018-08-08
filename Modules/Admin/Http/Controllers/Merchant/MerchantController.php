@@ -22,7 +22,9 @@ class MerchantController extends BaseController
      */
     public function index(Request $request)
     {
-
+        $filters = [];
+        $list =  $this->merchants->getListByWhere($filters);
+        return $list;
     }
 
     /**
