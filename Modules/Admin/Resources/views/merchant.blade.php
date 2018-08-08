@@ -9,17 +9,21 @@
             data : post_data,
             callback:function(res){
                 if(res.errors) {
-                    alert(2323);
                     return $(this).alertmsg('error', res.message), !1;
                 }
-                $(this).alertmsg('info', res.info, {
+                $(this).alertmsg('info', res.message, {
                     autoClose:false,
                     okCall: function () {
-                        productList_refresh();
                         $.CurrentNavtab.navtab('close');
                     }
                 });
             },
+            failCallback: function (msg, options) {
+                console.log(msg, options, 1)
+            },
+            errCallback: function (json, options) {
+                console.log(json, options)
+            }
         };
 
         $(document).bjuiajax('doAjax', oo);
@@ -121,13 +125,13 @@
                     </td>
                     <td>
                         <div class="row-input">
-                            <select name="address_province" data-toggle="selectpicker" data-nextselect="#j_form_city1" data-refurl="/api/areas/list?parent_id={value}">
+                            <select name="address_province" data-toggle="selectpicker" data-rule="required" data-nextselect="#j_form_city1" data-refurl="/api/areas/list?parent_id={value}">
                                 <option value="" selected>--省市--</option>
                                 @foreach($provinces as $province)
                                 <option value="{{ $province->id }}" selected="">{{ $province->name }}</option>
                                 @endforeach
                             </select>
-                            <select name="address_city" id="j_form_city1" data-toggle="selectpicker" data-nextselect="#j_form_area1" data-refurl="/api/areas/list?parent_id={value}" data-emptytxt="--城市--">
+                            <select name="address_city" id="j_form_city1" data-toggle="selectpicker"  data-rule="required" data-nextselect="#j_form_area1" data-refurl="/api/areas/list?parent_id={value}" data-emptytxt="--城市--">
                                 <option value="">--城市--</option>
                             </select>
                             <select name="address_district" id="j_form_area1" data-toggle="selectpicker"  data-emptytxt="--区县--">
@@ -223,7 +227,7 @@
 
                 <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>GPS认证：</label>
+                        <label class="label-control"><span style="color:red">*</span>GSP认证：</label>
                     </td>
                     <td>
                         <input type="radio" name="GPS_status" id="" checked value="1"> 通过
@@ -321,10 +325,8 @@
                         许可证号： <input type="text" placeholder="请填写名称" name="medical_app_num" size="30" data-rule="required"><br>
                         有效期： <input type="text" name="medical_app_expriy_date" value="2016-10-01 10:01:01" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
 
-                        附件上传：
                         <div class="content_showimg">
                             <button class="btn btn-success role-upload-image" data-field_name="medical_app_img[]">附件上传</button>
-                            <input type="file" id="content_img_upload_file" name="medical_app_img" class="content_img_upload_file" multiple="multiple"  /><br />
                         </div>
                     </td>
                 </tr>
