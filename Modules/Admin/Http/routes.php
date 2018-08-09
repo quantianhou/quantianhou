@@ -16,7 +16,7 @@ Route::group(['middleware' => 'web','prefix' => 'api', 'namespace' => 'Modules\A
 	});
 
 	//商品管理
-    Route::group(['prefix' => 'goods', 'namespace' => 'Login'], function(){
+    Route::group(['prefix' => 'goods', 'namespace' => 'Goods'], function(){
         Route::any('index', 'GoodsController@index');
         Route::post('save', 'GoodsController@save');
     });
