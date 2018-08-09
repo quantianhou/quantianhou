@@ -1,15 +1,16 @@
 <script type="text/javascript">
     $(function(){
         $.CurrentNavtab.find('#adpositionList_queryBtn').click(function(){
-            console.log("qqq");
+            var adpid=$("#adpid").val();
             var options = {
-                dataUrl:'api/merchants/index',
+                dataUrl:'api/adPosition/searchFor',
                 postData:{
-//                    city_id:$.CurrentNavtab.find('#city_id').val(),
+                    city_id:$.CurrentNavtab.find('#city_id').val(),
+                    adpid:adpid,
                 },
                 clearOldPostData:false
             };
-            $.CurrentNavtab.find('#merchant-table').datagrid('reload', options);
+            $.CurrentNavtab.find('#adlist-table').datagrid('reload', options);
         });
     });
 
@@ -31,13 +32,13 @@
 <div class="bjui-pageContent">
     <form action="" id="merchant_serarch_form">
         <div class="row-input">
-            <select name="address_province" data-toggle="selectpicker"  data-nextselect="#j_form_city1" data-refurl="/api/areas/list?parent_id={value}">
+            <select name="address_province" data-toggle="selectpicker" data-rule="required" data-nextselect="#j_form_city1" data-refurl="/api/areas/list?parent_id={value}">
                 <option value="" selected>--省市--</option>
                 @foreach($provinces as $province)
                     <option value="{{ $province->id }}" selected="">{{ $province->name }}</option>
                 @endforeach
             </select>
-            <select name="address_city" id="j_form_city1" data-toggle="selectpicker" data-nextselect="#j_form_area1" data-refurl="/api/areas/list?parent_id={value}" data-emptytxt="--城市--">
+            <select name="address_city" id="j_form_city1" data-toggle="selectpicker"  data-rule="required" data-nextselect="#j_form_area1" data-refurl="/api/areas/list?parent_id={value}" data-emptytxt="--城市--">
                 <option value="">--城市--</option>
             </select>
             <select name="address_district" id="j_form_area1" data-toggle="selectpicker"  data-emptytxt="--区县--">
@@ -139,7 +140,7 @@
             <input type="text" name="drug_license_expriy_date_end" value="2018-10-01 10:01:01" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
         </div>
         <div class="">
-            <button id="adpositionList_queryBtn" type="button" class="btn btn-default" data-icon="search" data-toggle="">搜索</button>
+            <button id="adpositionList_queryBtn" type="submit" class="btn btn-default" data-icon="search" data-toggle="">搜索</button>
         </div>
 
     </form>
@@ -176,6 +177,7 @@
                 {name: 'adid', width: 120,label:'操作',align:'center',render: operating},
 			],
 			dataUrl: 'api/merchants/index',
+			hiddenFields : 'id',
 			editUrl: 'api/merchant',
 			delUrl : 'api/merchant/delOrder',
 			paging: {total:50, pageSize:20},
@@ -193,69 +195,71 @@
         </table>
     </div>
 </div>
-{{--<script>--}}
+<script>
 
 
-    {{--$.CurrentNavtab.find('#merchant_serarch_form').on('submit',function(){--}}
-        {{--var post_data = $.CurrentNavtab.find('#merchant_serarch_form').serialize();--}}
-        {{--console.log(post_data);--}}
+    $.CurrentNavtab.find('#merchant_serarch_form').on('submit',function(){
+        var post_data = $.CurrentNavtab.find('#merchant_serarch_form').serialize();
+        console.log(post_data);return;
+        var oo = {
+            url : '/api/merchants',
+            type: 'GET',
+            loadingmask:true,
+            data : post_data,
+            callback:function(res){
 
-        {{--var options = {--}}
-            {{--dataUrl: 'api/merchants/index',--}}
-            {{--postData: post_data--}}
-        {{--};--}}
+            },
+        };
 
-
-        {{--$.CurrentNavtab.find('#merchant_serarch_form').datagrid('reload', options)--}}
-
-    {{--});--}}
-
-
-    {{--if(0){--}}
-        {{--$.CurrentNavtab.find('.box_center').css('display','block');--}}
-    {{--}else{--}}
-        {{--$.CurrentNavtab.find('.box_center').css('display','none');--}}
-    {{--}--}}
+        $(document).bjuiajax('doAjax', oo);
+    });
 
 
-    {{--//手动排序显示--}}
-    {{--function adorderby(json){--}}
-        {{--var operating ='<input id="ordernumber" style="width:50px;" type="text" value="">&nbsp;&nbsp;'+--}}
-            {{--'<button type="button" class="btn btn-green" data-fresh="true" data-toggle="navtab" onclick="getAllOrder(this,'+json+')" data-id="rbac_role" data-title="确定" data-icon="">确定</button>';--}}
-        {{--return operating;--}}
-    {{--}--}}
-    {{--//点击确定后更新排序--}}
-    {{--function getAllOrder(obj,adid){--}}
-        {{--//获取排序的新值--}}
-        {{--var ordernumber= $(obj).siblings('#ordernumber').val();--}}
-        {{--$.ajax({--}}
-            {{--type: 'POST',--}}
-            {{--url: 'api/adPosition/adUpdateSort',--}}
-            {{--data:  {ordernumber:ordernumber,adid:adid},--}}
-            {{--dataType: 'JSON',--}}
-            {{--success:function(res){--}}
-                {{--if(res.error) return $(this).alertmsg('info', res.info);--}}
-                {{--$(this).alertmsg('info', res.info);--}}
-                {{--cardlist_refreshApplyTable(0);--}}
-            {{--},--}}
-            {{--error : function(){--}}
+    if(0){
+        $.CurrentNavtab.find('.box_center').css('display','block');
+    }else{
+        $.CurrentNavtab.find('.box_center').css('display','none');
+    }
 
-            {{--},--}}
-            {{--timeout: 30000//30秒--}}
-        {{--});--}}
-    {{--}--}}
-    {{--//创建申请表后回调-刷新列表--}}
-    {{--function cardlist_refreshApplyTable(){--}}
-        {{--$('#adlist-table').datagrid('refresh');--}}
-    {{--}--}}
-{{--</script>--}}
 
-{{--<script type="text/javascript">--}}
-    {{--function adaddhtml(obj) {--}}
-        {{--adpid=$("#adpid").val();--}}
-        {{--$(document).navtab({id:'mydialog', url:'adAdd.html', title:'广告添加'});--}}
-    {{--}--}}
-{{--</script>--}}
+    //手动排序显示
+    function adorderby(json){
+        var operating ='<input id="ordernumber" style="width:50px;" type="text" value="">&nbsp;&nbsp;'+
+            '<button type="button" class="btn btn-green" data-fresh="true" data-toggle="navtab" onclick="getAllOrder(this,'+json+')" data-id="rbac_role" data-title="确定" data-icon="">确定</button>';
+        return operating;
+    }
+    //点击确定后更新排序
+    function getAllOrder(obj,adid){
+        //获取排序的新值
+        var ordernumber= $(obj).siblings('#ordernumber').val();
+        $.ajax({
+            type: 'POST',
+            url: 'api/adPosition/adUpdateSort',
+            data:  {ordernumber:ordernumber,adid:adid},
+            dataType: 'JSON',
+            success:function(res){
+                if(res.error) return $(this).alertmsg('info', res.info);
+                $(this).alertmsg('info', res.info);
+                cardlist_refreshApplyTable(0);
+            },
+            error : function(){
+
+            },
+            timeout: 30000//30秒
+        });
+    }
+    //创建申请表后回调-刷新列表
+    function cardlist_refreshApplyTable(){
+        $('#adlist-table').datagrid('refresh');
+    }
+</script>
+
+<script type="text/javascript">
+    function adaddhtml(obj) {
+        adpid=$("#adpid").val();
+        $(document).navtab({id:'mydialog', url:'adAdd.html', title:'广告添加'});
+    }
+</script>
 
 
 

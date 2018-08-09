@@ -20,6 +20,13 @@ class GoodsController extends AdminController
     }
 
     /**
+     * 商品列表
+     */
+    public function index(){
+
+    }
+
+    /**
      * 菜单
      * @return Response
      */
