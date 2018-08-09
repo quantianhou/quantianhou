@@ -21,6 +21,8 @@ Route::group(['middleware' => 'web','prefix' => 'api', 'namespace' => 'Modules\A
         Route::post('save', 'GoodsController@save');
     });
 
+
+   //商家管理
 	Route::group(['namespace' => 'Merchant'], function () {
         Route::resource('merchants', 'MerchantController');
         Route::post('merchants/index', 'MerchantController@index');
@@ -36,6 +38,12 @@ Route::group(['middleware' => 'web','prefix' => 'api', 'namespace' => 'Modules\A
         Route::post('areas/list', 'AreaController@getList');
     });
 
+
+    //门店管理
+    Route::group(['namespace' => 'ShopStore'], function () {
+        Route::resource('shop_store', 'ShopStoreController');
+        Route::post('merchants/index', 'ShopStoreController@index');
+    });
 });
 
 Route::get('/upload/policy', 'Modules\Admin\Http\Controllers\UploadController@policy')->name('upload-policy');
