@@ -193,69 +193,67 @@
         </table>
     </div>
 </div>
-{{--<script>--}}
+
+<script>
 
 
-    {{--$.CurrentNavtab.find('#merchant_serarch_form').on('submit',function(){--}}
-        {{--var post_data = $.CurrentNavtab.find('#merchant_serarch_form').serialize();--}}
-        {{--console.log(post_data);--}}
+    $.CurrentNavtab.find('#merchant_serarch_form').on('submit',function(){
+        var post_data = $.CurrentNavtab.find('#merchant_serarch_form').serialize();
+        console.log(post_data);
 
-        {{--var options = {--}}
-            {{--dataUrl: 'api/merchants/index',--}}
-            {{--postData: post_data--}}
-        {{--};--}}
-
-
-        {{--$.CurrentNavtab.find('#merchant_serarch_form').datagrid('reload', options)--}}
-
-    {{--});--}}
+        var options = {
+            dataUrl: 'api/merchants/index',
+            postData: post_data
+        };
 
 
-    {{--if(0){--}}
-        {{--$.CurrentNavtab.find('.box_center').css('display','block');--}}
-    {{--}else{--}}
-        {{--$.CurrentNavtab.find('.box_center').css('display','none');--}}
-    {{--}--}}
+        $.CurrentNavtab.find('#merchant_serarch_form').datagrid('reload', options)
+
+    });
 
 
-    {{--//手动排序显示--}}
-    {{--function adorderby(json){--}}
-        {{--var operating ='<input id="ordernumber" style="width:50px;" type="text" value="">&nbsp;&nbsp;'+--}}
-            {{--'<button type="button" class="btn btn-green" data-fresh="true" data-toggle="navtab" onclick="getAllOrder(this,'+json+')" data-id="rbac_role" data-title="确定" data-icon="">确定</button>';--}}
-        {{--return operating;--}}
-    {{--}--}}
-    {{--//点击确定后更新排序--}}
-    {{--function getAllOrder(obj,adid){--}}
-        {{--//获取排序的新值--}}
-        {{--var ordernumber= $(obj).siblings('#ordernumber').val();--}}
-        {{--$.ajax({--}}
-            {{--type: 'POST',--}}
-            {{--url: 'api/adPosition/adUpdateSort',--}}
-            {{--data:  {ordernumber:ordernumber,adid:adid},--}}
-            {{--dataType: 'JSON',--}}
-            {{--success:function(res){--}}
-                {{--if(res.error) return $(this).alertmsg('info', res.info);--}}
-                {{--$(this).alertmsg('info', res.info);--}}
-                {{--cardlist_refreshApplyTable(0);--}}
-            {{--},--}}
-            {{--error : function(){--}}
-
-            {{--},--}}
-            {{--timeout: 30000//30秒--}}
-        {{--});--}}
-    {{--}--}}
-    {{--//创建申请表后回调-刷新列表--}}
-    {{--function cardlist_refreshApplyTable(){--}}
-        {{--$('#adlist-table').datagrid('refresh');--}}
-    {{--}--}}
-{{--</script>--}}
-
-{{--<script type="text/javascript">--}}
-    {{--function adaddhtml(obj) {--}}
-        {{--adpid=$("#adpid").val();--}}
-        {{--$(document).navtab({id:'mydialog', url:'adAdd.html', title:'广告添加'});--}}
-    {{--}--}}
-{{--</script>--}}
+    if(0){
+        $.CurrentNavtab.find('.box_center').css('display','block');
+    }else{
+        $.CurrentNavtab.find('.box_center').css('display','none');
+    }
 
 
+    //手动排序显示
+    function adorderby(json){
+        var operating ='<input id="ordernumber" style="width:50px;" type="text" value="">&nbsp;&nbsp;'+
+            '<button type="button" class="btn btn-green" data-fresh="true" data-toggle="navtab" onclick="getAllOrder(this,'+json+')" data-id="rbac_role" data-title="确定" data-icon="">确定</button>';
+        return operating;
+    }
+    //点击确定后更新排序
+    function getAllOrder(obj,adid){
+        //获取排序的新值
+        var ordernumber= $(obj).siblings('#ordernumber').val();
+        $.ajax({
+            type: 'POST',
+            url: 'api/adPosition/adUpdateSort',
+            data:  {ordernumber:ordernumber,adid:adid},
+            dataType: 'JSON',
+            success:function(res){
+                if(res.error) return $(this).alertmsg('info', res.info);
+                $(this).alertmsg('info', res.info);
+                cardlist_refreshApplyTable(0);
+            },
+            error : function(){
 
+            },
+            timeout: 30000//30秒
+        });
+    }
+    //创建申请表后回调-刷新列表
+    function cardlist_refreshApplyTable(){
+        $('#adlist-table').datagrid('refresh');
+    }
+</script>
+
+<script type="text/javascript">
+    function adaddhtml(obj) {
+        adpid=$("#adpid").val();
+        $(document).navtab({id:'mydialog', url:'adAdd.html', title:'广告添加'});
+    }
+</script>
