@@ -15,6 +15,12 @@ Route::group(['middleware' => 'web','prefix' => 'api', 'namespace' => 'Modules\A
 		Route::any('index', 'IndexController@index');
 	});
 
+	//商品管理
+    Route::group(['prefix' => 'goods', 'namespace' => 'Login'], function(){
+        Route::any('index', 'GoodsController@index');
+        Route::post('save', 'GoodsController@save');
+    });
+
 	Route::group(['namespace' => 'Merchant'], function () {
         Route::resource('merchants', 'MerchantController');
     });
