@@ -191,12 +191,11 @@ $(function(){
             <div class="tabsPageHeader">
                 <div class="tabsPageHeaderContent">
                     <ul class="navtab-tab nav nav-tabs" id="mainTabUl">
-                        <li data-url="merchant"><a href="javascript:;"><span><i class="fa fa-home"></i> #maintab#</span></a></li>
+                        <li data-url="welcome"><a href="javascript:;"><span><i class="fa fa-home"></i> #maintab#</span></a></li>
                     </ul>
                 </div>
                 <div class="tabsLeft">
                     <i class="fa fa-angle-double-left"></i>
-                    <li data-url="merchant"><a href="javascript:;"><span><i class="fa fa-home"></i> #maintab#</span></a></li>
                 </div>
                 <div class="tabsRight"><i class="fa fa-angle-double-right"></i></div>
                 <div class="tabsMore"><i class="fa fa-angle-double-down"></i></div>
