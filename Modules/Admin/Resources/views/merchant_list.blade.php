@@ -177,7 +177,6 @@
                 {name: 'adid', width: 120,label:'操作',align:'center',render: operating},
 			],
 			dataUrl: 'api/merchants/index',
-			hiddenFields : 'id',
 			editUrl: 'api/merchant',
 			delUrl : 'api/merchant/delOrder',
 			paging: {total:50, pageSize:20},
@@ -200,18 +199,16 @@
 
     $.CurrentNavtab.find('#merchant_serarch_form').on('submit',function(){
         var post_data = $.CurrentNavtab.find('#merchant_serarch_form').serialize();
-        console.log(post_data);return;
-        var oo = {
-            url : '/api/merchants',
-            type: 'GET',
-            loadingmask:true,
-            data : post_data,
-            callback:function(res){
+        console.log(post_data);
 
-            },
+        var options = {
+            dataUrl: 'api/merchants/index',
+            postData: post_data
         };
 
-        $(document).bjuiajax('doAjax', oo);
+
+        $.CurrentNavtab.find('#merchant_serarch_form').datagrid('reload', options)
+
     });
 
 
