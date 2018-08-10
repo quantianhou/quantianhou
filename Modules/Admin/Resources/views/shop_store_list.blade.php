@@ -1,15 +1,16 @@
 <script type="text/javascript">
     $(function(){
         $.CurrentNavtab.find('#adpositionList_queryBtn').click(function(){
-            console.log("qqq");
+            var adpid=$("#adpid").val();
             var options = {
-                dataUrl:'api/merchants/index',
+                dataUrl:'api/adPosition/searchFor',
                 postData:{
-//                    city_id:$.CurrentNavtab.find('#city_id').val(),
+                    city_id:$.CurrentNavtab.find('#city_id').val(),
+                    adpid:adpid,
                 },
                 clearOldPostData:false
             };
-            $.CurrentNavtab.find('#merchant-table').datagrid('reload', options);
+            $.CurrentNavtab.find('#adlist-table').datagrid('reload', options);
         });
     });
 
@@ -29,15 +30,15 @@
 
 </script>
 <div class="bjui-pageContent">
-    <form action="" id="shop_store_serarch_form">
+    <form action="" id="merchant_serarch_form">
         <div class="row-input">
-            <select name="address_province" data-toggle="selectpicker"  data-nextselect="#j_form_city1" data-refurl="/api/areas/list?parent_id={value}">
+            <select name="address_province" data-toggle="selectpicker" data-rule="required" data-nextselect="#j_form_city1" data-refurl="/api/areas/list?parent_id={value}">
                 <option value="" selected>--省市--</option>
                 @foreach($provinces as $province)
                     <option value="{{ $province->id }}" selected="">{{ $province->name }}</option>
                 @endforeach
             </select>
-            <select name="address_city" id="j_form_city1" data-toggle="selectpicker" data-nextselect="#j_form_area1" data-refurl="/api/areas/list?parent_id={value}" data-emptytxt="--城市--">
+            <select name="address_city" id="j_form_city1" data-toggle="selectpicker"  data-rule="required" data-nextselect="#j_form_area1" data-refurl="/api/areas/list?parent_id={value}" data-emptytxt="--城市--">
                 <option value="">--城市--</option>
             </select>
             <select name="address_district" id="j_form_area1" data-toggle="selectpicker"  data-emptytxt="--区县--">
@@ -139,19 +140,19 @@
             <input type="text" name="drug_license_expriy_date_end" value="2018-10-01 10:01:01" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
         </div>
         <div class="">
-            <button id="adpositionList_queryBtn" type="button" class="btn btn-default" data-icon="search" data-toggle="">搜索</button>
+            <button id="adpositionList_queryBtn" type="submit" class="btn btn-default" data-icon="search" data-toggle="">搜索</button>
         </div>
 
     </form>
 
     <br />
     <div style="margin:10px 0px 0px 17px;" id="adpositiontList_services">
-        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:'添加商家'}">  添加商家</button>
+        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/shop_store', title:'添加门店'}">  添加门店</button>
     </div>
     <input type="hidden" id="city_id" name="city_id" />
     <div style="padding:15px; height:100%;width:99.8%" >
 
-        <table id="shop-store-table"   data-toggle="datagrid" data-options="{
+        <table id="merchant-table"   data-toggle="datagrid" data-options="{
             gridTitle:'商家列表',
 			toolbarCustom: $('#addQuestionBtn'),
 			filterThead: false,
@@ -193,21 +194,20 @@
         </table>
     </div>
 </div>
-
 <script>
 
 
-    $.CurrentNavtab.find('#shop_store_serarch_form').on('submit',function(){
-        var post_data = $.CurrentNavtab.find('#shop_store_serarch_form').serialize();
+    $.CurrentNavtab.find('#merchant_serarch_form').on('submit',function(){
+        var post_data = $.CurrentNavtab.find('#merchant_serarch_form').serialize();
         console.log(post_data);
 
         var options = {
-            dataUrl: 'api/shop_store/index',
+            dataUrl: 'api/merchants/index',
             postData: post_data
         };
 
 
-        $.CurrentNavtab.find('#shop_store_serarch_form').datagrid('reload', options)
+        $.CurrentNavtab.find('#merchant_serarch_form').datagrid('reload', options)
 
     });
 
@@ -257,3 +257,6 @@
         $(document).navtab({id:'mydialog', url:'adAdd.html', title:'广告添加'});
     }
 </script>
+
+
+
