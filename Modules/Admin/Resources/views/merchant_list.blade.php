@@ -29,7 +29,7 @@
 
 </script>
 <div class="bjui-pageContent">
-    <form action="" id="merchant_serarch_form">
+    <form action="" id="shop_store_serarch_form">
         <div class="row-input">
             <select name="address_province" data-toggle="selectpicker"  data-nextselect="#j_form_city1" data-refurl="/api/areas/list?parent_id={value}">
                 <option value="" selected>--省市--</option>
@@ -151,7 +151,7 @@
     <input type="hidden" id="city_id" name="city_id" />
     <div style="padding:15px; height:100%;width:99.8%" >
 
-        <table id="merchant-table"   data-toggle="datagrid" data-options="{
+        <table id="shop-store-table"   data-toggle="datagrid" data-options="{
             gridTitle:'商家列表',
 			toolbarCustom: $('#addQuestionBtn'),
 			filterThead: false,
@@ -197,17 +197,17 @@
 <script>
 
 
-    $.CurrentNavtab.find('#merchant_serarch_form').on('submit',function(){
-        var post_data = $.CurrentNavtab.find('#merchant_serarch_form').serialize();
+    $.CurrentNavtab.find('#shop_store_serarch_form').on('submit',function(){
+        var post_data = $.CurrentNavtab.find('#shop_store_serarch_form').serialize();
         console.log(post_data);
 
         var options = {
-            dataUrl: 'api/merchants/index',
+            dataUrl: 'api/shop_store/index',
             postData: post_data
         };
 
 
-        $.CurrentNavtab.find('#merchant_serarch_form').datagrid('reload', options)
+        $.CurrentNavtab.find('#shop_store_serarch_form').datagrid('reload', options)
 
     });
 

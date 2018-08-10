@@ -23,9 +23,6 @@ class MerchantController extends BaseController
     public function index(Request $request)
     {
         $filters = [];
-        if ($request->get('merchant_type')) {
-            dd($request->all());
-        }
         $list =  $this->merchants->getListByWhere($filters);
         return $list;
     }

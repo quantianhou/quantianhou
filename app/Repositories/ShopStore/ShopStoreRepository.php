@@ -6,16 +6,16 @@
  * Time: 上午10:16
  */
 
-namespace App\Repositories\Merchant;
+namespace App\Repositories\ShopStore;
 
-use App\Models\Merchant\Merchant;
+use App\Models\ShopStore\ShopStore;
 use App\Repositories\EloquentRepository;
 
-class MerchantRepository extends EloquentRepository
+class ShopStoreRepository extends EloquentRepository
 {
-    public function __construct(Merchant $merchant)
+    public function __construct(ShopStore $shopStore)
     {
-        $this->model = $merchant;
+        $this->model = $shopStore;
         parent::__construct($this->model);
     }
 
@@ -33,9 +33,4 @@ class MerchantRepository extends EloquentRepository
         return $result;
     }
 
-    public function getMerchants()
-    {
-        $result = $this->model->get();
-        return $result;
-    }
 }

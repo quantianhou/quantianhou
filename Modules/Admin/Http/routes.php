@@ -4,7 +4,8 @@ Route::group(['middleware' => 'web', 'namespace' => 'Modules\Admin\Http\Controll
 {
     Route::get('/{tmp?}', function($tmp = 'index'){
         $provinces = app(\App\Repositories\Area\AreaRepository::class)->getAreas();
-		return view("admin::".$tmp)->with(compact('provinces'));
+        $merchants = app(\App\Repositories\Merchant\MerchantRepository::class)->getMerchants();
+		return view("admin::".$tmp)->with(compact('provinces', 'merchants'));
 	});
 });
 
