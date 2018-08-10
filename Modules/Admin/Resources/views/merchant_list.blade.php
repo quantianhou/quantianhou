@@ -147,6 +147,7 @@
     <br />
     <div style="margin:10px 0px 0px 17px;" id="adpositiontList_services">
         <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:'添加商家'}">  添加商家</button>
+        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:''}">  </button>
     </div>
     <input type="hidden" id="city_id" name="city_id" />
     <div style="padding:15px; height:100%;width:99.8%" >
