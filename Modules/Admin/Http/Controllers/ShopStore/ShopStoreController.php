@@ -23,11 +23,12 @@ class ShopStoreController extends BaseController
     public function index(Request $request)
     {
         $filters = [];
+        $pageSize = $request->get('pageSize', 20);
         if ($request->get('merchant_type')) {
             dd($request->all());
         }
-        $list =  $this->shopStores->getListByWhere($filters);
-        return $list;
+        $list =  $this->shopStores->getListByWhere($filters, ['*'], [], $pageSize);
+        return $this->pageSuccess($list);
     }
 
     /**
@@ -95,25 +96,25 @@ class ShopStoreController extends BaseController
             'organization_code' => $request->get('organization_code', ''),
             'storename' => $request->get('storename', ''),
             'store_short_name' => $request->get('store_short_name', ''),
-//            'provincecode' => $request->get('provincecode', ''),
-            'provincecode' => 1,
-//            'citycode' => $request->get('citycode', ''),
-            'citycode' => 1,
-//            'areacode' => $request->get('areacode', ''),
-            'areacode' => 1,
+            'provincecode' => $request->get('provincecode', ''),
+            'citycode' => $request->get('citycode', ''),
+            'areacode' => $request->get('areacode', ''),
             'store_contacts' => $request->get('store_contacts', ''),
             'store_phone' => $request->get('store_phone', ''),
             'store_sms_sign' => $request->get('store_sms_sign', ''),
             'organization_introduce' => $request->get('organization_introduce', ''),
             'organization_logo' => $this->formatImgUrl($request, 'organization_logo'),
             'organization_front_img' => $this->formatImgUrl($request, 'organization_front_img'),
+            'shop_code' => $this->makeCode(),
+            'lat' => $request->get('lat', 0),
+            'lng' => $request->get('lng', 0),
 
         ];
 
         return $data;
     }
 
-    private function makeMerchantCode()
+    private function makeCode()
     {
         return md5(time() . rand(0, 999999));
     }

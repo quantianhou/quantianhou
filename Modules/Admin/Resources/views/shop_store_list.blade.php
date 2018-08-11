@@ -56,12 +56,9 @@
             <select name="status" >
                 <option value="" selected>状态</option>
                 <option value="1">新增</option>
-                <option value="2">审核</option>
-                <option value="3">退回</option>
-                <option value="4">通过</option>
-                <option value="5">拒绝</option>
-                <option value="6">取消</option>
-                <option value="7">预约</option>
+                <option value="2">取消</option>
+                <option value="3">签约</option>
+                <option value="4">冻结</option>
             </select>
         </div>
 
@@ -74,7 +71,22 @@
 
 
         <div class="">
-            <label for="">商家编码</label>
+            <label for="">门店编码</label>
+            <input type="text" name="merchant_code" id="">
+        </div>
+
+
+        <div class="">
+            <label for="">门店名称</label>
+            <input type="text" name="merchant_code" id="">
+        </div>
+
+        <div class="">
+            <label for="">门店简称</label>
+            <input type="text" name="merchant_code" id="">
+        </div>
+        <div class="">
+            <label for="">门店联系人</label>
             <input type="text" name="merchant_code" id="">
         </div>
 
@@ -99,17 +111,19 @@
             <label for="">药品经营许可证号</label>
             <input type="text" name="drug_license_expriy_date" id="">
         </div>
-        <div class="">
-            <label for="">商家名称</label>
-            <input type="text" name="merchant_name" id="">
-        </div>
 
         <div class="">
             <label for="">合同编号</label>
             <input type="text" name="merchant_code" id="">
         </div>
 
-
+        <div class="">
+            <select name="manage_type" >
+                <option value="" selected>机构类型</option>
+                <option value="1">药店</option>
+                <option value="2">医疗机构</option>
+            </select>
+        </div>
         <div class="">
             <select name="manage_type" >
                 <option value="" selected>经营方式</option>
@@ -148,6 +162,9 @@
     <br />
     <div style="margin:10px 0px 0px 17px;" id="adpositiontList_services">
         <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/shop_store', title:'添加门店'}">  添加门店</button>
+        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/shop_store', title:'添加门店'}"> 取消签约</button>
+        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/shop_store', title:'添加门店'}"> 导入</button>
+        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/shop_store', title:'添加门店'}">门店档案导出</button>
     </div>
     <input type="hidden" id="city_id" name="city_id" />
     <div style="padding:15px; height:100%;width:99.8%" >
@@ -158,25 +175,29 @@
 			filterThead: false,
 			columns: [
                 {name:'id', width: 100,align:'center',label:'ID',hide:'false'},
-                {name:'merchant_code', width: 150,align:'center',label:'商家编码'},
-                {name: 'merchant_name', width: 150, align:'center', label: '商家名称'},
-                {name: 'merchant_short_name', width: 180, align:'center', label: '商家简称'},
-                {name: 'merchant_contacts', width: 180, align:'center', label: '商家联系人'},
-                {name: 'merchant_phone', width: 70, align:'center', label: '联系电话'},
-                {name: 'manage_type_name', width: 70, align:'center', label: '经营方式'},
-                {name: 'merchant_type_name', width: 70, align:'center', label: '商家类型'},
+                {name:'shop_code', width: 150,align:'center',label:'门店编码'},
+                {name: 'province_name', width: 150, align:'center', label: '省'},
+                {name: 'city_name', width: 180, align:'center', label: '市'},
+                {name: 'area_name', width: 180, align:'center', label: '区'},
+                {name: 'merchant_name', width: 70, align:'center', label: '商家名称'},
+                {name: 'storename', width: 70, align:'center', label: '门店名称'},
+                {name: 'store_short_name', width: 70, align:'center', label: '门店简称'},
+                {name: 'store_contacts', width: 70, align:'center', label: '门店联系人'},
+                {name: 'store_phone', width: 70, align:'center', label: '门店联系方式'},
+                {name: 'manage_type', width: 70, align:'center', label: '经营方式'},
+                {name: 'organization_type', width: 70, align:'center', label: '机构类型'},
                 {name: 'manage_type', width: 70, align:'center', label: '档案类型'},
-                {name: 'status_name', width: 70, align:'center', label: '状态'},
-                {name: 'manage_type', width: 70, align:'center', label: '审核意见'},
+                {name: 'manage_type', width: 70, align:'center', label: '状态'},
                 {name: 'manage_type', width: 70, align:'center', label: '合同编号'},
                 {name: 'manage_type', width: 70, align:'center', label: '签约人'},
                 {name: 'manage_type', width: 70, align:'center', label: '签约时间'},
                 {name: 'manage_type', width: 70, align:'center', label: '取消签约人'},
                 {name: 'manage_type', width: 70, align:'center', label: '取消签约时间'},
-                {name: 'manage_type', width: 70, align:'center', label: '合同有效期'},
+                {name: 'manage_type', width: 70, align:'center', label: '取消签约时间'},
+                {name: 'manage_type', width: 70, align:'center', label: '冻结原因'},
                 {name: 'adid', width: 120,label:'操作',align:'center',render: operating},
 			],
-			dataUrl: 'api/merchants/index',
+			dataUrl: 'api/shop_store/index',
 			editUrl: 'api/merchant',
 			delUrl : 'api/merchant/delOrder',
 			paging: {total:50, pageSize:20},
@@ -202,7 +223,7 @@
         console.log(post_data);
 
         var options = {
-            dataUrl: 'api/merchants/index',
+            dataUrl: 'ap/shop_store/index',
             postData: post_data
         };
 

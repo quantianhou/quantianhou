@@ -31,4 +31,13 @@ class BaseController extends Controller
         }
         return implode('|', $image);
     }
+
+    public function pageSuccess($data)
+    {
+        return [
+            'totalRow' => $data->total(),
+            'pageCurrent' => $data->currentPage(),
+            'list' => ($data->toArray())['data']
+        ];
+    }
 }
