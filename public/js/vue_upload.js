@@ -21,10 +21,11 @@ function showOssImage($result) {
 }
 
 function appendHtmlImage($result) {
+    var oos = 'http://qth-test.oss-cn-hangzhou.aliyuncs.com/' + $result.file_name;
     uploadImageParent.append(
         '<div style="display: inline-block; margin: 5px;">\
               <input type="hidden" value="'+$result.file_name+'" name="' + inputField  +'" />\
-              <img width="100" height="100" src="http://vipx-test.oss-cn-beijing.aliyuncs.com/'+$result.file_name+'" />\
+              <img width="100" height="100" src="'+oos+'" />\
               <a onclick="$(this).parent().remove()" style="display: block; text-align: center;">删除</a>\
         </div>'
     )
