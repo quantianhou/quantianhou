@@ -6,9 +6,7 @@ Route::group(['middleware' => 'web', 'namespace' => 'Modules\Admin\Http\Controll
         $provinces = app(\App\Repositories\Area\AreaRepository::class)->getAreas();
         $merchants = app(\App\Repositories\Merchant\MerchantRepository::class)->getMerchants();
         if($tmp == "merchantAcount"){
-            $merchantNoAccounts = app(\App\Repositories\MerchantAccount\MerchantAccountRepository::class)->getMerchantNoAccounts();
-            $merchants = app(\App\Repositories\Merchant\MerchantRepository::class)->getMerchants();
-            print_r($merchantNoAccounts);exit;
+            $merchantNoAccounts = app(\App\Repositories\Merchant\MerchantRepository::class)->getMerchantNoAccounts();
             dd(\DB::getQueryLog());exit;
         }
 		return view("admin::".$tmp)->with(compact('provinces', 'merchants'));

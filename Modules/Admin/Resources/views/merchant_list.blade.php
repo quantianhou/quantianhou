@@ -189,6 +189,7 @@
 			editDialogOp: {width:500, height:180, mask:false},
 			inlineEditMult: false,
 			showEditbtnscol: false,
+			showCheckboxcol: true,
 			fullGrid: false,
 			delPK:'id',
 			height:550,

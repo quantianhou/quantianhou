@@ -24,4 +24,14 @@ class MerchantRepository extends EloquentRepository
         $result = $this->model->get();
         return $result;
     }
+
+    //得到还没开通账号的商家列表
+    public function getMerchantNoAccounts($field = ['*'])
+    {
+        $result = $this->model->leftJoin('users', 'users.a_merchant_id', '=', 'a_merchant.id')->where([
+            ['users.uid','>',1],
+            ['users.uid','is','null']
+        ])->select($field)->get();
+        return $result;
+    }
 }
