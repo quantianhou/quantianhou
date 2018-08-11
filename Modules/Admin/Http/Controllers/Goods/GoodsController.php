@@ -2,8 +2,6 @@
 
 namespace Modules\Admin\Http\Controllers\Goods;
 
-use App\Models\Rbac\RoleModel;
-use App\Repositories\Admin\AdminRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Modules\Admin\Http\Controllers\AdminController;
@@ -22,7 +20,13 @@ class GoodsController extends AdminController
     /**
      * 商品列表
      */
-    public function index(){
+    public function index(Request $request){
+
+        $filters = [];
+        $pageSize = $request->get('pageSize', 10);
+        $list =  $this->merchants->getListByWhere($filters, ['*'], [], $pageSize);
+
+        return $this->pageSuccess($list);
 
     }
 
