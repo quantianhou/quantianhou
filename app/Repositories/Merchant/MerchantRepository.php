@@ -24,7 +24,6 @@ class MerchantRepository extends EloquentRepository
         $result = $this->model
             ->with($with)
             ->whereNested(function ($query) use ($filters) {
-                dd($query);
                 if (empty($query)) return;
                 foreach ($filters as $filter) {
                     $query->where($filter[0], $filter[1], $filter[2]);
