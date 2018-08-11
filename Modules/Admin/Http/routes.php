@@ -49,7 +49,7 @@ Route::group(['middleware' => 'web','prefix' => 'api', 'namespace' => 'Modules\A
     //门店管理
     Route::group(['namespace' => 'ShopStore'], function () {
         Route::resource('shop_store', 'ShopStoreController');
-        Route::post('merchants/index', 'ShopStoreController@index');
+        Route::post('shop_store/index', 'ShopStoreController@index');
     });
 });
 

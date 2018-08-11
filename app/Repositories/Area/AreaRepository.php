@@ -59,4 +59,12 @@ class AreaRepository extends EloquentRepository
         }
         return $areas;
     }
+
+    public function getName()
+    {
+        $result = \Cache::remember('area_list', 3600, function () {
+            return $this->model->get();
+        });
+        return $result;
+    }
 }

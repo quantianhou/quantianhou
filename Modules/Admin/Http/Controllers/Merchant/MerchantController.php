@@ -23,8 +23,10 @@ class MerchantController extends BaseController
     public function index(Request $request)
     {
         $filters = [];
-        $list =  $this->merchants->getListByWhere($filters);
-        return $list;
+        $pageSize = $request->get('pageSize', 10);
+        $list =  $this->merchants->getListByWhere($filters, ['*'], [], $pageSize);
+        return  $this->merchants->getListByWhere($filters, ['*'], []);
+        return $this->pageSuccess($list);
     }
 
     /**

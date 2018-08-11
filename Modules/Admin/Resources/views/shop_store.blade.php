@@ -225,7 +225,7 @@
                         <label class="label-control"><span style="color:red">*</span>经度：</label>
                     </td>
                     <td>
-                        <input type="text" placeholder="经度" name="institution_num" size="30" data-rule="required"><span></span>
+                        <input type="text" placeholder="经度" name="lat" size="30" data-rule="required"><span></span>
                     </td>
                 </tr>
 
@@ -234,7 +234,7 @@
                         <label class="label-control"><span style="color:red">*</span>维度：</label>
                     </td>
                     <td>
-                        <input type="text" placeholder="维度" name="institution_num" size="30" data-rule="required"><span></span>
+                        <input type="text" placeholder="维度" name="lng" size="30" data-rule="required"><span></span>
                     </td>
                 </tr>
 

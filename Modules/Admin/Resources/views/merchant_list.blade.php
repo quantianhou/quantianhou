@@ -147,6 +147,12 @@
     <br />
     <div style="margin:10px 0px 0px 17px;" id="adpositiontList_services">
         <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:'添加商家'}">  添加商家</button>
+        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:''}"> 申请审核 </button>
+        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:''}"> 审核 </button>
+        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:''}"> 批量审核 </button>
+        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:''}"> 签约 </button>
+        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:''}"> 导入 </button>
+        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:''}"> 导出商家档案 </button>
     </div>
     <input type="hidden" id="city_id" name="city_id" />
     <div style="padding:15px; height:100%;width:99.8%" >
@@ -207,7 +213,7 @@
         };
 
 
-        $.CurrentNavtab.find('#shop_store_serarch_form').datagrid('reload', options)
+        $.CurrentNavtab.find('#shop-store-table').datagrid('reload', options)
 
     });
 

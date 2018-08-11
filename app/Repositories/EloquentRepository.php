@@ -214,4 +214,22 @@ abstract class EloquentRepository implements RepositoryInterface
             }
         })->count();
     }
+
+    public function getListByWhere($filters = [], $columns = ['*'], $with = [], $pageCount = 0)
+    {
+        $result = $this->model
+            ->with($with)
+            ->whereNested(function ($query) use ($filters) {
+                if (empty($query)) return;
+                foreach ($filters as $filter) {
+                    $query->where($filter[0], $filter[1], $filter[2]);
+                }
+            });
+        if ($pageCount) {
+            return $result->paginate($pageCount, $columns);
+        }
+
+        $result = $result->get($columns);
+        return $result;
+    }
 }
