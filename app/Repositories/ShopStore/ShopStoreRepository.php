@@ -19,18 +19,4 @@ class ShopStoreRepository extends EloquentRepository
         parent::__construct($this->model);
     }
 
-    public function getListByWhere($filters = [], $columns = ['*'], $with = [])
-    {
-        $result = $this->model
-            ->with($with)
-            ->whereNested(function ($query) use ($filters) {
-                if (empty($query)) return;
-                foreach ($filters as $filter) {
-                    $query->where($filter[0], $filter[1], $filter[2]);
-                }
-            })->get($columns);
-
-        return $result;
-    }
-
 }
