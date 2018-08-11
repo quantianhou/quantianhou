@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\BaseModel;
 use App\Models\Merchant\Merchant;
 
-class MerchantAccount extends Model
+class MerchantAccountModel extends Model
 {
     protected $table = 'users';//微擎的表
 
@@ -15,7 +15,8 @@ class MerchantAccount extends Model
     protected $appends = [
         'merchant_type_name',
         'manage_type_name',
-        'status_name'
+        'status_name',
+        'user_status_name',
     ];
 
     public function getMerchantTypeNameAttribute()
@@ -26,6 +27,11 @@ class MerchantAccount extends Model
     public function getManageTypeNameAttribute()
     {
         return array_get([1 => '连锁', 2 => '非连锁'], $this->manage_type);
+    }
+
+    public function getUserStatusNameAttribute()
+    {
+        return array_get([1 => '正常', 2 => '禁用'], $this->user_status);
     }
 
     /**

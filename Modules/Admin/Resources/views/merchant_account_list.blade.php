@@ -139,41 +139,40 @@
 
     <br />
     <div style="margin:10px 0px 0px 17px;" id="adpositiontList_services">
-        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:'添加商家'}">  添加商家</button>
+        <button type="button" class="btn btn-green" onclick="openAddMerchantAcount();">  新增</button>
     </div>
-    <input type="hidden" id="city_id" name="city_id" />
     <div style="padding:15px; height:100%;width:99.8%" >
 
-        <table id="shop-store-table"   data-toggle="datagrid" data-options="{
-            gridTitle:'商家列表',
+        <table id="merchant_account_table"   data-toggle="datagrid" data-options="{
+            gridTitle:'商家账号列表',
 			toolbarCustom: $('#addQuestionBtn'),
 			filterThead: false,
 			columns: [
                 {name:'id', width: 100,align:'center',label:'ID',hide:'false'},
                 {name:'username', width: 150,align:'center',label:'账户名称'},
                 {name:'merchant_name', width: 150,align:'center',label:'归属商家'},
-                {name:'status', width: 150,align:'center',label:'归属商家状态'},
-                {name:'username', width: 150,align:'center',label:'操作'},
-                {name:'username', width: 150,align:'center',label:'商家编码'},
-                {name:'username', width: 150,align:'center',label:'商家地址'},
-                {name:'username', width: 150,align:'center',label:'状态'},
-                {name:'username', width: 150,align:'center',label:'短信余量'},
-                {name:'username', width: 150,align:'center',label:'当面支付是否开通'},
-                {name:'username', width: 150,align:'center',label:'创建人'},
-                {name:'username', width: 150,align:'center',label:'创建时间'},
-                {name:'username', width: 150,align:'center',label:'更新人'},
-                {name:'username', width: 150,align:'center',label:'更新时间'},
-                {name: 'adid', width: 120,label:'操作',align:'center',render: operating},
+                {name:'status_name', width: 100,align:'center',label:'归属商家状态'},
+                {name:'username', width: 150,align:'center',label:'操作',hide:'false'},
+                {name:'merchant_code', width:250,align:'center',label:'商家编码'},
+                {name:'full_address', width: 150,align:'center',label:'商家地址'},
+                {name:'user_status_name', width: 100,align:'center',label:'状态'},
+                {name:'sms_balance', width: 100,align:'center',label:'短信余量'},
+                {name:'username', width: 150,align:'center',label:'当面支付是否开通',hide:'false'},
+                {name:'add_admin', width: 150,align:'center',label:'创建人'},
+                {name:'user_created_at', width: 150,align:'center',label:'创建时间'},
+                {name:'last_update_admin', width: 150,align:'center',label:'更新人'},
+                {name:'last_update_created_at', width: 150,align:'center',label:'更新时间'},
 			],
 			dataUrl: 'api/merchantAccount/index',
 			editUrl: 'api/merchant',
 			delUrl : 'api/merchant/delOrder',
 			paging: {total:50, pageSize:20},
 			editMode: 'dialog',
-			editDialogOp: {width:500, height:180, mask:false},
+			editDialogOp: {width:500, mask:false},
 			inlineEditMult: false,
 			showEditbtnscol: false,
-			fullGrid: false,
+			showCheckboxcol: true,
+			fullGrid: true,
 			delPK:'id',
 			height:550,
 			width:'100',
@@ -185,7 +184,14 @@
 </div>
 
 <script>
-
+    function openAddMerchantAcount() {
+        BJUI.dialog({
+            id:'openAddMerchantAcount',
+            url:'merchantAcount',
+            title:'新增商家账号',
+            height: 220
+        })
+    }
 
     $.CurrentNavtab.find('#shop_store_serarch_form').on('submit',function(){
         var post_data = $.CurrentNavtab.find('#shop_store_serarch_form').serialize();

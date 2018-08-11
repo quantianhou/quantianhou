@@ -8,39 +8,32 @@
 
 namespace App\Repositories\MerchantAccount;
 
-use App\Models\MerchantAccount\MerchantAccount;
+use App\Models\MerchantAccount\MerchantAccountModel;
 use App\Repositories\EloquentRepository;
 
 class MerchantAccountRepository extends EloquentRepository
 {
-    public function __construct(MerchantAccount $merchantAccount)
+    public function __construct(MerchantAccountModel $merchantAccount)
     {
         $this->model = $merchantAccount;
         parent::__construct($this->model);
     }
 
-    public function getListByWhere($filters = [], $columns = ['*'], $with = [])
-    {
-        $result = $this->model
-            ->with($with)
-            ->whereNested(function ($query) use ($filters) {
-                if (empty($query)) return;
-                foreach ($filters as $filter) {
-                    $query->where($filter[0], $filter[1], $filter[2]);
-                }
-            })->get($columns);
-    }
-
     public function getMerchantAccounts($field = [])
     {
         //$result = $this->model->getMerchantAccounts();
-        $result = $this->model->leftJoin('a_merchant', 'users.a_merchant_id', '=', 'a_merchant.id')->select($field)->get("*");
+        $result = $this->model->rightJoin('a_merchant', 'users.a_merchant_id', '=', 'a_merchant.id')->where([
+            ['users.uid','>',1]
+        ])->select($field)->get();
+        return $result;
+    }
 
-        foreach ($result as $v){
-            $v->ddd = $v->getStatusNameAttribute();
-        }
-        dd($result);
-        //$result = $this->model->leftJoin('a_merchant', 'users.a_merchant_id', '=', 'a_merchant.id')->select()->get("*");
+    //得到还没开通账号的商家列表
+    public function getMerchantNoAccounts($field = [])
+    {
+        $result = $this->model->rightJoin('a_merchant', 'users.a_merchant_id', '=', 'a_merchant.id')->where([
+            ['users.uid','>',1]
+        ])->select($field)->get();
         return $result;
     }
 }

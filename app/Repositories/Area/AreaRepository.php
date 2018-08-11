@@ -40,6 +40,15 @@ class AreaRepository extends EloquentRepository
         return $result;
     }
 
+    public function getOneArea($id = 0, $columns = ['*'])
+    {
+        $result = $this->model
+            ->where('id', $id)
+            ->first($columns);
+
+        return $result;
+    }
+
     /**
      * 组合联动
      * @param Area $result

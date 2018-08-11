@@ -25,7 +25,7 @@ class MerchantController extends BaseController
         $filters = [];
         $pageSize = $request->get('pageSize', 10);
         $list =  $this->merchants->getListByWhere($filters, ['*'], [], $pageSize);
-        return  $this->merchants->getListByWhere($filters, ['*'], []);
+//        return  $this->merchants->getListByWhere($filters, ['*'], []);
         return $this->pageSuccess($list);
     }
 

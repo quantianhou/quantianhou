@@ -3,9 +3,12 @@
 namespace Modules\Admin\Http\Controllers\MerchantAccount;
 
 use App\Repositories\MerchantAccount\MerchantAccountRepository;
+use App\Repositories\Area\AreaRepository;
+use App\Repositories\ActionLog\ActionLogRepository;
+use App\Repositories\Admin\AdminRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Modules\Admin\Http\Controllers\BaseController;
+use Carbon\Carbon;
 
 //use Modules\admin\Http\Requests\Merchant\MerchantRequest;
 
@@ -13,9 +16,12 @@ class MerchantAccountController extends BaseController
 {
     private $merchants;
 
-    public function __construct(MerchantAccountRepository $merchantAccount)
+    public function __construct(MerchantAccountRepository $merchantAccount,AreaRepository $areas,ActionLogRepository $actionLog,AdminRepository $admin)
     {
         $this->merchants = $merchantAccount;
+        $this->areas = $areas;
+        $this->actionLog = $actionLog;
+        $this->admin = $admin;
     }
     /**
      * Display a listing of the resource.
@@ -29,7 +35,29 @@ class MerchantAccountController extends BaseController
 //        $list = $users = DB::table('users')
 //            ->leftJoin('a_merchant', 'users.a_merchant_id', '=', 'a_merchant.id')->select(['users.*','a_merchant.id as merchant_id','a_merchant.merchant_name'])
 //            ->get();
-        $list = $this->merchants->getMerchantAccounts(['users.*','a_merchant.id as merchant_id','a_merchant.merchant_name']);
+        $list = $this->merchants->getMerchantAccounts(['users.*','a_merchant.*','a_merchant.id as merchant_id','users.created_at as user_created_at']);
+        foreach($list as $k => $v){
+            //拼接完整地址
+            $full_address = '';
+            $full_address .= $this->areas->getOneArea($v['address_province'], ['id', 'name'],1)->name;
+            $full_address .= $this->areas->getOneArea($v['address_city'], ['id', 'name'],1)->name;
+            $full_address .= $this->areas->getOneArea($v['address_district'], ['id', 'name'],1)->name;
+            $full_address .= $v['address_detail'];
+            $list[$k]['full_address'] = $full_address;
+//print_r($v['add_admin_id']);//exit;
+            $add_admin_info = $this->admin->getNameByAdminId($v['add_admin_id']);
+            $list[$k]['add_admin'] = $add_admin_info->username;
+
+            //看当前账号最后更新人
+            $last_update_admin = $this->actionLog->getOneLog($v['id']);
+            //print_r($last_update_admin);//exit;
+            $list[$k]['last_update_admin'] = $last_update_admin->username;
+            //print_r($last_update_admin->created_at);exit;
+            $t_int = $last_update_admin->created_at->timestamp;
+            $list[$k]['last_update_created_at'] = date('Y-m-d h:i:s',$t_int);
+
+            //dd(\DB::getQueryLog());exit;
+        }
 //        dd(\DB::getQueryLog());exit;
         return $list;
     }
