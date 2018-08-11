@@ -31,117 +31,75 @@
 </script>
 <div class="bjui-pageContent">
     <form action="" id="merchant_serarch_form">
-        <div class="row-input">
-            <select name="address_province" data-toggle="selectpicker" data-rule="required" data-nextselect="#j_form_city1" data-refurl="/api/areas/list?parent_id={value}">
-                <option value="" selected>--省市--</option>
-                @foreach($provinces as $province)
-                    <option value="{{ $province->id }}" selected="">{{ $province->name }}</option>
-                @endforeach
-            </select>
-            <select name="address_city" id="j_form_city1" data-toggle="selectpicker"  data-rule="required" data-nextselect="#j_form_area1" data-refurl="/api/areas/list?parent_id={value}" data-emptytxt="--城市--">
-                <option value="">--城市--</option>
-            </select>
-            <select name="address_district" id="j_form_area1" data-toggle="selectpicker"  data-emptytxt="--区县--">
-                <option value="">--区县--</option>
-            </select>
-        </div>
-        <div class="">
-            <select name="merchant_type" >
-                <option value="" selected>商家类型</option>
-                <option value="1">公司</option>
-                <option value="2">个人</option>
-            </select>
-        </div>
-        <div class="">
-            <select name="status" >
-                <option value="" selected>状态</option>
-                <option value="1">新增</option>
-                <option value="2">审核</option>
-                <option value="3">退回</option>
-                <option value="4">通过</option>
-                <option value="5">拒绝</option>
-                <option value="6">取消</option>
-                <option value="7">预约</option>
-            </select>
-        </div>
-
-        <div class="">
-            <label for="">签约时间</label>
-            <input type="text" name="created_at" value="2018-10-01 10:01:01" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
-            -
-            <input type="text" name="created_at" value="2018-10-01 10:01:01" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
-        </div>
-
-
-        <div class="">
-            <label for="">商家编码</label>
-            <input type="text" name="merchant_code" id="">
-        </div>
-
-
-        <div class="">
-            <label for="">商家名称</label>
-            <input type="text" name="merchant_name" id="">
-
-        </div>
-
-        <div class="">
-            <label for="">签约人 ---------</label>
-            <input type="text" name="merchant_code" id="">
-        </div>
-
-        <div class="">
-            <label for="">营业执照号</label>
-            <input type="text" name="business_license_num" id="">
-        </div>
-
-        <div class="">
-            <label for="">药品经营许可证号</label>
-            <input type="text" name="drug_license_expriy_date" id="">
-        </div>
-        <div class="">
-            <label for="">商家名称</label>
-            <input type="text" name="merchant_name" id="">
-        </div>
-
-        <div class="">
-            <label for="">合同编号</label>
-            <input type="text" name="merchant_code" id="">
-        </div>
-
-
-        <div class="">
-            <select name="manage_type" >
-                <option value="" selected>经营方式</option>
-                <option value="1">连锁</option>
-                <option value="2">非连锁</option>
-            </select>
-        </div>
-
-        <div class="">
-            <select name="merchant_type" >
-                <option value="" selected>档案类型</option>
-                <option value="1">加盟</option>
-                <option value="2">注册</option>
-            </select>
-        </div>
-
-        <div class="">
-            <label for="">药证截止日期</label>
-            <input type="text" name="drug_license_expriy_date_at" value="2018-10-01 10:01:01" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
-            -
-            <input type="text" name="drug_license_expriy_date_end" value="2018-10-01 10:01:01" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
-        </div>
-
-        <div class="">
-            <label for="">合同有效日期</label>
-            <input type="text" name="drug_license_expriy_date_at" value="2018-10-01 10:01:01" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
-            -
-            <input type="text" name="drug_license_expriy_date_end" value="2018-10-01 10:01:01" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
-        </div>
-        <div class="">
-            <button id="adpositionList_queryBtn" type="submit" class="btn btn-default" data-icon="search" data-toggle="">搜索</button>
-        </div>
+        <fieldset>
+            <legend>文本框</legend>
+            <table class="table table-condensed table-hover">
+                <tbody>
+                <tr>
+                    <td>
+                        <input type="text" name="goods[sn]" id="sn" value="" data-rule="required">
+                    </td>
+                    <td>
+                        <input type="text" name="goods[name]" id="name" value="" data-rule="required">
+                    </td>
+                    <td>
+                        <label for="single_name" class="control-label x85">通用名称：</label>
+                        <input type="text" name="goods[single_name]" id="single_name" value="" data-rule="required">
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="input-sm" value="小尺寸文本框"></td>
+                    <td>input-sm</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="input-nm" value="稍大尺寸文本框"></td>
+                    <td>input-nm</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="input-lg" value="较大尺寸文本框"></td>
+                    <td>input-lg</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="text" value="固定尺寸的普通文本框" size="30"></td>
+                    <td></td>
+                    <td>size="30"</td>
+                </tr>
+                <tr>
+                    <td><input type="text" value="只读文本框" size="30" readonly></td>
+                    <td></td>
+                    <td>size="30" readonly</td>
+                </tr>
+                <tr>
+                    <td><input type="text" value="已禁用的文本框" size="30" disabled></td>
+                    <td></td>
+                    <td>size="30" disabled</td>
+                </tr>
+                <tr>
+                    <td><textarea>普通多行文本框</textarea></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><textarea cols="30">固定尺寸的普通多行文本框</textarea></td>
+                    <td></td>
+                    <td>cols="30"</td>
+                </tr>
+                <tr>
+                    <td><textarea cols="30" rows="1" data-toggle="autoheight">自动调整高度的多行文本框</textarea></td>
+                    <td></td>
+                    <td>cols="30" rows="1" data-toggle="autoheight"</td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <div class="alert alert-warning form-inline"><i class="fa fa-warning"></i> <strong>Class说明：</strong>JS会为text或textarea自动加上Class[form-control]。</div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </fieldset>
 
     </form>
 
