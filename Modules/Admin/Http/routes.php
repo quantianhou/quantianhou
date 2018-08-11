@@ -29,6 +29,12 @@ Route::group(['middleware' => 'web','prefix' => 'api', 'namespace' => 'Modules\A
         Route::post('merchants/index', 'MerchantController@index');
     });
 
+    //商家管理
+	Route::group(['namespace' => 'MerchantAccount'], function () {
+        Route::resource('merchantAccount', 'MerchantAccountController');
+        Route::post('merchantAccount/index', 'MerchantAccountController@index');
+    });
+
     //权限系统
     Route::group(['prefix' => 'rbac', 'namespace' => 'Rbac'], function(){
         Route::post('menu', 'RbacController@menu');
