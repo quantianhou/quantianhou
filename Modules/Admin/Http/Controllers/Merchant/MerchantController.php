@@ -3,6 +3,7 @@
 namespace Modules\Admin\Http\Controllers\Merchant;
 
 use App\Repositories\Merchant\MerchantRepository;
+use App\Repositories\Area\AreaRepository;
 use Illuminate\Http\Request;
 use Modules\Admin\Http\Controllers\BaseController;
 use Modules\admin\Http\Requests\Merchant\MerchantRequest;
@@ -11,9 +12,10 @@ class MerchantController extends BaseController
 {
     private $merchants;
 
-    public function __construct(MerchantRepository $merchants)
+    public function __construct(MerchantRepository $merchants,AreaRepository $areas)
     {
         $this->merchants = $merchants;
+        $this->areas = $areas;
     }
     /**
      * Display a listing of the resource.
@@ -23,9 +25,61 @@ class MerchantController extends BaseController
     public function index(Request $request)
     {
         $filters = [];
+        $post_data = $request->get('post_data');
+        if(!empty($post_data) && is_array($post_data)){
+            foreach($post_data as $val){
+                if(!empty($val['value'])) {
+                    $type = '=';
+                    if(in_array($val['name'],["address_city",'address_district']) && !is_numeric($val['value'])){
+                        continue ;
+                    }
+                    if(in_array($val['name'],["merchant_name",''])){
+                        $type = 'LIKE';
+                        $val['value'] = '%'.$val['value'].'%';
+                    }
+                    //签约时间
+                    if(in_array($val['name'],["contract_time_start",'contract_time_end'])){
+                        if($val['name'] == 'contract_time_start'){
+                            $type = '>=';
+                            $val['name'] = 'contract_time';
+                        }
+                        if($val['name'] == 'contract_time_end'){
+                            $type = '<=';
+                            $val['name'] = 'contract_time';
+                        }
+                    }
+                    //合同有效日期
+                    if(in_array($val['name'],["contract_start_time",'contract_end_time'])){
+                        if($val['name'] == 'contract_start_time'){
+                            $type = '<=';
+                        }
+                        if($val['name'] == 'contract_end_time'){
+                            $type = '>=';
+                        }
+                    }
+                    //药证截止日期
+                    if(in_array($val['name'],["drug_license_expriy_date_start",'drug_license_expriy_date_end'])){
+                        if($val['name'] == 'drug_license_expriy_date_start'){
+                            $type = '>=';
+                            $val['name'] = 'drug_license_expriy_date';
+                        }
+                        if($val['name'] == 'drug_license_expriy_date_end'){
+                            $type = '<=';
+                            $val['name'] = 'drug_license_expriy_date';
+                        }
+                    }
+                    $filters[] = [$val['name'],$type, $val['value']];
+                }
+            }
+        }
         $pageSize = $request->get('pageSize', 10);
         $list =  $this->merchants->getListByWhere($filters, ['*'], [], $pageSize);
-//        return  $this->merchants->getListByWhere($filters, ['*'], []);
+        foreach($list as $key=>$v){
+            $list[$key]['address_province'] = $this->areas->getOneArea($v['address_province'], ['id', 'name'],1)->name;
+            $list[$key]['address_city'] = $this->areas->getOneArea($v['address_city'], ['id', 'name'],1)->name;
+            $list[$key]['address_district'] = $this->areas->getOneArea($v['address_district'], ['id', 'name'],1)->name;
+        }
+//        dd(\DB::getQueryLog());exit;
         return $this->pageSuccess($list);
     }
 

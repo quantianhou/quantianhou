@@ -232,6 +232,7 @@ abstract class EloquentRepository implements RepositoryInterface
             ->whereNested(function ($query) use ($filters) {
                 if (empty($query)) return;
                 foreach ($filters as $filter) {
+                    //print_r($filter);exit;
                     $query->where($filter[0], $filter[1], $filter[2]);
                 }
             });

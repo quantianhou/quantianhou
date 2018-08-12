@@ -33,7 +33,7 @@ class Merchant extends Model
             3 => '退回',
             4 => '通过',
             5 => '拒绝',
-            7 => '预约',
+            7 => '签约',
             8 => '取消签约',
         ];
         return array_get($result, $this->status);

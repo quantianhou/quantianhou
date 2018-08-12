@@ -32,6 +32,8 @@ class AreaController extends BaseController
     {
         $parentId = $request->get('parent_id', 0);
         $areas = $this->areas->getAreas($parentId, ['id', 'name'],1);
+        $init = array('value'=>'','label'=>'所有');
+        array_unshift($areas, $init);
         return $areas;
     }
 
