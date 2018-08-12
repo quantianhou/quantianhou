@@ -3,7 +3,9 @@ namespace Modules\Admin\Http\Controllers\Goods;
 
 use App\Models\Category\ComponentModel;
 use App\Models\Goods\DataModel;
+use App\Models\Goods\ExtraModel;
 use App\Models\Goods\GoodsModel;
+use Illuminate\Http\Request;
 use Modules\Admin\Http\Controllers\AdminController;
 use Excel;
 
@@ -13,7 +15,8 @@ class ExcelController extends AdminController
         GoodsModel $goodsModel,
         DataModel $dataModel,
         \App\Models\Category\GoodsModel $goodsCategoryModel,
-        ComponentModel $componentModel
+        ComponentModel $componentModel,
+        ExtraModel $extraModel
     )
     {
         parent::__construct();
@@ -21,6 +24,7 @@ class ExcelController extends AdminController
         $this->dataModel = $dataModel;
         $this->goodsCategoryModel = $goodsCategoryModel;
         $this->componentModel = $componentModel;
+        $this->extraModel = $extraModel;
     }
 
     //Excel文件导出
@@ -42,10 +46,9 @@ class ExcelController extends AdminController
         })->export('xls');
     }
 
-    public function import(){
+    public function import(Request $request){
 
-        $filePath = '../storage/app/public/base.xls';
-        Excel::load($filePath, function($reader) {
+        Excel::load($_FILES['file']['tmp_name'], function($reader) {
             $data = $reader->all();
 
             foreach ($data as $v){
@@ -53,7 +56,28 @@ class ExcelController extends AdminController
             }
         });
 
+        return $this->json([
+            'data' => 200,
+            'info' => 'success',
+            'code' => 200
+        ]);
+    }
 
+    public function extra(){
+
+        Excel::load($_FILES['file']['tmp_name'], function($reader) {
+            $data = $reader->all();
+
+            foreach ($data as $v){
+                self::saveExtra($v);
+            }
+        });
+
+        return $this->json([
+            'data' => 200,
+            'info' => 'success',
+            'code' => 200
+        ]);
     }
 
     private function saveGoods($data){
@@ -64,7 +88,7 @@ class ExcelController extends AdminController
 
         if(empty($goods)){
             //添加
-            $goods = $this->goodsModel;
+            $goods = new GoodsModel();
         }
 
         $goods->sn = $data["商品编码"];
@@ -104,15 +128,44 @@ class ExcelController extends AdminController
         $goods->use_time1 = $data["单盒服用最短天数"];
         $goods->use_time2 = $data["单盒服用最长天数"];
 
-        $goods->save();
-
-
-        return $this->json([
-            'data' => 456
-        ]);
+        return $goods->save();
     }
 
     private function saveExtra($data){
 
+        $goods = $this->goodsModel->where([
+            ['sn','=',$data["商品编码"]]
+        ])->first();
+
+        if(empty($goods)){
+            return false;
+        }
+
+        $extra = $goods->extra()->firstOrCreate([
+            'goods_id' => $goods->id
+        ]);
+
+        $extra->text_component = $data["成份"];
+        $extra->main_function = $data["适应症功能主治适宜人群"];
+        $extra->usage = $data["用法用量食用方法及食用量"];
+        $extra->untoward_effect = $data["不良反应"];
+        $extra->taboo = $data["禁忌"];
+        $extra->attention = $data["注意事项"];
+        $extra->drug_women = $data["孕妇及哺乳期妇女用药"];
+        $extra->drug_children = $data["儿童用药"];
+        $extra->drug_older = $data["老人用药"];
+        $extra->drug_interaction = $data["药物相互作用"];
+        $extra->goods_desc = $data["保健功能"];
+//        $extra->taboo_medicine_effect = $data["商品编码"];// text COLLATE utf8mb4_unicode_ci COMMENT '禁忌药物',
+//        $extra->taboo_medicine_res = $data["商品编码"];// text COLLATE utf8mb4_unicode_ci COMMENT '禁忌药物结果',
+//        $extra->taboo_food_effect = $data["商品编码"];// text COLLATE utf8mb4_unicode_ci COMMENT '禁忌食物',
+//        $extra->taboo_food_res = $data["商品编码"];// text COLLATE utf8mb4_unicode_ci COMMENT '禁忌食物结果',
+//        $extra->taboo_food_list = $data["商品编码"];// text COLLATE utf8mb4_unicode_ci COMMENT '禁忌食物列表',
+//        $extra->taboo_disease_effect = $data["商品编码"];// text COLLATE utf8mb4_unicode_ci,
+//        $extra->taboo_disease_res = $data["商品编码"];// text COLLATE utf8mb4_unicode_ci,
+//        $extra->taboo_kind_effect = $data["不适宜人群"];// text COLLATE utf8mb4_unicode_ci COMMENT '禁忌人物',
+//        $extra->taboo_kind_res = $data["商品编码"];// text COLLATE utf8mb4_unicode_ci COMMENT '禁忌人物结果',
+
+        return $extra->save();
     }
 }
