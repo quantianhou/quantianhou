@@ -25,6 +25,14 @@ class MerchantRepository extends EloquentRepository
         return $result;
     }
 
+    public function getOneMerchant($id = 0, $columns = ['*'])
+    {
+        $result = $this->model
+            ->where('id', $id)
+            ->first($columns);
+        return $result;
+    }
+
     //得到还没开通账号的商家列表
     public function getMerchantNoAccounts($field = ['a_merchant.id','a_merchant.merchant_name'])
     {

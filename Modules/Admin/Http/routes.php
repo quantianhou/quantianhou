@@ -38,6 +38,7 @@ Route::group(['middleware' => 'web','prefix' => 'api', 'namespace' => 'Modules\A
 	Route::group(['namespace' => 'Merchant'], function () {
         Route::resource('merchants', 'MerchantController');
         Route::post('merchants/index', 'MerchantController@index');
+        Route::post('merchants/getOne', 'MerchantController@getOne');
     });
 
     //商家管理

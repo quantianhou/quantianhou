@@ -84,6 +84,23 @@ class MerchantController extends BaseController
 //        print_R($list);exit;
         return $this->pageSuccess($list);
     }
+    
+    public function getOne(Request $request){
+        $id = $request->get('id');
+        $result = $this->merchants->getOneMerchant($id);
+
+        $init = array('value'=>'','label'=>'所有');
+        $citys = $this->areas->getAreas($result['address_province'], ['id', 'name'],1);
+        array_unshift($citys, $init);
+        $district = $this->areas->getAreas($result['address_city'], ['id', 'name'],1);
+        array_unshift($district, $init);
+        return [
+            'statusCode' => 200,
+            'data' => $result,
+            'area' => array('citys'=> $citys, 'district'=> $district),
+            'message' => 'success',
+        ]; 
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -104,13 +121,22 @@ class MerchantController extends BaseController
     public function store(MerchantRequest $request)
     {
         $data = $this->makeData($request);
-        $result = $this->merchants->create($data);
-        return $this->success($result, 200, '添加成功');
+        if(!empty($data['id'])){
+            $id = $data['id'];
+            unset($data['id']);
+            $result = $this->merchants->update($id, $data);
+            return $this->success($result, 200, '修改成功');
+        }else{
+            $result = $this->merchants->create($data);
+            return $this->success($result, 200, '添加成功');
+        }
+
     }
 
     private function makeData(Request $request)
     {
         $data = [
+            'id' => $request->get('id'),
             'merchant_type' => $request->get('merchant_type'),
             'manage_type' => $request->get('manage_type'),
             'organization_type' => $request->get('organization_type'),

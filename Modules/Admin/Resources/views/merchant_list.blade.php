@@ -120,7 +120,8 @@
 
     <br />
     <div id="merchant_list_table_tool" class="btn-group">
-        <button type="button" class="btn btn-blue" data-icon="plus"  data-toggle="navtab"  data-options="{id:'merchant', url:'/merchant', title:'添加商家'}">  添加商家</button>
+        <button type="button" class="btn btn-blue" data-icon="plus"  data-toggle="navtab"  data-options="{id:'merchant', url:'/merchant', title:'添加商家'}" onclick="BJUI.URLDATA.merchant={}">  新增</button>
+        <button type="button" class="btn btn-blue" data-icon="plus"  data-toggle="navtab"  onclick="openEditMerchant()">  修改</button>
         <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:''}"> 申请审核 </button>
         <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:''}"> 审核 </button>
         <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:''}"> 批量审核 </button>
@@ -179,6 +180,25 @@
 </div>
 
 <script>
+    //打开新增商家账号弹层窗口
+    function openEditMerchant() {
+        //获得勾选数据
+        var selectedData = $('#shop-store-table').data('selectedDatas');
+        if(!selectedData || selectedData.length == 0){
+            BJUI.alertmsg('error', "您需要勾选一条记录！");return ;
+        }
+        if(selectedData.length>1){
+            BJUI.alertmsg('error', "您只能勾选一条记录进行编辑！");return ;
+        }
+        var id = selectedData[0]['id'];
+        BJUI.URLDATA.merchant = {id: id};
+        BJUI.navtab({
+            id:'openEditMerchant',
+            url:'merchant',
+            title:'编辑商家'
+        })
+    }
+
     $.CurrentNavtab.find('#merchant_list_serarch_form').on('submit',function(event){
         var post_data = $.CurrentNavtab.find('#merchant_list_serarch_form').serializeArray();
         var options = {
