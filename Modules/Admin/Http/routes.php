@@ -23,6 +23,8 @@ Route::group(['middleware' => 'web','prefix' => 'api', 'namespace' => 'Modules\A
         Route::post('detail', 'GoodsController@detail');        //商品详情
         Route::post('options', 'GoodsController@options');        //下拉框选项
         Route::post('delete', 'GoodsController@delete');        //下拉框选项
+        Route::get('export','ExcelController@export');
+        Route::get('import','ExcelController@import');
     });
 
 
