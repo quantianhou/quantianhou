@@ -23,6 +23,8 @@ Route::group(['middleware' => 'web','prefix' => 'api', 'namespace' => 'Modules\A
     //登陆接口
 	Route::group(['prefix' => 'login', 'namespace' => 'Login'], function(){
 		Route::any('index', 'IndexController@index');
+        Route::any('logout', 'IndexController@logout');
+        Route::any('getUser', 'IndexController@getUser');
 	});
 
 	//商品管理

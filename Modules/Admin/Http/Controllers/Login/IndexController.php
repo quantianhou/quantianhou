@@ -19,6 +19,15 @@ class IndexController extends AdminController
         $this->adminRepository = $adminRepository;
     }
 
+    public function getUser(Request $request)
+    {
+        return $this->json([
+            'data' => $this->admin->username,
+            'info' => 'success',
+            'code' => 200
+        ]);
+    }
+
     /**
      * 登陆接口
      * @return Response
@@ -59,5 +68,14 @@ class IndexController extends AdminController
         ]);
 
 
+    }
+
+    public function logout(){
+        Session::put('admin', []);
+        return $this->json([
+            'data' => 200,
+            'info' => '登出成功',
+            'code' => 200
+        ]);
     }
 }

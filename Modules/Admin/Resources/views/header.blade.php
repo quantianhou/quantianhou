@@ -4,7 +4,7 @@
         <i class="fa fa-bars"></i>
     </button>
     <a class="bjui-navbar-logo" href="#">
-        <img style="width:48%; margin-left:30px;margin-top:12px;"src="/xyd_logo.png">
+        <img style="width:20%; margin-left:30px;margin-top:12px;"src="/B-JUI/logo.png">
     </a>
 </div>
 <nav id="bjui-navbar-collapse">
@@ -13,12 +13,12 @@
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">我的账户 <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-                <li>
-                    <a href="changepwd.html" data-toggle="dialog" data-id="changepwd_page" data-mask="true" data-width="400" data-height="260">
-                        <span class="glyphicon glyphicon-lock"></span>
-                        修改密码
-                    </a>
-                </li>
+                {{--<li>--}}
+                    {{--<a href="changepwd.html" data-toggle="dialog" data-id="changepwd_page" data-mask="true" data-width="400" data-height="260">--}}
+                        {{--<span class="glyphicon glyphicon-lock"></span>--}}
+                        {{--修改密码--}}
+                    {{--</a>--}}
+                {{--</li>--}}
                 <li><a id="loginOut" class="red">&nbsp;<span class="glyphicon glyphicon-off"></span> 注销登录</a></li>
             </ul>
         </li>
@@ -77,7 +77,7 @@
                     if (result.error) {
                         return layer.alert(result.info);
                     }
-                    window.location.href = '/login.html';
+                    window.location.href = '/login';
                 },
                 error: function () {
 
@@ -89,17 +89,14 @@
         //用户信息
         $.ajax({
             type: 'POST',
-            url: '/api/index/index',
+            url: '/api/login/getUser',
             data: {},
+            dataType: 'json',
             success: function (result) {
-                if (result) {
-                    $('#userInfo').html(result);
-                } else {
-                    window.location.href = '/login';
+                if (result.error) {
+                    window.location.href = '/login';return ;
                 }
-            },
-            error: function () {
-
+                $('#userInfo').html(result.data);
             },
             timeout: 30000//30秒
         });
