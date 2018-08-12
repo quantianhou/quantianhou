@@ -73,13 +73,15 @@ class MerchantController extends BaseController
             }
         }
         $pageSize = $request->get('pageSize', 10);
-        $list =  $this->merchants->getListByWhere($filters, ['*'], [], $pageSize);
+        $pageCurrent = $request->get('pageCurrent');
+        $list =  $this->merchants->getListByWhere($filters, ['*'], [], $pageSize, $pageCurrent);
         foreach($list as $key=>$v){
             $list[$key]['address_province'] = $this->areas->getOneArea($v['address_province'], ['id', 'name'],1)->name;
             $list[$key]['address_city'] = $this->areas->getOneArea($v['address_city'], ['id', 'name'],1)->name;
             $list[$key]['address_district'] = $this->areas->getOneArea($v['address_district'], ['id', 'name'],1)->name;
         }
 //        dd(\DB::getQueryLog());exit;
+//        print_R($list);exit;
         return $this->pageSuccess($list);
     }
 

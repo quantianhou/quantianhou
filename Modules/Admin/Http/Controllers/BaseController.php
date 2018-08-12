@@ -35,7 +35,7 @@ class BaseController extends Controller
     public function pageSuccess($data)
     {
         return [
-            'totalRow' => $data->total(),
+            'total' => $data->total(),
             'pageCurrent' => $data->currentPage(),
             'list' => ($data->toArray())['data']
         ];

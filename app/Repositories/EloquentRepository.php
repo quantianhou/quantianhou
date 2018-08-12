@@ -225,7 +225,7 @@ abstract class EloquentRepository implements RepositoryInterface
         })->count();
     }
 
-    public function getListByWhere($filters = [], $columns = ['*'], $with = [], $pageCount = 0)
+    public function getListByWhere($filters = [], $columns = ['*'], $with = [], $pageCount = 0, $page)
     {
         $result = $this->model
             ->with($with)
@@ -237,7 +237,7 @@ abstract class EloquentRepository implements RepositoryInterface
                 }
             });
         if ($pageCount) {
-            return $result->paginate($pageCount, $columns);
+            return $result->paginate($pageCount, $columns ,'page', $page);
         }
 
         $result = $result->get($columns);
