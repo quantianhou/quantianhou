@@ -433,7 +433,7 @@
                 }
 
                 //编辑器
-                KindEditor.html("#goods_desc", res.data.extra.goods_desc);
+                res.data.extra && KindEditor.html("#goods_desc", res.data.extra.goods_desc);
                 for(var i in res.data.goods){
                     $('fieldset #'+i).val(res.data.goods[i]);
                 }
