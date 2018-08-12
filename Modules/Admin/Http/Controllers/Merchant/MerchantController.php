@@ -102,6 +102,22 @@ class MerchantController extends BaseController
         ]; 
     }
 
+    //申请审核
+    public function applyCheck(Request $request){
+        $id = $request->get('id');
+        $result = $this->merchants->getOneMerchant($id);
+        if($result['status'] != 1){
+            return [
+                'statusCode' => 200,
+                'error' => true,
+                'message' => '商家当前状态无法进行提交审核',
+            ];
+        }
+        $data['status'] = 2;
+        $result = $this->merchants->update($id, $data);
+        return $this->success($result, 200, '申请审核成功');
+    }
+
     /**
      * Show the form for creating a new resource.
      *

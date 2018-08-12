@@ -122,8 +122,8 @@
     <div id="merchant_list_table_tool" class="btn-group">
         <button type="button" class="btn btn-blue" data-icon="plus"  data-toggle="navtab"  data-options="{id:'merchant', url:'/merchant', title:'添加商家'}" onclick="BJUI.URLDATA.merchant={}">  新增</button>
         <button type="button" class="btn btn-blue" data-icon="plus"  data-toggle="navtab"  onclick="openEditMerchant()">  修改</button>
-        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:''}"> 申请审核 </button>
-        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:''}"> 审核 </button>
+        <button type="button" class="btn btn-green"  onclick="applyCheckMerchant()"> 申请审核 </button>
+        <button type="button" class="btn btn-green"  onclick="checkMerchant()"> 审核 </button>
         <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:''}"> 批量审核 </button>
         <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:''}"> 签约 </button>
         <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:''}"> 导入 </button>
@@ -197,6 +197,60 @@
             url:'merchant',
             title:'编辑商家'
         })
+    }
+
+    //申请审核
+    function applyCheckMerchant(){
+        //获得勾选数据
+        var selectedData = $('#shop-store-table').data('selectedDatas');
+        if(!selectedData || selectedData.length == 0){
+            BJUI.alertmsg('error', "您需要勾选一条记录！");return ;
+        }
+        if(selectedData.length>1){
+            BJUI.alertmsg('error', "您只能勾选一条记录进行申请审核！");return ;
+        }
+        BJUI.alertmsg('confirm', '确认提交申请吗？',{
+            okCall: function () {
+                var id_arr = [];
+                for(var k in selectedData){
+                    if(!isNaN(k)){//过滤
+                        var d = selectedData[k];
+                        id_arr.push(d.id);
+                    }
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: 'api/merchants/applyCheck',
+                    data:  {id:id_arr[0]},
+                    dataType: 'JSON',
+                    success:function(res){
+                        if(res.error) return $(this).alertmsg('error', res.message);
+                        $(this).alertmsg('ok', res.message);
+                        $('#shop-store-table').datagrid('refresh');//刷新数据列表
+                    },
+                    timeout: 30000//30秒
+                });
+            }
+        })
+    }
+
+    //审核
+    function checkMerchant(){
+        //获得勾选数据
+        var selectedData = $('#shop-store-table').data('selectedDatas');
+        if(!selectedData || selectedData.length == 0){
+            BJUI.alertmsg('error', "您需要勾选一条记录！");return ;
+        }
+        if(selectedData.length>1){
+            BJUI.alertmsg('error', "您只能勾选一条记录进行审核！");return ;
+        }
+        BJUI.dialog({
+            id:'openMerchantCheck',
+            url:'merchantCheck',
+            title:'审核商家账号',
+            height: 220
+        })
+
     }
 
     $.CurrentNavtab.find('#merchant_list_serarch_form').on('submit',function(event){
