@@ -47,16 +47,15 @@
                 if (!(i >= 0)) {
                     continue;
                 }
-                appendStr += '<li><a data-toggle="slidebar"><i class="fa fa-database"></i> ' + result.data[i].name + '</a>\
+                appendStr += '<li><a href="javascript:;" data-toggle="slidebar"><i class="fa fa-database"></i> ' + result.data[i].name + '</a>\
                         <div class="items hide" data-noinit="true">\
-                            <ul id="bjui-hnav-tree' + (i + 1) + '" class="ztree ztree_main" data-toggle="ztree" data-on-click="MainMenuClick" data-expand-all="true" data-faicon="plane">';
+                             <ul class="menu-items" data-faicon="table">';
                 mix = result.data[i].child;
                 for (var j in mix) {
                     if (!(j >= 0)) {
                         continue;
                     }
-                    appendStr += '<li data-id="' + mix[j].id + '" data-pid="0" data-url="' + mix[j].route + '" data-faicon="folder-open-o" data-faicon-close="folder-o">' + mix[j].name + '</li>';
-
+                    appendStr += '<li><a href="' + mix[j].route + '" data-options="{id:\'tab_' + mix[j].id + '\', faicon:\'table\'}" >' + mix[j].name + '</li>';
                 }
                 appendStr += '</ul></div></li>';
             }

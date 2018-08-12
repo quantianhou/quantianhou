@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>小洋豆-后台管理系统</title>
+<title>全天候-后台管理系统</title>
 <meta name="Keywords" content=""/>
 <!-- bootstrap - css -->
 <link href="/B-JUI/BJUI/themes/css/bootstrap.css" rel="stylesheet">
@@ -121,13 +121,13 @@ $(function() {
             options.onClose  = onClose
             options.onSwitch = onSwitch
             if (!options.title) options.title = $a.text()
-            
+
             if (!options.target)
                 $a.navtab(options)
             else
                 $a.dialog(options)
         }
-        
+
         e.preventDefault()
     })
 	BJUI.URLDATA = {};

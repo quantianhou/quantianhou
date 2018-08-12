@@ -1,5 +1,5 @@
     <div class="bjui-pageContent">
-    <form action="" id="merchant_serarch_form">
+    <form action="" id="merchantAccount_form">
         <fieldset>
             <legend>信息填写</legend>
             <table class="table table-condensed table-hover">
@@ -7,28 +7,24 @@
                 <tr>
                     <td>
                         <label for="j_dialog_operation" class="control-label x90">所属商家：</label>
-                        <select class="select-nm" name="dialog.operation" id="j_dialog_operation" data-toggle="selectpicker"
+                        <select class="select-nm" name="a_merchant_id" id="dialog_merchant_id" data-toggle="selectpicker"
                         >
-                            <option value="">全部</option>
-                            <option value="1">业务1</option>
-                            <option value="2" selected>订房部</option>
-                            <option value="3">领队</option>
-                            <option value="4">导游</option>
+                            @foreach($merchantNoAccounts as $v)
+                                <option value="{{ $v->id }}">{{ $v->merchant_name }}</option>
+                            @endforeach
                         </select>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <label for="j_dialog_name" class="control-label x90">账户名称：</label>
-                        <input type="text" name="dialog.name" id="j_dialog_name" value="" data-rule="required"
-                               size="20">
+                        <input type="text" name="username" id="dialog_merchant_username" value="" data-rule="required" size="20">
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <label for="j_dialog_name" class="control-label x90">原始密码：</label>
-                        <input type="text" name="dialog.name" id="j_dialog_name" value="" data-rule="required"
-                               size="20">
+                        <input type="text" name="password" id="dialog_merchant_password" value="" data-rule="required" size="20">
                     </td>
                 </tr>
                 {{--<tr>--}}
@@ -44,33 +40,28 @@
 
     <br />
     <div id="adpositiontList_services">
-        <button type="button" class="btn btn-green">保存</button>
+        <button type="button" id="merchantAccount_save_btn" class="btn btn-green">保存</button>
     </div>
 </div>
 <script>
-
-
-    $.CurrentNavtab.find('#merchant_serarch_form').on('submit',function(){
-        var post_data = $.CurrentNavtab.find('#merchant_serarch_form').serialize();
-        console.log(post_data);return;
+    //监听"保存"按钮点击事件
+    $.CurrentDialog.find('#merchantAccount_save_btn').on('click',function(){
+        var post_data = $.CurrentDialog.find('#merchantAccount_form').serialize();
         var oo = {
-            url : '/api/merchants',
-            type: 'GET',
+            url : '/api/merchantAccount/add',
+            type: 'POST',
             loadingmask:true,
             data : post_data,
-            callback:function(res){
-
+            okCallback:function(res){
+                BJUI.dialog('close', 'openAddMerchantAccount');//关闭当前弹窗
+                $('#merchant_account_table').datagrid('refresh');//刷新数据列表
             },
+            errCallback:function(res){
+                BJUI.alertmsg('error', res.message);
+            }
         };
-
         $(document).bjuiajax('doAjax', oo);
     });
-
-
-    //创建申请表后回调-刷新列表
-    function cardlist_refreshApplyTable(){
-        $('#adlist-table').datagrid('refresh');
-    }
 </script>
 
 

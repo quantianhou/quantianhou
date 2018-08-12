@@ -5,9 +5,14 @@ Route::group(['middleware' => 'web', 'namespace' => 'Modules\Admin\Http\Controll
     Route::get('/{tmp?}', function($tmp = 'index'){
         $provinces = app(\App\Repositories\Area\AreaRepository::class)->getAreas();
         $merchants = app(\App\Repositories\Merchant\MerchantRepository::class)->getMerchants();
-        if($tmp == "merchantAcount"){
+        if(in_array($tmp, ["merchantAccount"])){
             $merchantNoAccounts = app(\App\Repositories\Merchant\MerchantRepository::class)->getMerchantNoAccounts();
-            dd(\DB::getQueryLog());exit;
+            //dd(\DB::getQueryLog());exit;
+            return view("admin::".$tmp)->with(compact('merchantNoAccounts'));
+        }
+        if(in_array($tmp, ["merchant_account_list"])){
+            $merchantAccounts = app(\App\Repositories\MerchantAccount\MerchantAccountRepository::class)->getMerchantAccounts();
+            return view("admin::".$tmp)->with(compact('merchantAccounts'));
         }
 		return view("admin::".$tmp)->with(compact('provinces', 'merchants'));
 	});
@@ -37,6 +42,8 @@ Route::group(['middleware' => 'web','prefix' => 'api', 'namespace' => 'Modules\A
 	Route::group(['namespace' => 'MerchantAccount'], function () {
         Route::resource('merchantAccount', 'MerchantAccountController');
         Route::post('merchantAccount/index', 'MerchantAccountController@index');
+        Route::post('merchantAccount/add', 'MerchantAccountController@add');//添加商家B端账号
+        Route::post('merchantAccount/resetPasswd', 'MerchantAccountController@resetPasswd');//重置商家B端账号密码
     });
 
     //权限系统

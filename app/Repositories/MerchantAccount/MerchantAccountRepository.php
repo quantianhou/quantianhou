@@ -19,12 +19,33 @@ class MerchantAccountRepository extends EloquentRepository
         parent::__construct($this->model);
     }
 
-    public function getMerchantAccounts($field = [])
+    public function getMerchantAccounts($field = ['*'], $where = [], $byAddAdminOrUpdateAdmin = '')
     {
         //$result = $this->model->getMerchantAccounts();
-        $result = $this->model->rightJoin('a_merchant', 'users.a_merchant_id', '=', 'a_merchant.id')->where([
+        $model = $this->model->rightJoin('a_merchant', 'users.a_merchant_id', '=', 'a_merchant.id')->where([
             ['users.uid','>',1]
-        ])->select($field)->get();
+        ]);
+        if(!empty($byAddAdminOrUpdateAdmin)){
+            if($byAddAdminOrUpdateAdmin == "add"){
+                $model->rightJoin('a_admin', 'users.add_admin_id', '=', 'a_admin.id');
+            }
+            if($byAddAdminOrUpdateAdmin == "update"){
+                $model->rightJoin('a_admin', 'users.update_admin_id', '=', 'a_admin.id');
+            }
+        }
+        
+        $model->where($where);
+        //if($where[''])
+        $result = $model->select($field)->get();
+        //$this->model;
+        return $result;
+    }
+
+    public function getMerchantAccountByUsername($username, $field = ['*'])
+    {
+        $result = $this->model->where([
+            ['username','=',$username]
+        ])->select($field)->first();
         return $result;
     }
 

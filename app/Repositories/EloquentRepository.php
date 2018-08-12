@@ -167,6 +167,16 @@ abstract class EloquentRepository implements RepositoryInterface
         return $this->model->where('id', '=', $id)->update($input);
     }
 
+    public function updateByOtherColumn($column, $column_value, array $input)
+    {
+        if(is_array($column_value)){
+            return $this->model->whereIn($column, $column_value)->update($input);
+        }else{
+            return $this->model->where($column, '=', $column_value)->update($input);
+        }
+
+    }
+
     public function delete($id)
     {
         return $this->model->find($id)->delete();
