@@ -34,9 +34,16 @@ class GoodsController extends AdminController
 
         $filters = [];
         $goods = $request->get('goods');
+        $other = $request->get('other');
         if(!empty($goods)){
             foreach ($goods as $k => $v){
                 $v && $filters[] = [$k,'=',$v];
+            }
+        }
+        if(!empty($other)){
+            foreach ($goods as $k => $v){
+                $k== 'sn_start' && $filters[] = ['sn','>=',$v];
+                $k== 'sn_end' && $filters[] = ['sn','<=',$v];
             }
         }
 
