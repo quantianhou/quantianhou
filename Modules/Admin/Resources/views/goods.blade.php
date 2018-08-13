@@ -214,8 +214,8 @@
         <button type="button" class="btn btn-green" onclick="deletegoods(this)">删除</button>
         <button type="button" class="btn btn-green" onclick="editline(this)">修改</button>
         <button type="button" class="btn btn-green" onclick="goodsimport(this)">导入</button>
-        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:'新增商品'}">基本信息导出</button>
-        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:'新增商品'}">扩展信息导出</button>
+        {{--<button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:'新增商品'}">基本信息导出</button>--}}
+        {{--<button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:'新增商品'}">扩展信息导出</button>--}}
     </div>
     <div style="padding:15px; height:100%;width:99.8%" >
 
