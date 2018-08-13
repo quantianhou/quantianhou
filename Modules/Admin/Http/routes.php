@@ -26,6 +26,7 @@ Route::group(['middleware' => 'web','prefix' => 'api', 'namespace' => 'Modules\A
         Route::post('export','ExcelController@export');
         Route::post('import','ExcelController@import');
         Route::post('import/extra','ExcelController@extra');
+        Route::post('import/category','ExcelController@category');
     });
 
 

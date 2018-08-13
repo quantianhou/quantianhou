@@ -80,10 +80,44 @@ class ExcelController extends AdminController
         ]);
     }
 
+    /**
+     * @param $data
+     * @return bool
+     * 导入分类
+     */
+    public function category(){
+
+        Excel::load($_FILES['file']['tmp_name'], function($reader) {
+            $data = $reader->all();
+
+            foreach ($data as $v){
+                self::saveCategory($v);
+            }
+        });
+
+        return $this->json([
+            'data' => 200,
+            'info' => 'success',
+            'code' => 200
+        ]);
+    }
+
+    private function saveCategory($data){
+
+        if($data['type'] > 0){
+            //商品
+            $this->goodsCategoryModel->getId($data["id"],$data["name"]);
+        }else{
+            //成分
+            $this->componentModel->getId($data["id"],$data["name"]);
+        }
+    }
+
     private function saveGoods($data){
 
+        $sn = $data["商品编码"];
         $goods = $this->goodsModel->where([
-            ['sn','=',$data["商品编码"]]
+            ['sn','=',$sn]
         ])->first();
 
         if(empty($goods)){
@@ -91,7 +125,10 @@ class ExcelController extends AdminController
             $goods = new GoodsModel();
         }
 
+        $imgs = self::getimg($sn);
+
         $goods->sn = $data["商品编码"];
+        $goods->images = $imgs;
         $goods->name = $data["商品名称"];
         $goods->single_name = $data["通用名称"];
         $goods->show_name = $data["显示名称"];
@@ -129,6 +166,54 @@ class ExcelController extends AdminController
         $goods->use_time2 = $data["单盒服用最长天数"];
 
         return $goods->save();
+    }
+
+    private function getimg($sn){
+
+        $s = [];
+        $t = [];
+
+        //图片下载
+        $dir = iconv("UTF-8", "GBK", "upload/".$sn[0].$sn[1].'/'.$sn[2].$sn[3].'/'.$sn[4].$sn[5]);
+        if (!is_dir($dir)){
+            mkdir ($dir,0777,true);
+        }
+
+        //中图
+        $url = 'http://img.qwysfw.cn/product/middle/'.$sn[0].$sn[1].'/'.$sn[2].$sn[3].'/'.$sn[4].$sn[5].'/1.JPG';
+        $file = false;
+        if(@fopen($url, 'r')){
+            file_put_contents($dir.'/11.JPG',file_get_contents($url));
+            $s['middle'] = $dir.'/11.JPG';
+            $t[] = $dir.'/11.JPG';
+        }
+
+        //小图
+        $url = 'http://img.qwysfw.cn/product/small/'.$sn[0].$sn[1].'/'.$sn[2].$sn[3].'/'.$sn[4].$sn[5].'/1.JPG';
+        $file = false;
+        if(@fopen($url, 'r')){
+            file_put_contents($dir.'/12.JPG',file_get_contents($url));
+            $s['small'] = $dir.'/12.JPG';
+            $t[] = $dir.'/12.JPG';
+        }
+
+        //大图
+        for ($i=1;$i<8;$i++){
+            $url = 'http://img.qwysfw.cn/product/big/'.$sn[0].$sn[1].'/'.$sn[2].$sn[3].'/'.$sn[4].$sn[5].'/'.$i.'.JPG';
+            $file = false;
+            if(@fopen($url, 'r')){
+                file_put_contents($dir.'/'.$i.'.JPG',file_get_contents($url));
+                $s['big'][] = $dir.'/'.$i.'.JPG';
+                $t[] = $dir.'/'.$i.'.JPG';
+            }
+        }
+
+        if(!empty($t)){
+            unset($t);
+            return json_encode($s);
+        }else{
+            return json_encode([]);
+        }
     }
 
     private function saveExtra($data){
