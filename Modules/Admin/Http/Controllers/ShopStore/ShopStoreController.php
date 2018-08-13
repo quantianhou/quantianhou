@@ -192,6 +192,7 @@ class ShopStoreController extends BaseController
         if(!empty($data['id'])){
             $id = $data['id'];
             unset($data['id']);
+            unset($data['shop_code']);//不更新编码
             $result = $this->shopStores->update($id, $data);
             return $this->success($result, 200, '修改成功');
         }else{

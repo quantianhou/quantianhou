@@ -303,6 +303,7 @@ class MerchantController extends BaseController
         if(!empty($data['id'])){
             $id = $data['id'];
             unset($data['id']);
+            unset($data['merchant_code']);
             $result = $this->merchants->update($id, $data);
             return $this->success($result, 200, '修改成功');
         }else{
