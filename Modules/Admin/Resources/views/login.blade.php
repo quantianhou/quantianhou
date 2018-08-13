@@ -136,7 +136,7 @@
                     <label for="js_password" class="t">密　码：</label>
                     <input id="js_password" value="" name="password" type="password" class="form-control x319 in">
                 </div>
-                <div class="form-group space">
+                <div class="form-group space" style="margin-left:50px">
                     <label class="t"></label>　　　
                     <input type="submit" id="login_ok" value="&nbsp;登&nbsp;录&nbsp;" class="btn btn-primary btn-lg">&nbsp;&nbsp;&nbsp;&nbsp;
                     {{--<a value="&nbsp;重&nbsp;置&nbsp;" class="btn btn-default btn-lg">&nbsp;重&nbsp;置&nbsp;</a>--}}

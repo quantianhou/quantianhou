@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>全天候-后台管理系统</title>
+<title>药美康臣-A端后台管理系统</title>
 <meta name="Keywords" content=""/>
 <!-- bootstrap - css -->
 <link href="/B-JUI/BJUI/themes/css/bootstrap.css" rel="stylesheet">
