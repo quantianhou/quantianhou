@@ -9,7 +9,16 @@ class GoodsModel extends BaseModel {
 
     protected $fillable = ['sn', 'name', 'single_name', 'show_name', 'nation_sn', 'approval_number', 'brand', 'company', 'place', 'alias', 'specifications', 'dosage_form', 'unit', 'validity_period', 'has_mhj', 'basic_medicine', 'easy_break', 'easy_smell', 'curing', 'save_method', 'component', 'category_goods', 'category_component', 'control_code', 'service_information', 'search_words', 'reference_price', 'selling_price', 'high_price', 'treatment', 'use_time1', 'use_time2'];
 
+    protected $appends = [
+        'brand_name'
+    ];
+
     public function extra(){
         return $this->hasOne(ExtraModel::class,'goods_id');
+    }
+
+    public function getBrandNameAttribute()
+    {
+        return DataModel::find($this->brand)->select_option;
     }
 }

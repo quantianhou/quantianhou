@@ -230,7 +230,7 @@
                 {name: 'name', width: 150, align:'center', label: '商品名称'},
                 {name: 'show_name', width: 150, align:'center', label: '显示名称'},
                 {name: 'specifications', width: 150, align:'center', label: '规格'},
-                {name: 'brand', width: 150, align:'center', label: '品牌名称'},
+                {name: 'brand_name', width: 150, align:'center', label: '品牌名称'},
                 {name: 'nation_sn', width: 150, align:'center', label: '国际条形码'},
                 {name: 'approval_number', width: 150, align:'center', label: '批准文号'},
                 {name: 'company', width: 150, align:'center', label: '生产企业'},
