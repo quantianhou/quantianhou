@@ -13,6 +13,10 @@ class AdminController extends Controller
 
     public function __construct()
     {
+        if (config('app.debug')) {
+            \DB::enableQueryLog();
+        }
+
         $this->middleware(function ($request, $next) {
             $this->admin = Session::get('admin');
 

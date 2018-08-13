@@ -1,102 +1,207 @@
+<style>
+    label.x85 {
+        display: inline-block;
+        width: 70px !important;
+        padding-right: 5px;
+    }
+</style>
 <script type="text/javascript">
+    //获取两个分类
+    var obj = {
+        url : '/api/goods/options',
+        type : 'POST',
+        callback : function (res) {
+            for(var i in res.brand){
+                $('fieldset #'+res.brand[i].select_name).append('<option value="'+res.brand[i].id+'">'+res.brand[i].select_option+'</option>');
+            }
+
+            //category_goods
+            for(var i in res.goods){
+                if(i >= 0){
+                    var prefix = '';
+                    for(var j=1;j<res.goods[i].level;j++){
+                        prefix += ' -- ';
+                    }
+                    $('fieldset #category_goods').append('<option value="'+res.goods[i].id+'">'+prefix+res.goods[i].category_name+'</option>');
+                }
+            }
+
+            $('fieldset select').selectpicker('refresh');
+        }
+    }
+    $(this).bjuiajax('doAjax', obj)
+    //刷新
+    function refresh(){
+        $(this).navtab('refresh');
+    }
+
+    //新增
+    function addgoods(obj) {
+
+        parent.GID = 0;
+        $(obj).navtab({id:'goodsdetail', url:'/goodsdetail', title:'商品编辑'});
+    }
+
+    //删除
+    function deletegoods(obj) {
+        var choose = $('#goods_list').data('selectedDatas');
+        var json = {};
+        for(var ii in choose){
+            json[ii] = choose[ii].id;
+        }
+        var obj = {
+            url : '/api/goods/delete',
+            type : 'POST',
+            data : {id:json},
+            callback : function (res) {
+                return $(document).alertmsg('error', '已删除');
+            }
+        }
+        $(this).bjuiajax('doAjax', obj)
+    }
+
+    //编辑
+    function editline(obj) {
+        var choose = $('#goods_list').data('selectedDatas');
+        if(choose.length != 1){
+            return $(document).alertmsg('error', '请选择一个商品')
+        }
+
+        parent.GID = choose[0].id;
+        $(obj).navtab({id:'goodsdetail', url:'/goodsdetail', title:'商品编辑'});
+    }
+
+    //导入
+    function goodsimport(obj) {
+        $(obj).navtab({id:'goodsimport', url:'/goodsimport', title:'商品导入'});
+    }
+
+    //搜索
     $(function(){
-        $.CurrentNavtab.find('#adpositionList_queryBtn').click(function(){
-            var adpid=$("#adpid").val();
+        $.CurrentNavtab.find('#goodlist').click(function(){
+
             var options = {
-                dataUrl:'api/adPosition/searchFor',
-                postData:{
-                    city_id:$.CurrentNavtab.find('#city_id').val(),
-                    adpid:adpid,
-                },
+                dataUrl:'api/goods/index',
+                postData:formJson('#goods_search'),
                 clearOldPostData:false
             };
-            $.CurrentNavtab.find('#adlist-table').datagrid('reload', options);
+            $.CurrentNavtab.find('#goods_list').datagrid('reload', options);
         });
     });
 
-    //编辑删除
-    function operating(value){
-        var signStr = '';
-        signStr += '<button type="button" class="btn btn-green" data-fresh="true" data-toggle="navtab"  data-id="advertising_PositionUpdate" data-url="adEdit.html" onclick="BJUI.URLDATA.ad={id:'+value+'}" data-title="广告编辑" data-icon="">编辑</button>';
-        signStr += '&nbsp;&nbsp;<button type="button" class="btn btn-green" data-toggle="doajax" data-callback="refresh" data-confirm-msg="确定要删除吗？" data-id="lockadmin" data-url="/api/adPosition/deleteAd/id/' +value+'">删除</button>';
-        return signStr;
+    function formJson(id) {
+        var register =$(id);
+        var formData = register.serializeArray();
+
+        //将json数组转为json 对象
+        return transformToJson(formData);
     }
 
-    //刷新
-    function refresh(){
-//        $(this).navtab('refresh');
-        $.CurrentNavtab.find('#adpositionList_queryBtn').click();
+    // 转为json数据格式
+    function transformToJson(formData){
+        var obj={}
+        for (var i in formData) {
+
+            obj[formData[i].name]=formData[i]['value'];
+        }
+        return obj;
     }
 
 </script>
 <div class="bjui-pageContent">
-    <form action="" id="merchant_serarch_form">
+    <form action="" id="goods_search">
         <fieldset>
-            <legend>文本框</legend>
+            <legend>搜索</legend>
             <table class="table table-condensed table-hover">
                 <tbody>
                 <tr>
                     <td>
-                        <input type="text" name="goods[sn]" id="sn" value="" data-rule="required">
+                        <label for="single_name" class="control-label x85">商品编码：</label>
+                        <input type="text" name="goods[sn]" id="sn" value="">
                     </td>
                     <td>
-                        <input type="text" name="goods[name]" id="name" value="" data-rule="required">
+                        <label for="single_name" class="control-label x85">编码区间：</label>
+                        <input type="text" name="other[sn_start]" id="sn_start" value="">
                     </td>
                     <td>
-                        <label for="single_name" class="control-label x85">通用名称：</label>
-                        <input type="text" name="goods[single_name]" id="single_name" value="" data-rule="required">
+                        <label for="single_name" class="control-label x85" style="text-align: center;">~</label>
+                        <input type="text" name="other[sn_end]" id="sn_end" value="">
+                    </td>
+                    <td>
+                        <label for="single_name" class="control-label x85">商品名称：</label>
+                        <input type="text" name="goods[name]" id="name" value="">
                     </td>
                 </tr>
+
                 <tr>
-                    <td><input type="text" class="input-sm" value="小尺寸文本框"></td>
-                    <td>input-sm</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td><input type="text" class="input-nm" value="稍大尺寸文本框"></td>
-                    <td>input-nm</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td><input type="text" class="input-lg" value="较大尺寸文本框"></td>
-                    <td>input-lg</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td><input type="text" value="固定尺寸的普通文本框" size="30"></td>
-                    <td></td>
-                    <td>size="30"</td>
-                </tr>
-                <tr>
-                    <td><input type="text" value="只读文本框" size="30" readonly></td>
-                    <td></td>
-                    <td>size="30" readonly</td>
-                </tr>
-                <tr>
-                    <td><input type="text" value="已禁用的文本框" size="30" disabled></td>
-                    <td></td>
-                    <td>size="30" disabled</td>
-                </tr>
-                <tr>
-                    <td><textarea>普通多行文本框</textarea></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td><textarea cols="30">固定尺寸的普通多行文本框</textarea></td>
-                    <td></td>
-                    <td>cols="30"</td>
-                </tr>
-                <tr>
-                    <td><textarea cols="30" rows="1" data-toggle="autoheight">自动调整高度的多行文本框</textarea></td>
-                    <td></td>
-                    <td>cols="30" rows="1" data-toggle="autoheight"</td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <div class="alert alert-warning form-inline"><i class="fa fa-warning"></i> <strong>Class说明：</strong>JS会为text或textarea自动加上Class[form-control]。</div>
+                    <td>
+                        <label for="single_name" class="control-label x85">品牌名称：</label>
+                        <select name="goods[brand]" id="brand" data-toggle="selectpicker" data-width="150">
+                            <option value="">全部</option>
+                        </select>
+                    </td>
+                    <td>
+                        <label for="single_name" class="control-label x85">国际码：</label>
+                        <input type="text" name="goods[nation_sn]" id="nation_sn" value="">
+                    </td>
+                    <td>
+                        <label for="single_name" class="control-label x85">批准文号：</label>
+                        <input type="text" name="goods[approval_number]" id="approval_number" value="">
+                    </td>
+                    <td>
+                        <label for="single_name" class="control-label x85">生产企业：</label>
+                        <input type="text" name="goods[company]" id="company" value="">
                     </td>
                 </tr>
+
+                <tr>
+                    <td>
+                        <label for="single_name" class="control-label x85">成分编码：</label>
+                        <input type="text" name="goods[category_component_sn]" id="category_component_sn" value="">
+                    </td>
+                    <td>
+                        <label for="single_name" class="control-label x85">成分名称：</label>
+                        <input type="text" name="goods[category_component_name]" id="category_component_name" value="">
+                    </td>
+                    <td>
+                        <label for="single_name" class="control-label x85">类别编码：</label>
+                        <input type="text" name="goods[category_goods_sn]" id="category_goods_sn" value="">
+                    </td>
+                    <td>
+                        <label for="single_name" class="control-label x85">类别名称：</label>
+                        <select name="goods[category_goods]" id="category_goods" data-toggle="selectpicker" data-width="150">
+                            <option value="">全部</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="single_name" class="control-label x85">微商图片：</label>
+                        <select name="goods[has_imgaes]" id="has_pic" data-toggle="selectpicker" data-width="150">
+                            <option value="">全部</option>
+                            <option value="1">有</option>
+                            <option value="2">无</option>
+                        </select>
+                    </td>
+                    <td>
+                        <label for="single_name" class="control-label x85">商品详情：</label>
+                        <select name="other[has_desc]" id="has_desc" data-toggle="selectpicker" data-width="150">
+                            <option value="">全部</option>
+                            <option value="1">有</option>
+                            <option value="2">无</option>
+                        </select>
+                    </td>
+                    <td>
+                        <label for="single_name" class="control-label x85">显示名称：</label>
+                        <input type="text" name="goods[show_name]" id="show_name" value="">
+                    </td>
+                    <td>
+                        <label for="single_name" class="control-label x85">&nbsp;</label>
+                        <button id="goodlist" type="button" class="btn btn-default" data-icon="search" data-toggle="">搜索</button>
+                    </td>
+                </tr>
+
                 </tbody>
             </table>
         </fieldset>
@@ -104,47 +209,41 @@
     </form>
 
     <br />
-    <div style="margin:10px 0px 0px 17px;" id="adpositiontList_services">
-        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:'添加商家'}">  添加商家</button>
+    <div id="goods_nav">
+        <button type="button" class="btn btn-green" onclick="addgoods(this)">新增</button>
+        <button type="button" class="btn btn-green" onclick="deletegoods(this)">删除</button>
+        <button type="button" class="btn btn-green" onclick="editline(this)">修改</button>
+        <button type="button" class="btn btn-green" onclick="goodsimport(this)">导入</button>
+        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:'新增商品'}">基本信息导出</button>
+        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:'新增商品'}">扩展信息导出</button>
     </div>
-    <input type="hidden" id="city_id" name="city_id" />
     <div style="padding:15px; height:100%;width:99.8%" >
 
-        <table id="merchant-table"   data-toggle="datagrid" data-options="{
-            gridTitle:'商家列表',
-			toolbarCustom: $('#addQuestionBtn'),
+        <table id="goods_list" data-toggle="datagrid" data-options="{
+            gridTitle:'商品列表',
+			showToolbar: true,
+			toolbarCustom: $('#goods_nav'),
 			filterThead: false,
 			columns: [
                 {name:'id', width: 100,align:'center',label:'ID',hide:'false'},
-                {name:'merchant_code', width: 150,align:'center',label:'商家编码'},
-                {name: 'merchant_name', width: 150, align:'center', label: '商家名称'},
-                {name: 'merchant_short_name', width: 180, align:'center', label: '商家简称'},
-                {name: 'merchant_contacts', width: 180, align:'center', label: '商家联系人'},
-                {name: 'merchant_phone', width: 70, align:'center', label: '联系电话'},
-                {name: 'manage_type_name', width: 70, align:'center', label: '经营方式'},
-                {name: 'merchant_type_name', width: 70, align:'center', label: '商家类型'},
-                {name: 'manage_type', width: 70, align:'center', label: '档案类型'},
-                {name: 'status_name', width: 70, align:'center', label: '状态'},
-                {name: 'manage_type', width: 70, align:'center', label: '审核意见'},
-                {name: 'manage_type', width: 70, align:'center', label: '合同编号'},
-                {name: 'manage_type', width: 70, align:'center', label: '签约人'},
-                {name: 'manage_type', width: 70, align:'center', label: '签约时间'},
-                {name: 'manage_type', width: 70, align:'center', label: '取消签约人'},
-                {name: 'manage_type', width: 70, align:'center', label: '取消签约时间'},
-                {name: 'manage_type', width: 70, align:'center', label: '合同有效期'},
-                {name: 'adid', width: 120,label:'操作',align:'center',render: operating},
+                {name:'sn', width: 150,align:'center',label:'商家编码'},
+                {name: 'name', width: 150, align:'center', label: '商品名称'},
+                {name: 'show_name', width: 150, align:'center', label: '显示名称'},
+                {name: 'specifications', width: 150, align:'center', label: '规格'},
+                {name: 'brand_name', width: 150, align:'center', label: '品牌名称'},
+                {name: 'nation_sn', width: 150, align:'center', label: '国际条形码'},
+                {name: 'approval_number', width: 150, align:'center', label: '批准文号'},
+                {name: 'company', width: 150, align:'center', label: '生产企业'},
+                {name: 'place', width: 150, align:'center', label: '产地'},
+                {name: 'category_component_sn', width: 150, align:'center', label: '成分编码'},
+                {name: 'category_goods_sn', width: 150, align:'center', label: '类别编码'},
+                {name: 'category_goods_name', width: 150, align:'center', label: '类别名称'},
+                {name: 'updated_at', width: 150, align:'center', label: '操作时间'},
 			],
-			dataUrl: 'api/merchants/index',
-			hiddenFields : 'id',
-			editUrl: 'api/merchant',
-			delUrl : 'api/merchant/delOrder',
+			dataUrl: 'api/goods/index',
 			paging: {total:50, pageSize:20},
-			editMode: 'dialog',
-			editDialogOp: {width:500, height:180, mask:false},
-			inlineEditMult: false,
-			showEditbtnscol: false,
+			showCheckboxcol: true,
 			fullGrid: false,
-			delPK:'id',
 			height:550,
 			width:'100',
             linenumberAll:true,
@@ -153,71 +252,4 @@
         </table>
     </div>
 </div>
-<script>
-
-
-    $.CurrentNavtab.find('#merchant_serarch_form').on('submit',function(){
-        var post_data = $.CurrentNavtab.find('#merchant_serarch_form').serialize();
-        console.log(post_data);return;
-        var oo = {
-            url : '/api/merchants',
-            type: 'GET',
-            loadingmask:true,
-            data : post_data,
-            callback:function(res){
-
-            },
-        };
-
-        $(document).bjuiajax('doAjax', oo);
-    });
-
-
-    if(0){
-        $.CurrentNavtab.find('.box_center').css('display','block');
-    }else{
-        $.CurrentNavtab.find('.box_center').css('display','none');
-    }
-
-
-    //手动排序显示
-    function adorderby(json){
-        var operating ='<input id="ordernumber" style="width:50px;" type="text" value="">&nbsp;&nbsp;'+
-            '<button type="button" class="btn btn-green" data-fresh="true" data-toggle="navtab" onclick="getAllOrder(this,'+json+')" data-id="rbac_role" data-title="确定" data-icon="">确定</button>';
-        return operating;
-    }
-    //点击确定后更新排序
-    function getAllOrder(obj,adid){
-        //获取排序的新值
-        var ordernumber= $(obj).siblings('#ordernumber').val();
-        $.ajax({
-            type: 'POST',
-            url: 'api/adPosition/adUpdateSort',
-            data:  {ordernumber:ordernumber,adid:adid},
-            dataType: 'JSON',
-            success:function(res){
-                if(res.error) return $(this).alertmsg('info', res.info);
-                $(this).alertmsg('info', res.info);
-                cardlist_refreshApplyTable(0);
-            },
-            error : function(){
-
-            },
-            timeout: 30000//30秒
-        });
-    }
-    //创建申请表后回调-刷新列表
-    function cardlist_refreshApplyTable(){
-        $('#adlist-table').datagrid('refresh');
-    }
-</script>
-
-<script type="text/javascript">
-    function adaddhtml(obj) {
-        adpid=$("#adpid").val();
-        $(document).navtab({id:'mydialog', url:'adAdd.html', title:'广告添加'});
-    }
-</script>
-
-
 

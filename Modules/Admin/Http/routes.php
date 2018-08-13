@@ -30,7 +30,14 @@ Route::group(['middleware' => 'web','prefix' => 'api', 'namespace' => 'Modules\A
 	//商品管理
     Route::group(['prefix' => 'goods', 'namespace' => 'Goods'], function(){
         Route::any('index', 'GoodsController@index');       //商品列表
-        Route::post('save', 'GoodsController@save');
+        Route::post('save', 'GoodsController@save');        //商品添加/修改
+        Route::post('detail', 'GoodsController@detail');        //商品详情
+        Route::post('options', 'GoodsController@options');        //下拉框选项
+        Route::post('delete', 'GoodsController@delete');        //下拉框选项
+        Route::post('export','ExcelController@export');
+        Route::post('import','ExcelController@import');
+        Route::post('import/extra','ExcelController@extra');
+        Route::post('import/category','ExcelController@category');
     });
 
 
