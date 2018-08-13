@@ -9836,7 +9836,7 @@
         
         $selectedTrs.each(function() {
             var $tr = $(this), data_index = $tr.index(), data
-            
+
             data_index = that.tools.getNoChildDataIndex(data_index)
             
             if (that.isDom) data = $tr.data('initData') || that.tools.setDomData($tr)
@@ -9844,10 +9844,10 @@
             
             datas.push(data)
         })
-        
+
         that.$element.data('selectedTrs', $selectedTrs).data('selectedDatas', datas)
     }
-    
+
     //lock
     Datagrid.prototype.initLock = function() {
         var that = this, columnModel = that.columnModel
@@ -11039,7 +11039,7 @@
     
     Datagrid.prototype.jumpPage = function(pageCurrent, pageSize) {
         var that = this, paging = that.paging, pageCount = paging.pageCount
-        
+        that.$element.data('selectedTrs', []).data('selectedDatas', []);//范海龙 2018-08-13 15:38为了修正分页后上一页的勾选还有的问题
         if (pageCurrent && isNaN(pageCurrent)) return
         if (pageSize && isNaN(pageSize))       return
         if (pageCurrent) {
