@@ -50,7 +50,7 @@ class GoodsController extends AdminController
             }
         }
 
-        $pageSize = $request->get('pageSize', 2);
+        $pageSize = $request->get('pageSize', 20);
         $pageCurrent = $request->get('pageCurrent');
         $list =  $this->goods->getListByWhere($filters, ['*'], [], $pageSize, $pageCurrent);
 
