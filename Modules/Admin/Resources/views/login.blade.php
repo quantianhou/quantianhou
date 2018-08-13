@@ -122,7 +122,7 @@
         }
     </style>
 </head>
-<body>
+<body style="background-image:url('/B-JUI/banner.jpg') ">
 <div class="main_box">
     <div class="login_box">
         <div class="login_form">
@@ -139,7 +139,7 @@
                 <div class="form-group space">
                     <label class="t"></label>　　　
                     <input type="submit" id="login_ok" value="&nbsp;登&nbsp;录&nbsp;" class="btn btn-primary btn-lg">&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a value="&nbsp;重&nbsp;置&nbsp;" class="btn btn-default btn-lg">&nbsp;重&nbsp;置&nbsp;</a>
+                    {{--<a value="&nbsp;重&nbsp;置&nbsp;" class="btn btn-default btn-lg">&nbsp;重&nbsp;置&nbsp;</a>--}}
                 </div>
             </div>
         </div>

@@ -1,197 +1,177 @@
-<script type="text/javascript">
-    $(function(){
-        $.CurrentNavtab.find('#adpositionList_queryBtn').click(function(){
-            console.log("qqq");
-            var options = {
-                dataUrl:'api/merchants/index',
-                postData:{
-//                    city_id:$.CurrentNavtab.find('#city_id').val(),
-                },
-                clearOldPostData:false
-            };
-            $.CurrentNavtab.find('#merchant-table').datagrid('reload', options);
-        });
-    });
-
-    //编辑删除
-    function operating(value){
-        var signStr = '';
-        signStr += '<button type="button" class="btn btn-green" data-fresh="true" data-toggle="navtab"  data-id="advertising_PositionUpdate" data-url="adEdit.html" onclick="BJUI.URLDATA.ad={id:'+value+'}" data-title="广告编辑" data-icon="">编辑</button>';
-        signStr += '&nbsp;&nbsp;<button type="button" class="btn btn-green" data-toggle="doajax" data-callback="refresh" data-confirm-msg="确定要删除吗？" data-id="lockadmin" data-url="/api/adPosition/deleteAd/id/' +value+'">删除</button>';
-        return signStr;
-    }
-
-    //刷新
-    function refresh(){
-//        $(this).navtab('refresh');
-        $.CurrentNavtab.find('#adpositionList_queryBtn').click();
-    }
-
-</script>
 <div class="bjui-pageContent">
-    <form action="" id="shop_store_serarch_form">
-        <div class="row-input">
-            <select name="address_province" data-toggle="selectpicker"  data-nextselect="#j_form_city1" data-refurl="/api/areas/list?parent_id={value}">
-                <option value="" selected>--省市--</option>
-                @foreach($provinces as $province)
-                    <option value="{{ $province->id }}" selected="">{{ $province->name }}</option>
-                @endforeach
-            </select>
-            <select name="address_city" id="j_form_city1" data-toggle="selectpicker" data-nextselect="#j_form_area1" data-refurl="/api/areas/list?parent_id={value}" data-emptytxt="--城市--">
-                <option value="">--城市--</option>
-            </select>
-            <select name="address_district" id="j_form_area1" data-toggle="selectpicker"  data-emptytxt="--区县--">
-                <option value="">--区县--</option>
-            </select>
-        </div>
-        <div class="">
-            <select name="merchant_type" >
-                <option value="" selected>商家类型</option>
-                <option value="1">公司</option>
-                <option value="2">个人</option>
-            </select>
-        </div>
-        <div class="">
-            <select name="status" >
-                <option value="" selected>状态</option>
-                <option value="1">新增</option>
-                <option value="2">审核</option>
-                <option value="3">退回</option>
-                <option value="4">通过</option>
-                <option value="5">拒绝</option>
-                <option value="6">取消</option>
-                <option value="7">预约</option>
-            </select>
-        </div>
+    <form action="" id="merchant_list_serarch_form">
+        <fieldset>
+            <legend>搜索条件</legend>
+            <table class="table table-condensed table-hover">
+                <tbody>
+                <tr>
+                    <td>
+                        <label for="">地区</label>
+                        <select name="address_province" data-toggle="selectpicker"  data-nextselect="#j_form_city1" data-refurl="/api/areas/list?parent_id={value}">
+                            <option value="" selected>--请选择--</option>
+                            @foreach($provinces as $province)
+                                <option value="{{ $province->id }}">{{ $province->name }}</option>
+                            @endforeach
+                        </select>
 
-        <div class="">
-            <label for="">签约时间</label>
-            <input type="text" name="created_at" value="2018-10-01 10:01:01" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
-            -
-            <input type="text" name="created_at" value="2018-10-01 10:01:01" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
-        </div>
+                        <select name="address_city" id="j_form_city1" data-toggle="selectpicker" data-nextselect="#j_form_area1" data-refurl="/api/areas/list?parent_id={value}" data-emptytxt="--请选择--">
+                            <option value="">--请选择--</option>
+                        </select>
 
+                        <select name="address_district" id="j_form_area1" data-toggle="selectpicker"  data-emptytxt="--请选择--">
+                            <option value="">--请选择--</option>
+                        </select>
+                    </td>
+                    <td class="">
+                        <label for="">商家编码</label>
+                        <input type="text" name="merchant_code" id="">
+                    </td>
+                    <td class="">
+                        <label for="">商家名称</label>
+                        <input type="text" name="merchant_name" id="">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="">
+                        <label for="">状态</label>
+                        <select name="status"  data-toggle="selectpicker">
+                            <option value="" selected>状态</option>
+                            <option value="1">新增</option>
+                            <option value="2">待审核</option>
+                            <option value="3">退回</option>
+                            <option value="4">通过</option>
+                            <option value="5">拒绝</option>
+                            <option value="7">签约</option>
+                            <option value="8">取消签约</option>
+                        </select>
+                    </td>
+                    <td class="">
+                        <label for="">签约时间</label>
+                        <input type="text" name="contract_time_start" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
+                        -
+                        <input type="text" name="contract_time_end" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
+                    </td>
+                    <td class="">
+                        <label for="">合同编号</label>
+                        <input type="text" name="contract_num" id="">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="">
+                        <label for="">签约人</label>
+                        <input type="text" name="contract_operator" id="">
+                    </td>
 
-        <div class="">
-            <label for="">商家编码</label>
-            <input type="text" name="merchant_code" id="">
-        </div>
+                    <td class="">
+                        <label for="">营业执照号</label>
+                        <input type="text" name="business_license_num" id="">
+                    </td>
 
-
-        <div class="">
-            <label for="">商家名称</label>
-            <input type="text" name="merchant_name" id="">
-
-        </div>
-
-        <div class="">
-            <label for="">签约人 ---------</label>
-            <input type="text" name="merchant_code" id="">
-        </div>
-
-        <div class="">
-            <label for="">营业执照号</label>
-            <input type="text" name="business_license_num" id="">
-        </div>
-
-        <div class="">
-            <label for="">药品经营许可证号</label>
-            <input type="text" name="drug_license_expriy_date" id="">
-        </div>
-        <div class="">
-            <label for="">商家名称</label>
-            <input type="text" name="merchant_name" id="">
-        </div>
-
-        <div class="">
-            <label for="">合同编号</label>
-            <input type="text" name="merchant_code" id="">
-        </div>
-
-
-        <div class="">
-            <select name="manage_type" >
-                <option value="" selected>经营方式</option>
-                <option value="1">连锁</option>
-                <option value="2">非连锁</option>
-            </select>
-        </div>
-
-        <div class="">
-            <select name="merchant_type" >
-                <option value="" selected>档案类型</option>
-                <option value="1">加盟</option>
-                <option value="2">注册</option>
-            </select>
-        </div>
-
-        <div class="">
-            <label for="">药证截止日期</label>
-            <input type="text" name="drug_license_expriy_date_at" value="2018-10-01 10:01:01" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
-            -
-            <input type="text" name="drug_license_expriy_date_end" value="2018-10-01 10:01:01" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
-        </div>
-
-        <div class="">
-            <label for="">合同有效日期</label>
-            <input type="text" name="drug_license_expriy_date_at" value="2018-10-01 10:01:01" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
-            -
-            <input type="text" name="drug_license_expriy_date_end" value="2018-10-01 10:01:01" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
-        </div>
-        <div class="">
-            <button id="adpositionList_queryBtn" type="button" class="btn btn-default" data-icon="search" data-toggle="">搜索</button>
-        </div>
-
+                    <td class="">
+                        <label for="">药品经营许可证号</label>
+                        <input type="text" name="drug_license_num" id="">
+                    </td>
+                    <td class="">
+                        <label for="">经营方式</label>
+                        <select name="manage_type" data-toggle="selectpicker">
+                            <option value="" selected>经营方式</option>
+                            <option value="1">连锁</option>
+                            <option value="2">非连锁</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="">
+                        <label for="">商家类型</label>
+                        <select name="merchant_type" data-toggle="selectpicker">
+                            <option value="" selected>商家类型</option>
+                            <option value="1">公司</option>
+                            <option value="2">个人</option>
+                        </select>
+                    </td>
+                    <td class="">
+                        <label for="">合同有效期</label>
+                        <input type="text" name="contract_start_time" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
+                        -
+                        <input type="text" name="contract_end_time" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
+                    </td>
+                    {{--<td class="">--}}
+                        {{--<label for="">档案类型</label>--}}
+                        {{--<select name="merchant_type" data-toggle="selectpicker">--}}
+                            {{--<option value="" selected>档案类型</option>--}}
+                            {{--<option value="1">加盟</option>--}}
+                            {{--<option value="2">注册</option>--}}
+                        {{--</select>--}}
+                    {{--</td>--}}
+                </tr>
+                <tr>
+                    <td class="">
+                        <label for="">药证截止日期</label>
+                        <input type="text" name="drug_license_expriy_date_start" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
+                        -
+                        <input type="text" name="drug_license_expriy_date_end" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
+                    </td>
+                    <td class="">
+                        <button id="merchant_list_queryBtn" type="submit" class="btn btn-default" data-icon="search" data-toggle="">搜索</button>
+                    </td>
+            </table>
+        </fieldset>
     </form>
 
     <br />
-    <div style="margin:10px 0px 0px 17px;" id="adpositiontList_services">
-        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:'添加商家'}">  添加商家</button>
-        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:''}"> 申请审核 </button>
-        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:''}"> 审核 </button>
-        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:''}"> 批量审核 </button>
-        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:''}"> 签约 </button>
-        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:''}"> 导入 </button>
-        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:''}"> 导出商家档案 </button>
+    <div id="merchant_list_table_tool" class="btn-group">
+        <button type="button" class="btn btn-blue" data-icon="plus"  data-toggle="navtab"  data-options="{id:'merchant', url:'/merchant', title:'添加商家'}" onclick="BJUI.URLDATA.merchant={}">  新增</button>
+        <button type="button" class="btn btn-blue" data-icon="plus"  data-toggle="navtab"  onclick="openEditMerchant()">  修改</button>
+        <button type="button" class="btn btn-green"  onclick="applyCheckMerchant()"> 申请审核 </button>
+        <button type="button" class="btn btn-green"  onclick="checkMerchant()"> 审核 </button>
+        <button type="button" class="btn btn-green" onclick="checkMerchant()"> 批量审核 </button>
+        <button type="button" class="btn btn-green" onclick="openMerchantSigning()"> 签约 </button>
+        <button type="button" class="btn btn-green" onclick="openMerchantCancelSigning()"> 取消签约 </button>
+        {{--<button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:''}"> 导入 </button>--}}
+        {{--<button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:''}"> 导出商家档案 </button>--}}
     </div>
-    <input type="hidden" id="city_id" name="city_id" />
     <div style="padding:15px; height:100%;width:99.8%" >
 
-        <table id="shop-store-table"   data-toggle="datagrid" data-options="{
+        <table id="merchant_list_table"   data-toggle="datagrid" data-options="{
             gridTitle:'商家列表',
-			toolbarCustom: $('#addQuestionBtn'),
+            showToolbar: true,
+			toolbarCustom: $('#merchant_list_table_tool'),
 			filterThead: false,
 			columns: [
                 {name:'id', width: 100,align:'center',label:'ID',hide:'false'},
                 {name:'merchant_code', width: 150,align:'center',label:'商家编码'},
+                {name:'address_province', width: 150,align:'center',label:'省'},
+                {name:'address_city', width: 150,align:'center',label:'市'},
+                {name:'address_district', width: 150,align:'center',label:'区'},
                 {name: 'merchant_name', width: 150, align:'center', label: '商家名称'},
                 {name: 'merchant_short_name', width: 180, align:'center', label: '商家简称'},
                 {name: 'merchant_contacts', width: 180, align:'center', label: '商家联系人'},
                 {name: 'merchant_phone', width: 70, align:'center', label: '联系电话'},
                 {name: 'manage_type_name', width: 70, align:'center', label: '经营方式'},
                 {name: 'merchant_type_name', width: 70, align:'center', label: '商家类型'},
-                {name: 'manage_type', width: 70, align:'center', label: '档案类型'},
+                {{--{name: 'manage_type', width: 70, align:'center', label: '档案类型'},--}}
                 {name: 'status_name', width: 70, align:'center', label: '状态'},
-                {name: 'manage_type', width: 70, align:'center', label: '审核意见'},
-                {name: 'manage_type', width: 70, align:'center', label: '合同编号'},
-                {name: 'manage_type', width: 70, align:'center', label: '签约人'},
-                {name: 'manage_type', width: 70, align:'center', label: '签约时间'},
-                {name: 'manage_type', width: 70, align:'center', label: '取消签约人'},
-                {name: 'manage_type', width: 70, align:'center', label: '取消签约时间'},
-                {name: 'manage_type', width: 70, align:'center', label: '合同有效期'},
-                {name: 'adid', width: 120,label:'操作',align:'center',render: operating},
+                {name: 'check_remark', width: 70, align:'center', label: '审核意见'},
+                {name: 'contract_num', width: 70, align:'center', label: '合同编号'},
+                {name: 'contract_operator', width: 70, align:'center', label: '签约人'},
+                {name: 'contract_time', width: 70, align:'center', label: '签约时间'},
+                {name: 'contract_cancel_operator', width: 70, align:'center', label: '取消签约人'},
+                {name: 'contract_cancel_time', width: 70, align:'center', label: '取消签约时间'},
+                {name: 'contract_start_time', width: 70, align:'center', label: '合同有效期'},
+                {name: 'contract_end_time', width: 70, align:'center', label: '合同有效期'},
 			],
 			dataUrl: 'api/merchants/index',
 			editUrl: 'api/merchant',
 			delUrl : 'api/merchant/delOrder',
-			paging: {total:50, pageSize:20},
+			paging: {total:50, pageSize:10},
 			editMode: 'dialog',
 			editDialogOp: {width:500, height:180, mask:false},
 			inlineEditMult: false,
 			showEditbtnscol: false,
+			showCheckboxcol: true,
 			fullGrid: false,
 			delPK:'id',
-			height:550,
+			height:450,
 			width:'100',
             linenumberAll:true,
             showLinenumber:true,
@@ -201,65 +181,150 @@
 </div>
 
 <script>
-
-
-    $.CurrentNavtab.find('#shop_store_serarch_form').on('submit',function(){
-        var post_data = $.CurrentNavtab.find('#shop_store_serarch_form').serialize();
-        console.log(post_data);
-
-        var options = {
-            dataUrl: 'api/shop_store/index',
-            postData: post_data
-        };
-
-
-        $.CurrentNavtab.find('#shop-store-table').datagrid('reload', options)
-
-    });
-
-
-    if(0){
-        $.CurrentNavtab.find('.box_center').css('display','block');
-    }else{
-        $.CurrentNavtab.find('.box_center').css('display','none');
+    //打开新增商家账号弹层窗口
+    function openEditMerchant() {
+        //获得勾选数据
+        var selectedData = $('#merchant_list_table').data('selectedDatas');
+        if(!selectedData || selectedData.length == 0){
+            BJUI.alertmsg('error', "您需要勾选一条记录！");return ;
+        }
+        if(selectedData.length>1){
+            BJUI.alertmsg('error', "您只能勾选一条记录进行编辑！");return ;
+        }
+        var id = selectedData[0]['id'];
+        BJUI.URLDATA.merchant = {id: id};
+        BJUI.navtab({
+            id:'openEditMerchant',
+            url:'merchant',
+            title:'编辑商家'
+        })
     }
 
-
-    //手动排序显示
-    function adorderby(json){
-        var operating ='<input id="ordernumber" style="width:50px;" type="text" value="">&nbsp;&nbsp;'+
-            '<button type="button" class="btn btn-green" data-fresh="true" data-toggle="navtab" onclick="getAllOrder(this,'+json+')" data-id="rbac_role" data-title="确定" data-icon="">确定</button>';
-        return operating;
+    //申请审核
+    function applyCheckMerchant(){
+        //获得勾选数据
+        var selectedData = $('#merchant_list_table').data('selectedDatas');
+        if(!selectedData || selectedData.length == 0){
+            BJUI.alertmsg('error', "您需要勾选一条记录！");return ;
+        }
+        if(selectedData.length>1){
+            BJUI.alertmsg('error', "您只能勾选一条记录进行申请审核！");return ;
+        }
+        BJUI.alertmsg('confirm', '确认提交申请吗？',{
+            okCall: function () {
+                var id_arr = [];
+                for(var k in selectedData){
+                    if(!isNaN(k)){//过滤
+                        var d = selectedData[k];
+                        id_arr.push(d.id);
+                    }
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: 'api/merchants/applyCheck',
+                    data:  {id:id_arr[0]},
+                    dataType: 'JSON',
+                    success:function(res){
+                        if(res.error) return $(this).alertmsg('error', res.message);
+                        $(this).alertmsg('ok', res.message);
+                        $('#merchant_list_table').datagrid('refresh');//刷新数据列表
+                    },
+                    timeout: 30000//30秒
+                });
+            }
+        })
     }
-    //点击确定后更新排序
-    function getAllOrder(obj,adid){
-        //获取排序的新值
-        var ordernumber= $(obj).siblings('#ordernumber').val();
-        $.ajax({
-            type: 'POST',
-            url: 'api/adPosition/adUpdateSort',
-            data:  {ordernumber:ordernumber,adid:adid},
-            dataType: 'JSON',
-            success:function(res){
-                if(res.error) return $(this).alertmsg('info', res.info);
-                $(this).alertmsg('info', res.info);
-                cardlist_refreshApplyTable(0);
-            },
-            error : function(){
 
-            },
-            timeout: 30000//30秒
+    //审核
+    function checkMerchant(){
+        //获得勾选数据
+        var selectedData = $('#merchant_list_table').data('selectedDatas');
+        if(!selectedData || selectedData.length == 0){
+            BJUI.alertmsg('error', "您需要勾选一条记录！");return ;
+        }
+        if(selectedData.length>1){
+            //BJUI.alertmsg('error', "您只能勾选一条记录进行审核！");return ;
+        }
+        var id_arr = [];
+        for(var k in selectedData){
+            if(!isNaN(k)){//过滤
+                var d = selectedData[k];
+                id_arr.push(d.id);
+            }
+        }
+        BJUI.URLDATA.merchantCheck = {id: id_arr};
+        BJUI.dialog({
+            id:'openMerchantCheck',
+            url:'merchantCheck',
+            title:'审核商家账号',
+            height: 250
+        })
+    }
+
+    //签约
+    function openMerchantSigning() {
+        //获得勾选数据
+        var selectedData = $('#merchant_list_table').data('selectedDatas');
+        if(!selectedData || selectedData.length == 0){
+            BJUI.alertmsg('error', "您需要勾选一条记录！");return ;
+        }
+        if(selectedData.length>1){
+            BJUI.alertmsg('error', "您只能勾选一条记录进行签约！");return ;
+        }
+        var id = selectedData[0]['id'];
+        if(selectedData.length > 0)
+        {
+            BJUI.URLDATA.MerchantSign = {id: id};
+            BJUI.navtab({
+                id:'openMerchantSigning',
+                url:'merchantSigning',
+                title:'商家签约'
+            })
+        }
+    }
+
+    function openMerchantCancelSigning() {
+        //获得勾选数据
+        var selectedData = $('#merchant_list_table').data('selectedDatas');
+        if (!selectedData || selectedData.length == 0) {
+            BJUI.alertmsg('error', "您需要勾选一条记录！");
+            return;
+        }
+        BJUI.alertmsg('confirm', '确认取消签约吗？',{
+            okCall: function () {
+                if (selectedData.length > 0) {
+                    post_data = JSON.stringify(selectedData);
+                    var oo = {
+                        url: '/api/merchants/cancel',
+                        loadingmask: true,
+                        data: {'info': post_data},
+                        callback: function (res) {
+                            if (res.error) {
+                                return $(this).alertmsg('error', res.message)
+                            }
+                            $(this).alertmsg('info', res.message, {
+                                autoClose: false,
+                                okCall: function () {
+                                    $.CurrentNavtab.navtab('close');
+                                    $('#merchant_list_table').datagrid('refresh');//刷新数据列表
+                                }
+                            });
+                        },
+                    };
+                    $(document).bjuiajax('doAjax', oo);
+                }
+            }
         });
     }
-    //创建申请表后回调-刷新列表
-    function cardlist_refreshApplyTable(){
-        $('#adlist-table').datagrid('refresh');
-    }
-</script>
 
-<script type="text/javascript">
-    function adaddhtml(obj) {
-        adpid=$("#adpid").val();
-        $(document).navtab({id:'mydialog', url:'adAdd.html', title:'广告添加'});
-    }
+    $.CurrentNavtab.find('#merchant_list_serarch_form').on('submit',function(event){
+        var post_data = $.CurrentNavtab.find('#merchant_list_serarch_form').serializeArray();
+        var options = {
+            dataUrl: 'api/merchants/index',
+            postData: {post_data: post_data}
+        };
+        $.CurrentNavtab.find('#merchant_list_table').datagrid('reload', options);
+        event.preventDefault();
+    });
+
 </script>

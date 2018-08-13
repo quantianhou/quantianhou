@@ -45,4 +45,14 @@ class AdminRepository extends EloquentRepository
         }
         return $arr;
     }
+
+    /**
+     * 根据id获取用户信息
+     */
+    public function getNameByAdminId($adminId){
+
+        return $this->model->where([
+            ['id','=',$adminId]
+        ])->first();
+    }
 }

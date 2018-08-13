@@ -167,6 +167,16 @@ abstract class EloquentRepository implements RepositoryInterface
         return $this->model->where('id', '=', $id)->update($input);
     }
 
+    public function updateByOtherColumn($column, $column_value, array $input)
+    {
+        if(is_array($column_value)){
+            return $this->model->whereIn($column, $column_value)->update($input);
+        }else{
+            return $this->model->where($column, '=', $column_value)->update($input);
+        }
+
+    }
+
     public function delete($id)
     {
         return $this->model->find($id)->delete();
@@ -215,18 +225,19 @@ abstract class EloquentRepository implements RepositoryInterface
         })->count();
     }
 
-    public function getListByWhere($filters = [], $columns = ['*'], $with = [], $pageCount = 0)
+    public function getListByWhere($filters = [], $columns = ['*'], $with = [], $pageCount = 0, $page)
     {
         $result = $this->model
             ->with($with)
             ->whereNested(function ($query) use ($filters) {
                 if (empty($query)) return;
                 foreach ($filters as $filter) {
+                    //print_r($filter);exit;
                     $query->where($filter[0], $filter[1], $filter[2]);
                 }
             });
         if ($pageCount) {
-            return $result->paginate($pageCount, $columns);
+            return $result->paginate($pageCount, $columns ,'page', $page);
         }
 
         $result = $result->get($columns);

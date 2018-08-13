@@ -3,17 +3,21 @@
 namespace Modules\Admin\Http\Controllers\Merchant;
 
 use App\Repositories\Merchant\MerchantRepository;
+use App\Repositories\Area\AreaRepository;
 use Illuminate\Http\Request;
 use Modules\Admin\Http\Controllers\BaseController;
 use Modules\admin\Http\Requests\Merchant\MerchantRequest;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class MerchantController extends BaseController
 {
     private $merchants;
 
-    public function __construct(MerchantRepository $merchants)
+    public function __construct(MerchantRepository $merchants,AreaRepository $areas)
     {
         $this->merchants = $merchants;
+        $this->areas = $areas;
     }
     /**
      * Display a listing of the resource.
@@ -23,12 +27,260 @@ class MerchantController extends BaseController
     public function index(Request $request)
     {
         $filters = [];
+        $post_data = $request->get('post_data');
+        if(!empty($post_data) && is_array($post_data)){
+            foreach($post_data as $val){
+                if(!empty($val['value'])) {
+                    $type = '=';
+                    if(in_array($val['name'],["address_city",'address_district']) && !is_numeric($val['value'])){
+                        continue ;
+                    }
+                    if(in_array($val['name'],["merchant_name",''])){
+                        $type = 'LIKE';
+                        $val['value'] = '%'.$val['value'].'%';
+                    }
+                    //签约时间
+                    if(in_array($val['name'],["contract_time_start",'contract_time_end'])){
+                        if($val['name'] == 'contract_time_start'){
+                            $type = '>=';
+                            $val['name'] = 'contract_time';
+                        }
+                        if($val['name'] == 'contract_time_end'){
+                            $type = '<=';
+                            $val['name'] = 'contract_time';
+                        }
+                    }
+                    //合同有效日期
+                    if(in_array($val['name'],["contract_start_time",'contract_end_time'])){
+                        if($val['name'] == 'contract_start_time'){
+                            $type = '<=';
+                        }
+                        if($val['name'] == 'contract_end_time'){
+                            $type = '>=';
+                        }
+                    }
+                    //药证截止日期
+                    if(in_array($val['name'],["drug_license_expriy_date_start",'drug_license_expriy_date_end'])){
+                        if($val['name'] == 'drug_license_expriy_date_start'){
+                            $type = '>=';
+                            $val['name'] = 'drug_license_expriy_date';
+                        }
+                        if($val['name'] == 'drug_license_expriy_date_end'){
+                            $type = '<=';
+                            $val['name'] = 'drug_license_expriy_date';
+                        }
+                    }
+                    $filters[] = [$val['name'],$type, $val['value']];
+                }
+            }
+        }
         $pageSize = $request->get('pageSize', 10);
-        $list =  $this->merchants->getListByWhere($filters, ['*'], [], $pageSize);
-        return  $this->merchants->getListByWhere($filters, ['*'], []);
+        $pageCurrent = $request->get('pageCurrent');
+        $list =  $this->merchants->getListByWhere($filters, ['*'], [], $pageSize, $pageCurrent);
+        foreach($list as $key=>$v){
+            $list[$key]['address_province'] = $this->areas->getOneArea($v['address_province'], ['id', 'name'],1)->name;
+            $list[$key]['address_city'] = $this->areas->getOneArea($v['address_city'], ['id', 'name'],1)->name;
+            $list[$key]['address_district'] = $this->areas->getOneArea($v['address_district'], ['id', 'name'],1)->name;
+        }
+//        dd(\DB::getQueryLog());exit;
+//        print_R($list);exit;
         return $this->pageSuccess($list);
     }
+    
+    public function getOne(Request $request){
+        $id = $request->get('id');
+        $result = $this->merchants->getOneMerchant($id);
 
+        $init = array('value'=>'','label'=>'所有');
+        $citys = $this->areas->getAreas($result['address_province'], ['id', 'name'],1);
+        array_unshift($citys, $init);
+        $district = $this->areas->getAreas($result['address_city'], ['id', 'name'],1);
+        array_unshift($district, $init);
+        return [
+            'statusCode' => 200,
+            'data' => $result,
+            'area' => array('citys'=> $citys, 'district'=> $district),
+            'message' => 'success',
+        ]; 
+    }
+
+    public function getMerchants(Request $request){
+        $id = $request->get('id');
+        if(empty($id) || !is_array($id)){
+            return [
+                'statusCode' => 200,
+                'error' => true,
+                'message' => '参数错误',
+            ];
+        }
+        $name = '';
+        foreach($id as $val){
+            $name .= $this->merchants->getOneMerchant($val, [ 'merchant_name'])->merchant_name . ',';
+        }
+        $name = substr($name, 0, -1);
+        return [
+            'statusCode' => 200,
+            'data' => $name,
+            'message' => 'success',
+        ];
+    }
+
+    //审核商家
+    public function checkMerchants(Request $request){
+        $id = $request->get('id');
+        if(empty($id) || !is_array($id)){
+            return [
+                'statusCode' => 200,
+                'error' => true,
+                'message' => '参数错误',
+            ];
+        }
+        $id[] = 'aaa';
+        $data = array();
+        $data['check_remark'] = $request->get('check_remark');
+        $data['status'] = $request->get('status');
+        foreach($id as $v){
+            $result = $this->merchants->getOneMerchant($id, ['merchant_name','status']);
+            if($result['status'] != 2){
+                return [
+                    'statusCode' => 200,
+                    'error' => true,
+                    'message' => '商家['.$result['merchant_name'].']的状态无法进行提交审核',
+                ];
+            }
+        }
+        $res = $this->merchants->updateByOtherColumn('id', $id, $data);
+        //dd(\DB::getQueryLog());exit;
+        if($res){
+            return [
+                'statusCode' => 200,
+                'message' => '审核成功',
+            ];
+        }else{
+            return [
+                'statusCode' => 200,
+                'error' => true,
+                'message' => '审核失败',
+            ];
+        }
+    }
+
+    //申请审核
+    public function applyCheck(Request $request){
+        $id = $request->get('id');
+        $result = $this->merchants->getOneMerchant($id);
+        if($result['status'] != 1 && $result['status'] != 3){
+            return [
+                'statusCode' => 200,
+                'error' => true,
+                'message' => '商家当前状态无法进行提交审核',
+            ];
+        }
+        $data['status'] = 2;
+        $result = $this->merchants->update($id, $data);
+        return $this->success($result, 200, '申请审核成功');
+    }
+
+    //签约
+    public function signing(Request $request)
+    {
+        $data = $request->all();
+        if(isset($data['id']) && !empty($data['id']))
+        {
+            $result = $this->merchants->getOneMerchant($data['id']);
+            if($result['status'] == 7){
+                return [
+                    'statusCode' => 200,
+                    'error' => true,
+                    'message' => '商家已签约，无法重复签约',
+                ];
+            }
+            if($result['status'] != 4){
+                return [
+                    'statusCode' => 200,
+                    'error' => true,
+                    'message' => '商家当前状态无法进行签约',
+                ];
+            }
+            $admin = Session::get('admin');
+            $update_data = [
+                'contract_num' => $data['contract_num'],
+                'contract_operator_id' => $admin['id'],
+                'contract_operator' => $admin['username'],
+                'status' => 7,
+                'contract_time' =>  date('Y-m-d H:i:s'),
+                'contract_start_time' => $data['contract_start_time'],
+                'contract_end_time' => $data['contract_end_time']
+            ];
+
+            $res = $this->merchants->updateByOtherColumn('id',$data['id'],$update_data);
+            if($res)
+            {
+                return [
+                    'statusCode' => 200,
+                    'data' => $res,
+                    'message' => '成功签订合约',
+                ];
+            }else{
+                return [
+                    'statusCode' => 500,
+                    'error' => true,
+                    'message' => '签订合约失败',
+                ];
+            }
+        }
+    }
+
+    //取消签约
+    public function cancel(Request $request)
+    {
+        $data = $request->get('info');
+        $info = json_decode($data,true);
+        if(!empty($info))
+        {
+            $ids = array_column($info,'id');
+            foreach($ids as $v){
+                $result = $this->merchants->getOneMerchant($v, ['merchant_name','status']);
+                if($result['status'] == 8){
+                    return [
+                        'statusCode' => 200,
+                        'error' => true,
+                        'message' => '商家['.$result['merchant_name'].']无法重复取消签约',
+                    ];
+                }
+                if($result['status'] != 7){
+                    return [
+                        'statusCode' => 200,
+                        'error' => true,
+                        'message' => '商家['.$result['merchant_name'].']的状态无法取消签约',
+                    ];
+                }
+            }
+            $admin = Session::get('admin');
+            $update_data = [
+                'contract_cancel_operator_id' => $admin['id'],
+                'contract_cancel_operator' => $admin['username'],
+                'contract_cancel_time' => date('Y-m-d H:i:s'),
+                'status' => 8
+            ];
+            $res = $this->merchants->updateByOtherColumn('id',$ids,$update_data);
+
+            if($res)
+            {
+                return [
+                    'statusCode' => 200,
+                    'data' => $res,
+                    'message' => '成功取消签约',
+                ];
+            }else{
+                return [
+                    'statusCode' => 500,
+                    'error' => true,
+                    'message' => '取消签约失败',
+                ];
+            }
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -48,13 +300,21 @@ class MerchantController extends BaseController
     public function store(MerchantRequest $request)
     {
         $data = $this->makeData($request);
-        $result = $this->merchants->create($data);
-        return $this->success($result, 200, '添加成功');
+        if(!empty($data['id'])){
+            $id = $data['id'];
+            unset($data['id']);
+            $result = $this->merchants->update($id, $data);
+            return $this->success($result, 200, '修改成功');
+        }else{
+            $result = $this->merchants->create($data);
+            return $this->success($result, 200, '添加成功');
+        }
     }
 
     private function makeData(Request $request)
     {
         $data = [
+            'id' => $request->get('id'),
             'merchant_type' => $request->get('merchant_type'),
             'manage_type' => $request->get('manage_type'),
             'organization_type' => $request->get('organization_type'),

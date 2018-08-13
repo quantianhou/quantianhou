@@ -50,8 +50,9 @@ class GoodsController extends AdminController
             }
         }
 
-        $pageSize = $request->get('pageSize', 10);
-        $list =  $this->goods->getListByWhere($filters, ['*'], [], $pageSize);
+        $pageSize = $request->get('pageSize', 2);
+        $pageCurrent = $request->get('pageCurrent');
+        $list =  $this->goods->getListByWhere($filters, ['*'], [], $pageSize, $pageCurrent);
 
         return $this->pageSuccess($list);
 
@@ -148,7 +149,7 @@ class GoodsController extends AdminController
     public function pageSuccess($data)
     {
         return [
-            'totalRow' => $data->total(),
+            'total' => $data->total(),
             'pageCurrent' => $data->currentPage(),
             'list' => ($data->toArray())['data'],
             'sql' => \DB::getQueryLog()

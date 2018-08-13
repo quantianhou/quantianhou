@@ -5,6 +5,15 @@ Route::group(['middleware' => 'web', 'namespace' => 'Modules\Admin\Http\Controll
     Route::get('/{tmp?}', function($tmp = 'index'){
         $provinces = app(\App\Repositories\Area\AreaRepository::class)->getAreas();
         $merchants = app(\App\Repositories\Merchant\MerchantRepository::class)->getMerchants();
+        if(in_array($tmp, ["merchantAccount"])){
+            $merchantNoAccounts = app(\App\Repositories\Merchant\MerchantRepository::class)->getMerchantNoAccounts();
+            //dd(\DB::getQueryLog());exit;
+            return view("admin::".$tmp)->with(compact('merchantNoAccounts'));
+        }
+        if(in_array($tmp, ["merchant_account_list"])){
+            $merchantAccounts = app(\App\Repositories\MerchantAccount\MerchantAccountRepository::class)->getMerchantAccounts();
+            return view("admin::".$tmp)->with(compact('merchantAccounts'));
+        }
 		return view("admin::".$tmp)->with(compact('provinces', 'merchants'));
 	});
 });
@@ -14,6 +23,8 @@ Route::group(['middleware' => 'web','prefix' => 'api', 'namespace' => 'Modules\A
     //登陆接口
 	Route::group(['prefix' => 'login', 'namespace' => 'Login'], function(){
 		Route::any('index', 'IndexController@index');
+        Route::any('logout', 'IndexController@logout');
+        Route::any('getUser', 'IndexController@getUser');
 	});
 
 	//商品管理
@@ -34,6 +45,21 @@ Route::group(['middleware' => 'web','prefix' => 'api', 'namespace' => 'Modules\A
 	Route::group(['namespace' => 'Merchant'], function () {
         Route::resource('merchants', 'MerchantController');
         Route::post('merchants/index', 'MerchantController@index');
+        Route::post('merchants/getOne', 'MerchantController@getOne');//编辑页面读取商家信息用
+        Route::post('merchants/applyCheck', 'MerchantController@applyCheck');
+        Route::post('merchants/getMerchants', 'MerchantController@getMerchants');
+        Route::post('merchants/checkMerchants', 'MerchantController@checkMerchants');//审核商家
+        Route::post('merchants/signing', 'MerchantController@signing');//签约
+        Route::post('merchants/cancel', 'MerchantController@cancel');//取消签约
+
+    });
+
+    //商家管理
+	Route::group(['namespace' => 'MerchantAccount'], function () {
+        Route::resource('merchantAccount', 'MerchantAccountController');
+        Route::post('merchantAccount/index', 'MerchantAccountController@index');
+        Route::post('merchantAccount/add', 'MerchantAccountController@add');//添加商家B端账号
+        Route::post('merchantAccount/resetPasswd', 'MerchantAccountController@resetPasswd');//重置商家B端账号密码
     });
 
     //权限系统
@@ -51,6 +77,10 @@ Route::group(['middleware' => 'web','prefix' => 'api', 'namespace' => 'Modules\A
     Route::group(['namespace' => 'ShopStore'], function () {
         Route::resource('shop_store', 'ShopStoreController');
         Route::post('shop_store/index', 'ShopStoreController@index');
+        Route::post('shop_store/info', 'ShopStoreController@info');
+        Route::post('shop_store/cancel', 'ShopStoreController@cancel');
+        Route::post('shop_store/signing', 'ShopStoreController@signing');
+        Route::post('shop_store/signing_info', 'ShopStoreController@singingInfo');
     });
 });
 

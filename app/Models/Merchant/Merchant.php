@@ -29,12 +29,12 @@ class Merchant extends Model
     {
         $result = [
             1 =>'新增',
-            2 => '审核',
+            2 => '待审核',
             3 => '退回',
             4 => '通过',
             5 => '拒绝',
-            6 => '取消',
-            7 => '预约'
+            7 => '签约',
+            8 => '取消签约',
         ];
         return array_get($result, $this->status);
     }

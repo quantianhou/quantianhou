@@ -1,7 +1,9 @@
 
 <script type="text/javascript">
 
-    $.CurrentNavtab.find('.formarea').on('submit',function(){
+    $.CurrentNavtab.find('#confirm').on('click',function(event){
+        event.preventDefault();
+        console.log("aaa");
         var post_data = $.CurrentNavtab.find('.formarea').serialize();
         var oo = {
             url : '/api/merchants',
@@ -27,6 +29,7 @@
         };
 
         $(document).bjuiajax('doAjax', oo);
+
     });
 
 </script>
@@ -96,7 +99,7 @@
                     </td>
 
                     <td id="content_showimg">
-                        <div class="btn btn-success role-upload-image" data-field_name="merchant_logo[]">上传</div>
+                        <button class="btn btn-success role-upload-image" type="button" data-field_name="merchant_logo[]">上传</button>
                     </td>
                 </tr>
                 <tr>
@@ -125,16 +128,16 @@
                     </td>
                     <td>
                         <div class="row-input">
-                            <select name="address_province" data-toggle="selectpicker" data-rule="required" data-nextselect="#j_form_city1" data-refurl="/api/areas/list?parent_id={value}">
+                            <select name="address_province" data-toggle="selectpicker" data-rule="required" data-nextselect="#merchant_form_city1" data-refurl="/api/areas/list?parent_id={value}">
                                 <option value="" selected>--省市--</option>
                                 @foreach($provinces as $province)
-                                <option value="{{ $province->id }}" selected="">{{ $province->name }}</option>
+                                <option value="{{ $province->id }}">{{ $province->name }}</option>
                                 @endforeach
                             </select>
-                            <select name="address_city" id="j_form_city1" data-toggle="selectpicker"  data-rule="required" data-nextselect="#j_form_area1" data-refurl="/api/areas/list?parent_id={value}" data-emptytxt="--城市--">
+                            <select name="address_city" id="merchant_form_city1" data-toggle="selectpicker"  data-rule="required" data-nextselect="#merchant_form_area1" data-refurl="/api/areas/list?parent_id={value}" data-emptytxt="--城市--">
                                 <option value="">--城市--</option>
                             </select>
-                            <select name="address_district" id="j_form_area1" data-toggle="selectpicker"  data-emptytxt="--区县--">
+                            <select name="address_district" id="merchant_form_area1" data-toggle="selectpicker"  data-emptytxt="--区县--">
                                 <option value="">--区县--</option>
                             </select>
                         </div>
@@ -244,7 +247,7 @@
                         许可证号： <input type="text" placeholder="请填写名称" name="business_license_num" size="30" data-rule="required"><br>
                         有效期： <input type="text" name="business_license_expiry_date" value="2018-10-01 10:01:01" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
                         <div class="content_showimg">
-                            <button class="btn btn-success role-upload-image" data-field_name="business_license_img[]">附件上传</button>
+                            <button class="btn btn-success role-upload-image" type="button" data-field_name="business_license_img[]">附件上传</button>
                         </div>
                     </td>
                 </tr>
@@ -257,7 +260,7 @@
                         许可证号： <input type="text" placeholder="请填写名称" name="drug_license_num" size="30" data-rule="required"><br>
                         有效期： <input type="text" name="drug_license_expriy_date" value="2016-10-01 10:01:01" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
                         <div class="content_showimg">
-                            <button class="btn btn-success role-upload-image" data-field_name="drug_license_img[]">附件上传</button>
+                            <button class="btn btn-success role-upload-image" type="button" data-field_name="drug_license_img[]">附件上传</button>
                         </div>
                     </td>
                 </tr>
@@ -272,7 +275,7 @@
                         身份证号： <input type="text" value="2016-10-01 10:01:01" name="legal_person_id_num" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
 
                         <div class="content_showimg">
-                            <button class="btn btn-success role-upload-image" data-field_name="legal_person_img[]">照片</button>
+                            <button class="btn btn-success role-upload-image" type="button" data-field_name="legal_person_img[]">照片</button>
                         </div>
                     </td>
                 </tr>
@@ -285,7 +288,7 @@
                         许可证号： <input type="text" placeholder="请填写名称" name="GSP_num" size="30" data-rule="required"><br>
                         有效期： <input type="text" value="2016-10-01 10:01:01" name="GSP_expriy_date" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
                         <div class="content_showimg">
-                            <button class="btn btn-success role-upload-image" data-field_name="GSP_img[]">附件上传</button>
+                            <button class="btn btn-success role-upload-image" type="button" data-field_name="GSP_img[]">附件上传</button>
                         </div>
                     </td>
                 </tr>
@@ -298,7 +301,7 @@
                         许可证号： <input type="text"  placeholder="请填写名称" name="food_licence_num" size="30" data-rule="required"><br>
                         有效期： <input type="text" value="2016-10-01 10:01:01" data-toggle="datepicker" name="food_licence_expriy_date" data-pattern="yyyy-MM-dd HH:mm:ss">
                         <div class="content_showimg">
-                            <button class="btn btn-success role-upload-image" data-field_name="food_licence_img[]">附件上传</button>
+                            <button class="btn btn-success role-upload-image" type="button" data-field_name="food_licence_img[]">附件上传</button>
                         </div>
                     </td>
                 </tr>
@@ -312,7 +315,7 @@
                         有效期： <input type="text" name="medical_institution_expriy_date" value="2016-10-01 10:01:01" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
 
                         <div class="content_showimg">
-                            <button class="btn btn-success role-upload-image" data-field_name="medical_institution_img[]">附件上传</button>
+                            <button class="btn btn-success role-upload-image" type="button" data-field_name="medical_institution_img[]">附件上传</button>
                         </div>
                     </td>
                 </tr>
@@ -326,7 +329,7 @@
                         有效期： <input type="text" name="medical_app_expriy_date" value="2016-10-01 10:01:01" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
 
                         <div class="content_showimg">
-                            <button class="btn btn-success role-upload-image" data-field_name="medical_app_img[]">附件上传</button>
+                            <button class="btn btn-success role-upload-image" type="button" data-field_name="medical_app_img[]">附件上传</button>
                         </div>
                     </td>
                 </tr>
@@ -340,7 +343,7 @@
                         有效期： <input type="text" name="internet_med_tran_expriy_date" value="2016-10-01 10:01:01" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
 
                         <div class="content_showimg">
-                            <button class="btn btn-success role-upload-image" data-field_name="internet_med_tran_img[]">附件上传</button>
+                            <button class="btn btn-success role-upload-image" type="button" data-field_name="internet_med_tran_img[]">附件上传</button>
                         </div>
                     </td>
                 </tr>
@@ -354,7 +357,7 @@
                         许可证号： <input type="text" placeholder="请填写名称" name="internet_med_info_num" size="30" data-rule="required"><br>
                         有效期： <input type="text" name="internet_med_info_expriy_date" value="2016-10-01 10:01:01" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
                         <div class="content_showimg">
-                            <button class="btn btn-success role-upload-image" data-field_name="internet_med_info_img[]">附件上传</button>
+                            <button class="btn btn-success role-upload-image" type="button" data-field_name="internet_med_info_img[]">附件上传</button>
                         </div>
                     </td>
                 </tr>
@@ -377,5 +380,47 @@
     $('.role-upload-image').click(function () {
         vueUpload($(this), 'merchant_logo[]')
     });
+
+    //判断是否需要拉取数据
+    if(BJUI.URLDATA.hasOwnProperty("merchant") && BJUI.URLDATA.merchant.hasOwnProperty("id")){
+        if(BJUI.URLDATA.merchant.id >0){
+            var oo = {
+                url : '/api/merchants/getOne',
+                loadingmask:true,
+                data : {id:BJUI.URLDATA.merchant.id},
+                callback:function(res){
+                    if(res.error) return $(this).alertmsg('error', res.info), !1;
+                    //由于bjui的select控件三级联动赋值第一层后不自动联动，所以特殊处理下
+                    for(var i in res.area.citys){
+                        if(!isNaN(i)){
+                            var d = res.area.citys[i];
+                            $.CurrentNavtab.find('select[name=address_city]').append('<option value="'+d.value+'">'+d.label+'</option>');
+                        }
+                    }
+                    for(var i in res.area.district){
+                        if(!isNaN(i)){
+                            var d = res.area.district[i];
+                            $.CurrentNavtab.find('select[name=address_district]').append('<option value="'+d.value+'">'+d.label+'</option>');
+                        }
+                    }
+                    for(var i in res.data){
+                        if(i != 'merchant_logo'){
+                            $.CurrentNavtab.find('input[name='+i+']').val(res.data[i])
+                            $.CurrentNavtab.find('select[name='+i+']').val(res.data[i])
+                            $.CurrentNavtab.find('textarea[name='+i+']').val(res.data[i])
+                        }
+                        if(i == 'merchant_logo' || i.indexOf('_img')!= -1){
+                            console.log(i);
+                            var str = '<div style="display: inline-block; margin: 5px;"><input type="hidden" value="'+res.data[i]+'" name="'+i+'[]"><img width="100" height="100" src="http://qth-test.oss-cn-hangzhou.aliyuncs.com/'+res.data[i]+'"><a onclick="$(this).parent().remove()" style="display: block; text-align: center;">删除</a></div>';
+                            $.CurrentNavtab.find('button[data-field_name="'+i+'[]"]').after(str);
+                        }
+                    }
+                    $.CurrentNavtab.find('select').selectpicker('refresh');
+                }
+            };
+            $(document).bjuiajax('doAjax', oo);
+        }
+    }
+
 
 </script>
