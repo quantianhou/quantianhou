@@ -142,6 +142,30 @@ class GoodsController extends AdminController
     }
 
     /**
+     * 商品图片
+     */
+    public function images(Request $request){
+
+        $id = $request->get('id');
+        $index = $request->get('index');
+
+        $goods = \App\Models\Goods\GoodsModel::find($id);
+
+        $images = json_decode($goods->images,true);
+        $data = [];
+        if($index == 1){//大图
+            $data = $images['big'];
+        }else if($index == 2){//中图
+            $data[] = $images['middle'];
+        }else{//小图
+            $data[] = $images['small'];
+        }
+
+        return $this->json($data);
+
+    }
+
+    /**
      * @param $data
      * @return array
      * bjui返回列表
