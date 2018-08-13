@@ -107,6 +107,18 @@
         return obj;
     }
 
+    function images(v) {
+
+        return '<a onclick="toimages(this,1,'+v+')">大图</a>&nbsp;&nbsp;&nbsp;' +
+            '<a onclick="toimages(this,2,'+v+')">中图</a>&nbsp;&nbsp;&nbsp;' +
+            '<a onclick="toimages(this,3,'+v+')">小图</a>';
+    }
+
+    function toimages(obj,index,v) {
+        parent.GIMG = {id:v,index:index}
+        $(obj).navtab({id:'toimages', url:'/toimages', title:'商品图片'});
+    }
+
 </script>
 <div class="bjui-pageContent">
     <form action="" id="goods_search">
@@ -227,6 +239,7 @@
 			columns: [
                 {name:'id', width: 100,align:'center',label:'ID',hide:'false'},
                 {name:'sn', width: 150,align:'center',label:'商家编码'},
+                {name:'id', width: 150,align:'center',label:'图片',render:images},
                 {name: 'name', width: 150, align:'center', label: '商品名称'},
                 {name: 'show_name', width: 150, align:'center', label: '显示名称'},
                 {name: 'specifications', width: 150, align:'center', label: '规格'},
