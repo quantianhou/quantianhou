@@ -40,6 +40,9 @@ Route::group(['middleware' => 'web','prefix' => 'api', 'namespace' => 'Modules\A
         Route::post('merchants/index', 'MerchantController@index');
         Route::post('merchants/getOne', 'MerchantController@getOne');//编辑页面读取商家信息用
         Route::post('merchants/applyCheck', 'MerchantController@applyCheck');
+        Route::post('merchants/getMerchants', 'MerchantController@getMerchants');
+        Route::post('merchants/checkMerchants', 'MerchantController@checkMerchants');//审核商家
+
     });
 
     //商家管理

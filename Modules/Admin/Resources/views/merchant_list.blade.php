@@ -242,8 +242,16 @@
             BJUI.alertmsg('error', "您需要勾选一条记录！");return ;
         }
         if(selectedData.length>1){
-            BJUI.alertmsg('error', "您只能勾选一条记录进行审核！");return ;
+            //BJUI.alertmsg('error', "您只能勾选一条记录进行审核！");return ;
         }
+        var id_arr = [];
+        for(var k in selectedData){
+            if(!isNaN(k)){//过滤
+                var d = selectedData[k];
+                id_arr.push(d.id);
+            }
+        }
+        BJUI.URLDATA.merchantCheck = {id: id_arr};
         BJUI.dialog({
             id:'openMerchantCheck',
             url:'merchantCheck',
@@ -263,8 +271,4 @@
         event.preventDefault();
     });
 
-    //创建申请表后回调-刷新列表
-    function cardlist_refreshApplyTable(){
-        $('#adlist-table').datagrid('refresh');
-    }
 </script>

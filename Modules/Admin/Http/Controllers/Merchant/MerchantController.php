@@ -7,6 +7,7 @@ use App\Repositories\Area\AreaRepository;
 use Illuminate\Http\Request;
 use Modules\Admin\Http\Controllers\BaseController;
 use Modules\admin\Http\Requests\Merchant\MerchantRequest;
+use Illuminate\Support\Facades\DB;
 
 class MerchantController extends BaseController
 {
@@ -100,6 +101,65 @@ class MerchantController extends BaseController
             'area' => array('citys'=> $citys, 'district'=> $district),
             'message' => 'success',
         ]; 
+    }
+
+    public function getMerchants(Request $request){
+        $id = $request->get('id');
+        if(empty($id) || !is_array($id)){
+            return [
+                'statusCode' => 200,
+                'error' => true,
+                'message' => '参数错误',
+            ];
+        }
+        $name = '';
+        foreach($id as $val){
+            $name .= $this->merchants->getOneMerchant($val, [ 'merchant_name'])->merchant_name . ',';
+        }
+        $name = substr($name, 0, -1);
+        return [
+            'statusCode' => 200,
+            'data' => $name,
+            'message' => 'success',
+        ];
+    }
+
+    //审核商家
+    public function checkMerchants(Request $request){
+        $id = $request->get('id');
+        if(empty($id) || !is_array($id)){
+            return [
+                'statusCode' => 200,
+                'error' => true,
+                'message' => '参数错误',
+            ];
+        }
+        $id[] = 'aaa';
+        $data = array();
+        $data['check_remark'] = $request->get('check_remark');
+
+        DB::beginTransaction();
+        try{
+            foreach($id as $val){
+                $this->merchants->update($val, $data);
+            }//中间逻辑代码
+            DB::commit();
+            dd(\DB::getQueryLog());exit;
+            return [
+                'statusCode' => 200,
+                'message' => '审核成功',
+            ];
+        }catch (\Exception $e) {
+            //接收异常处理并回滚
+            DB::rollBack();
+            dd(\DB::getQueryLog());exit;
+            return [
+                'statusCode' => 200,
+                'error' => true,
+                'message' => '审核失败',
+            ];
+        }
+
     }
 
     //申请审核
