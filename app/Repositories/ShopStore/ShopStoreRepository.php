@@ -19,4 +19,12 @@ class ShopStoreRepository extends EloquentRepository
         parent::__construct($this->model);
     }
 
+    public function getOne($id = 0, $columns = ['*'])
+    {
+        $result = $this->model
+            ->where('id', $id)
+            ->first($columns);
+        return $result;
+    }
+
 }

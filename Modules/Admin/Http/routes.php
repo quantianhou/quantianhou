@@ -75,6 +75,10 @@ Route::group(['middleware' => 'web','prefix' => 'api', 'namespace' => 'Modules\A
     Route::group(['namespace' => 'ShopStore'], function () {
         Route::resource('shop_store', 'ShopStoreController');
         Route::post('shop_store/index', 'ShopStoreController@index');
+        Route::post('shop_store/info', 'ShopStoreController@info');
+        Route::post('shop_store/cancel', 'ShopStoreController@cancel');
+        Route::post('shop_store/signing', 'ShopStoreController@signing');
+        Route::post('shop_store/signing_info', 'ShopStoreController@singingInfo');
     });
 });
 
