@@ -12,6 +12,17 @@
                 </tr>
                 <tr>
                     <td>
+                        <label for="j_dialog_name" class="control-label x90">审核状态：</label>
+                        <input type="radio" name="status" id="merchantCheck_status" value="4"
+                               data-toggle="icheck" data-label="通过" checked>
+                        <input type="radio" name="status" id="merchantCheck_status" value="3"
+                               data-toggle="icheck" data-label="退回">
+                        <input type="radio" name="status" id="merchantCheck_status" value="5"
+                               data-toggle="icheck" data-label="拒绝">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         <label for="j_dialog_name" class="control-label x90">审核意见：</label>
                         <textarea cols="30" name="check_remark" id="check_remark"></textarea>
                     </td>
@@ -50,10 +61,11 @@
             url : '/api/merchants/checkMerchants',
             type: 'POST',
             loadingmask:true,
-            data : {id: BJUI.URLDATA.merchantCheck.id, check_remark: $('#check_remark').val()},
+            data : {id: BJUI.URLDATA.merchantCheck.id, check_remark: $('#check_remark').val(), status: $('input[name="status"]:checked').val()},
             okCallback:function(res){
+                if(res.error) return $(this).alertmsg('error', res.message), !1;
                 BJUI.dialog('close', 'openMerchantCheck');//关闭当前弹窗
-                $('#shop-store-table').datagrid('refresh');//刷新数据列表
+                $('#merchant_list_table').datagrid('refresh');//刷新数据列表
             },
             errCallback:function(res){
                 BJUI.alertmsg('error', res.message);

@@ -132,7 +132,6 @@ class ShopStoreController extends BaseController
                 'contract_num' => $data['contract_num'],
                 'contract_operator_id' => $admin['id'],
                 'contract_operator' => $admin['username'],
-                'contract_cancel_time' => date('Y-m-d H:i:s'),
                 'store_status' => 1,
                 'contract_time' =>  date('Y-m-d H:i:s'),
                 'contract_start_time' => $data['contract_start_time'],
@@ -204,6 +203,7 @@ class ShopStoreController extends BaseController
     private function makeData(Request $request)
     {
         $data = [
+            'id' => $request->get('id'),
             'manage_type' => $request->get('manage_type'),
             'organization_type' => $request->get('organization_type'),
             'legal_person_id_num' => $request->get('legal_person_id_num'),

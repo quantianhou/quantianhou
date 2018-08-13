@@ -134,6 +134,7 @@
     <div style="padding:15px; height:100%;width:99.8%" >
         <table id="shop-store-table"   data-toggle="datagrid" data-options="{
             gridTitle:'门店列表',
+             showToolbar: true,
             toolbarCustom: $('#shopstore_list_table_tool'),
             filterThead: false,
             columns: [
@@ -239,37 +240,37 @@
         if(!selectedData || selectedData.length == 0){
             BJUI.alertmsg('error', "您需要勾选一条记录！");return ;
         }
-
-        if(selectedData.length > 0)
-        {
-            post_data = JSON.stringify(selectedData);
-            var oo = {
-                url : '/api/shop_store/cancel',
-                loadingmask:true,
-                data : {'info':post_data},
-                callback:function(res){
-                    if(res.errors) {
-                        return $(this).alertmsg('error', res.message)
-                    }
-                    $(this).alertmsg('info', res.message, {
-                        autoClose:false,
-                        okCall: function () {
-                            $.CurrentNavtab.navtab('close');
-                            $('#shop-store-table').datagrid('refresh');//刷新数据列表
+        BJUI.alertmsg('confirm', '确认取消签约吗？',{
+            okCall: function () {
+                if(selectedData.length > 0)
+                {
+                    post_data = JSON.stringify(selectedData);
+                    var oo = {
+                        url : '/api/shop_store/cancel',
+                        loadingmask:true,
+                        data : {'info':post_data},
+                        callback:function(res){
+                            if(res.errors) {
+                                return $(this).alertmsg('error', res.message)
+                            }
+                            $(this).alertmsg('info', res.message, {
+                                autoClose:false,
+                                okCall: function () {
+                                    $.CurrentNavtab.navtab('close');
+                                    $('#shop-store-table').datagrid('refresh');//刷新数据列表
+                                }
+                            });
+                        },
+                        failCallback: function (msg, options) {
+                            console.log(msg, options, 1)
+                        },
+                        errCallback: function (json, options) {
+                            console.log(json, options)
                         }
-                    });
-                },
-                failCallback: function (msg, options) {
-                    console.log(msg, options, 1)
-                },
-                errCallback: function (json, options) {
-                    console.log(json, options)
-
+                    };
+                    $(document).bjuiajax('doAjax', oo);
                 }
-            };
-
-            $(document).bjuiajax('doAjax', oo);
-            
-        }
+            }
+        });
     }
 </script>

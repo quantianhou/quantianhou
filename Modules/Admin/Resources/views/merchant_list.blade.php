@@ -124,14 +124,15 @@
         <button type="button" class="btn btn-blue" data-icon="plus"  data-toggle="navtab"  onclick="openEditMerchant()">  修改</button>
         <button type="button" class="btn btn-green"  onclick="applyCheckMerchant()"> 申请审核 </button>
         <button type="button" class="btn btn-green"  onclick="checkMerchant()"> 审核 </button>
-        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:''}"> 批量审核 </button>
-        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:''}"> 签约 </button>
-        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:''}"> 导入 </button>
-        <button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:''}"> 导出商家档案 </button>
+        <button type="button" class="btn btn-green" onclick="checkMerchant()"> 批量审核 </button>
+        <button type="button" class="btn btn-green" onclick="openMerchantSigning()"> 签约 </button>
+        <button type="button" class="btn btn-green" onclick="openMerchantCancelSigning()"> 取消签约 </button>
+        {{--<button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:''}"> 导入 </button>--}}
+        {{--<button type="button" class="btn btn-green" data-toggle="navtab"  data-options="{id:'test_navtab1', url:'/merchant', title:''}"> 导出商家档案 </button>--}}
     </div>
     <div style="padding:15px; height:100%;width:99.8%" >
 
-        <table id="shop-store-table"   data-toggle="datagrid" data-options="{
+        <table id="merchant_list_table"   data-toggle="datagrid" data-options="{
             gridTitle:'商家列表',
             showToolbar: true,
 			toolbarCustom: $('#merchant_list_table_tool'),
@@ -183,7 +184,7 @@
     //打开新增商家账号弹层窗口
     function openEditMerchant() {
         //获得勾选数据
-        var selectedData = $('#shop-store-table').data('selectedDatas');
+        var selectedData = $('#merchant_list_table').data('selectedDatas');
         if(!selectedData || selectedData.length == 0){
             BJUI.alertmsg('error', "您需要勾选一条记录！");return ;
         }
@@ -202,7 +203,7 @@
     //申请审核
     function applyCheckMerchant(){
         //获得勾选数据
-        var selectedData = $('#shop-store-table').data('selectedDatas');
+        var selectedData = $('#merchant_list_table').data('selectedDatas');
         if(!selectedData || selectedData.length == 0){
             BJUI.alertmsg('error', "您需要勾选一条记录！");return ;
         }
@@ -226,7 +227,7 @@
                     success:function(res){
                         if(res.error) return $(this).alertmsg('error', res.message);
                         $(this).alertmsg('ok', res.message);
-                        $('#shop-store-table').datagrid('refresh');//刷新数据列表
+                        $('#merchant_list_table').datagrid('refresh');//刷新数据列表
                     },
                     timeout: 30000//30秒
                 });
@@ -237,7 +238,7 @@
     //审核
     function checkMerchant(){
         //获得勾选数据
-        var selectedData = $('#shop-store-table').data('selectedDatas');
+        var selectedData = $('#merchant_list_table').data('selectedDatas');
         if(!selectedData || selectedData.length == 0){
             BJUI.alertmsg('error', "您需要勾选一条记录！");return ;
         }
@@ -256,9 +257,64 @@
             id:'openMerchantCheck',
             url:'merchantCheck',
             title:'审核商家账号',
-            height: 220
+            height: 250
         })
+    }
 
+    //签约
+    function openMerchantSigning() {
+        //获得勾选数据
+        var selectedData = $('#merchant_list_table').data('selectedDatas');
+        if(!selectedData || selectedData.length == 0){
+            BJUI.alertmsg('error', "您需要勾选一条记录！");return ;
+        }
+        if(selectedData.length>1){
+            BJUI.alertmsg('error', "您只能勾选一条记录进行签约！");return ;
+        }
+        var id = selectedData[0]['id'];
+        if(selectedData.length > 0)
+        {
+            BJUI.URLDATA.MerchantSign = {id: id};
+            BJUI.navtab({
+                id:'openMerchantSigning',
+                url:'merchantSigning',
+                title:'商家签约'
+            })
+        }
+    }
+
+    function openMerchantCancelSigning() {
+        //获得勾选数据
+        var selectedData = $('#merchant_list_table').data('selectedDatas');
+        if (!selectedData || selectedData.length == 0) {
+            BJUI.alertmsg('error', "您需要勾选一条记录！");
+            return;
+        }
+        BJUI.alertmsg('confirm', '确认取消签约吗？',{
+            okCall: function () {
+                if (selectedData.length > 0) {
+                    post_data = JSON.stringify(selectedData);
+                    var oo = {
+                        url: '/api/merchants/cancel',
+                        loadingmask: true,
+                        data: {'info': post_data},
+                        callback: function (res) {
+                            if (res.error) {
+                                return $(this).alertmsg('error', res.message)
+                            }
+                            $(this).alertmsg('info', res.message, {
+                                autoClose: false,
+                                okCall: function () {
+                                    $.CurrentNavtab.navtab('close');
+                                    $('#merchant_list_table').datagrid('refresh');//刷新数据列表
+                                }
+                            });
+                        },
+                    };
+                    $(document).bjuiajax('doAjax', oo);
+                }
+            }
+        });
     }
 
     $.CurrentNavtab.find('#merchant_list_serarch_form').on('submit',function(event){
@@ -267,7 +323,7 @@
             dataUrl: 'api/merchants/index',
             postData: {post_data: post_data}
         };
-        $.CurrentNavtab.find('#shop-store-table').datagrid('reload', options);
+        $.CurrentNavtab.find('#merchant_list_table').datagrid('reload', options);
         event.preventDefault();
     });
 

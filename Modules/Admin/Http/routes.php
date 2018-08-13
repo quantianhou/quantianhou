@@ -49,6 +49,8 @@ Route::group(['middleware' => 'web','prefix' => 'api', 'namespace' => 'Modules\A
         Route::post('merchants/applyCheck', 'MerchantController@applyCheck');
         Route::post('merchants/getMerchants', 'MerchantController@getMerchants');
         Route::post('merchants/checkMerchants', 'MerchantController@checkMerchants');//审核商家
+        Route::post('merchants/signing', 'MerchantController@signing');//签约
+        Route::post('merchants/cancel', 'MerchantController@cancel');//取消签约
 
     });
 
