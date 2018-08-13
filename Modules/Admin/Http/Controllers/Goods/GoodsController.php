@@ -41,7 +41,10 @@ class GoodsController extends AdminController
             }
         }
         if(!empty($other)){
-            foreach ($goods as $k => $v){
+            foreach ($other as $k => $v){
+                if(!$v){
+                    continue;
+                }
                 $k== 'sn_start' && $filters[] = ['sn','>=',$v];
                 $k== 'sn_end' && $filters[] = ['sn','<=',$v];
             }
