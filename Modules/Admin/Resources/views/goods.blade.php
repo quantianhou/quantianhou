@@ -178,7 +178,7 @@
                 <tr>
                     <td>
                         <label for="single_name" class="control-label x85">微商图片：</label>
-                        <select name="other[has_pic]" id="has_pic" data-toggle="selectpicker" data-width="150">
+                        <select name="goods[has_imgaes]" id="has_pic" data-toggle="selectpicker" data-width="150">
                             <option value="">全部</option>
                             <option value="1">有</option>
                             <option value="2">无</option>

@@ -129,6 +129,7 @@ class ExcelController extends AdminController
 
         $goods->sn = $data["商品编码"];
         $goods->images = $imgs;
+        $goods->has_imgaes = count($imgs)<12?2:1;
         $goods->name = $data["商品名称"];
         $goods->single_name = $data["通用名称"];
         $goods->show_name = $data["显示名称"];

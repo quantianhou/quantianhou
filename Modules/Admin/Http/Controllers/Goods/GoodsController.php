@@ -56,6 +56,16 @@ class GoodsController extends AdminController
         $goods = $request->get('goods');
         $extra = $request->get('extra');
 
+        if(!$goods['id']){
+            $hasGoods = $this->goods->getBy('sn',$goods['sn']);
+            if(!empty($hasGoods)){
+                return $this->json([
+                    'error' => 2001,
+                    'info' => '已存在',
+                    'code' => 2001
+                ]);
+            }
+        }
         //添加商品
         $this->goods->saveGoods($goods,$extra);
         return $this->json([

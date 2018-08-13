@@ -392,7 +392,7 @@
 
             for(var i in res.brand){
                 if(i >= 0) {
-                    $('fieldset #' + res.brand[i].select_name).append('<option value="' + res.brand[i].id + '">' + res.brand[i].select_option + '</option>');
+                    $.CurrentNavtab.find('fieldset #' + res.brand[i].select_name).append('<option value="' + res.brand[i].id + '">' + res.brand[i].select_option + '</option>');
                 }
             }
 
@@ -429,13 +429,13 @@
             data : {id:parent.GID},
             callback : function (res) {
                 for(var i in res.data.extra){
-                    $('fieldset #'+i).val(res.data.extra[i]);
+                    $.CurrentNavtab.find('fieldset #'+i).val(res.data.extra[i]);
                 }
 
                 //编辑器
                 res.data.extra && KindEditor.html("#goods_desc", res.data.extra.goods_desc);
                 for(var i in res.data.goods){
-                    $('fieldset #'+i).val(res.data.goods[i]);
+                    $.CurrentNavtab.find('fieldset #'+i).val(res.data.goods[i]);
                 }
 
                 $('fieldset select').selectpicker('refresh');
