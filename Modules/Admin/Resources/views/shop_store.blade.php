@@ -11,10 +11,11 @@
                 if(res.errors) {
                     return $(this).alertmsg('error', res.message)
                 }
-                $(this).alertmsg('info', res.message, {
+                $(this).alertmsg('ok', res.message, {
                     autoClose:false,
                     okCall: function () {
-                        $.CurrentNavtab.navtab('close');
+                        $('#shop-store-table').datagrid('refresh');//刷新数据列表
+                        $(this).navtab('closeCurrentTab');//成功后关闭当前tab页
                     }
                 });
             },
@@ -433,9 +434,11 @@
                     }
                     for(var i in res.data){
                         if(i != 'merchant_logo'){
-                            $.CurrentNavtab.find('input[name='+i+']').val(res.data[i])
-                            $.CurrentNavtab.find('select[name='+i+']').val(res.data[i])
-                            $.CurrentNavtab.find('textarea[name='+i+']').val(res.data[i])
+                            $.CurrentNavtab.find('input:hidden[name='+i+']').val(res.data[i]);
+                            $.CurrentNavtab.find('input:text[name='+i+']').val(res.data[i]);
+                            $.CurrentNavtab.find('select[name='+i+']').val(res.data[i]);
+                            $.CurrentNavtab.find('input:radio[name='+i+'][value="' + res.data[i] + '"]').prop("checked", "checked");
+                            $.CurrentNavtab.find('textarea[name='+i+']').val(res.data[i]);
                         }
                         if(i == 'merchant_logo' || i.indexOf('_img')!= -1){
                             console.log(i);

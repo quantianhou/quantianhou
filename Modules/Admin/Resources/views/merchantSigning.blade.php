@@ -13,7 +13,7 @@
                 loadingmask:true,
                 data : post_data,
                 callback:function(res){
-                    if(res.errors) {
+                    if(res.error) {
                         return $(this).alertmsg('error', res.message)
                     }
                     $(this).alertmsg('ok', res.message, {
