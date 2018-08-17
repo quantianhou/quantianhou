@@ -39,6 +39,7 @@ Route::group(['middleware' => 'web','prefix' => 'api', 'namespace' => 'Modules\A
         Route::post('import/extra','ExcelController@extra');
         Route::post('import/category','ExcelController@category');
         Route::post('images','GoodsController@images');
+        Route::get('tmp','ExcelController@tmp');
     });
 
 

@@ -12,6 +12,6 @@
     }
     $(this).bjuiajax('doAjax', obj)
 </script>
-<div id="iiimages">
+<div id="iiimages" style="height:100%; overflow:scroll;">
 
 </div>

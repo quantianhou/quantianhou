@@ -23,19 +23,27 @@ class GoodsModel extends BaseModel {
 
     public function getBrandNameAttribute()
     {
-        return DataModel::find($this->brand)->select_option;
+        $res = DataModel::where([
+            'select_name' => 'brand',
+            'extra' => $this->brand
+        ])->first();
+        return empty($res) ? '': $res->select_option;
     }
 
     public function getCategoryComponentSnAttribute()
     {
-        return ComponentModel::find($this->category_component)->category_sn;
+        return $this->category_component;
     }
 
     public function getCategoryGoodsSnAttribute(){
-        return \App\Models\Category\GoodsModel::find($this->category_goods)->category_sn;
+
+        return $this->category_goods;
     }
 
     public function getCategoryGoodsNameAttribute(){
-        return \App\Models\Category\GoodsModel::find($this->category_goods)->category_name;
+        $res = \App\Models\Category\GoodsModel::where([
+            'category_sn' => $this->category_goods
+        ])->first();
+        return $res->category_name;
     }
 }

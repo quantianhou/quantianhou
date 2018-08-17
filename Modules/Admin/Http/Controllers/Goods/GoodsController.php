@@ -123,9 +123,12 @@ class GoodsController extends AdminController
      */
     public function options(){
         //品牌
-        $brand = $this->dataModel->where([
-            ['id','>',0]
-        ])->get();
+        $brand = $this->dataModel->whereIn('select_name',['brand'])->limit(100)->get()->toArray();
+        $component = $this->dataModel->whereIn('select_name',['component'])->limit(100)->get()->toArray();
+        $data = $this->dataModel->whereIn('select_name',['control_code','dosage_form','save_method','unit'])->get()->toArray();
+
+        $data = array_merge($data,$brand);
+        $data = array_merge($data,$component);
 
         //商品分类
         $category_goods = $this->categoryGoodsModel->get();
@@ -134,9 +137,9 @@ class GoodsController extends AdminController
         $category_component = $this->categoryComponentModel->get();
 
         return $this->json([
-            'brand' => $brand,
-            'goods' => self::merge($category_goods),
-            'component' => self::merge2($category_component),
+            'brand' => $data,
+            'goods' => $category_goods,
+            'component' => $category_component,
         ]);
 
     }
