@@ -398,7 +398,7 @@
     function inputInit() {
         var single_name = $('#single_name').val();
         var specifications = $('#specifications').val();
-        var brand = $('#brand').val();
+        var brand = $("#brand option:selected").text();
 
         $.CurrentNavtab.find('#name').val(brand+'，'+single_name+'，'+specifications);
         $.CurrentNavtab.find('#show_name').val('【'+brand+'】'+single_name);
