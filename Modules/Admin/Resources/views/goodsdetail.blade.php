@@ -384,6 +384,11 @@
 <script>
     $('#goodsid').val(parent.GID);
 
+    //输入联动
+    $('#single_name,#brand,#specifications').on('input',function(){
+        alert('7489');
+    });
+
     //获取两个分类
     var obj = {
         url : '/api/goods/options',
