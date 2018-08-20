@@ -12,7 +12,7 @@
         type : 'POST',
         callback : function (res) {
             for(var i in res.brand){
-                $('fieldset #'+res.brand[i].select_name).append('<option value="'+res.brand[i].id+'">'+res.brand[i].select_option+'</option>');
+                $('fieldset #'+res.brand[i].select_name).append('<option value="'+res.brand[i].extra+'">'+res.brand[i].select_option+'</option>');
             }
 
             //category_goods
@@ -22,7 +22,7 @@
                     for(var j=1;j<res.goods[i].level;j++){
                         prefix += ' -- ';
                     }
-                    $('fieldset #category_goods').append('<option value="'+res.goods[i].id+'">'+prefix+res.goods[i].category_name+'</option>');
+                    $('fieldset #category_goods').append('<option value="'+res.goods[i].extra+'">'+prefix+res.goods[i].category_name+'</option>');
                 }
             }
 
