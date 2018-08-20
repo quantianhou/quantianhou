@@ -5,8 +5,8 @@
         data:parent.GIMG,
         callback : function (res) {
 
-            for(var i in res){
-                $('#iiimages').append('<image src="/'+res[i]+'"><br />');
+            for(var i in res.images){
+                $('#iiimages').append('<image src="/'+res.images[i]+'"><br />');
             }
         }
     }
