@@ -4,7 +4,7 @@
         type : 'POST',
         data:parent.GIMG,
         callback : function (res) {
-
+console.log(res);
             for(var i in res.images){
                 $('#iiimages').append('<image src="/'+res.images[i]+'"><br />');
             }
