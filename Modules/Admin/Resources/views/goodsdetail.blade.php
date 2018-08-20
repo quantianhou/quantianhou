@@ -391,7 +391,7 @@
     $('#specifications').on('input',function(){
         inputInit();
     });
-    $('#brand').on('select',function(){
+    $(document).on('change','#brand',function(){
         inputInit();
     });
 
