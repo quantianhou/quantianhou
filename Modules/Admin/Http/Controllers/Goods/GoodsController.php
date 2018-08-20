@@ -165,11 +165,11 @@ class GoodsController extends AdminController
         $images = json_decode($goods->images,true);
         $data = [];
         if($index == 1){//大图
-            $data = $images['big'];
+            $data = $images['big'] ?? [];
         }else if($index == 2){//中图
-            $data[] = $images['middle'];
+            $data[] = $images['middle'] ?? [];
         }else{//小图
-            $data[] = $images['small'];
+            $data[] = $images['small'] ?? [];
         }
 
         return $this->json($data);
