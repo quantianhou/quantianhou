@@ -22,7 +22,7 @@
                     for(var j=1;j<res.goods[i].level;j++){
                         prefix += ' -- ';
                     }
-                    $('fieldset #category_goods').append('<option value="'+res.goods[i].extra+'">'+prefix+res.goods[i].category_name+'</option>');
+                    $('fieldset #category_goods').append('<option value="'+res.goods[i].category_sn+'">'+prefix+res.goods[i].category_name+'</option>');
                 }
             }
 
