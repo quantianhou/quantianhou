@@ -7,7 +7,7 @@
     }
 </style>
 <div class="bjui-pageContent">
-    <form action="/api/goods/save" id="j_form_form" callback="checkerror" class="pageForm" data-toggle="validate">
+    <form action="/api/goods/save" id="j_form_form" data-callback="checkerror" class="pageForm" data-toggle="validate">
         <input type="hidden" name="goods[id]" value="0" id="goodsid" />
         <div style="margin:15px auto 0; width:100%;">
             <fieldset>
