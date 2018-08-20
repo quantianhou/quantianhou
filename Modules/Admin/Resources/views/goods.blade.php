@@ -129,7 +129,7 @@
                 <tr>
                     <td>
                         <label for="single_name" class="control-label x85">商品编码：</label>
-                        <input type="text" name="goods[sn]" id="sn" value="">
+                        <input type="text" name="like[sn]" id="sn" value="">
                     </td>
                     <td>
                         <label for="single_name" class="control-label x85">编码区间：</label>
@@ -141,7 +141,7 @@
                     </td>
                     <td>
                         <label for="single_name" class="control-label x85">商品名称：</label>
-                        <input type="text" name="goods[name]" id="name" value="">
+                        <input type="text" name="like[name]" id="name" value="">
                     </td>
                 </tr>
 
@@ -154,7 +154,7 @@
                     </td>
                     <td>
                         <label for="single_name" class="control-label x85">国际码：</label>
-                        <input type="text" name="goods[nation_sn]" id="nation_sn" value="">
+                        <input type="text" name="like[nation_sn]" id="nation_sn" value="">
                     </td>
                     <td>
                         <label for="single_name" class="control-label x85">批准文号：</label>
@@ -206,7 +206,7 @@
                     </td>
                     <td>
                         <label for="single_name" class="control-label x85">显示名称：</label>
-                        <input type="text" name="goods[show_name]" id="show_name" value="">
+                        <input type="text" name="like[show_name]" id="show_name" value="">
                     </td>
                     <td>
                         <label for="single_name" class="control-label x85">&nbsp;</label>

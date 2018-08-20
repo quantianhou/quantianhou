@@ -35,11 +35,19 @@ class GoodsController extends AdminController
         $filters = [];
         $goods = $request->get('goods');
         $other = $request->get('other');
+        $like = $request->get('like');
         if(!empty($goods)){
             foreach ($goods as $k => $v){
                 $v && $filters[] = [$k,'=',$v];
             }
         }
+
+        if(!empty($like)){
+            foreach ($like as $k => $v){
+                $v && $filters[] = [$k,'like','%'.$v.'%'];
+            }
+        }
+
         if(!empty($other)){
             foreach ($other as $k => $v){
                 if(!$v){
