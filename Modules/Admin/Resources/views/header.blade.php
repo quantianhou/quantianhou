@@ -4,7 +4,8 @@
         <i class="fa fa-bars"></i>
     </button>
     <a class="bjui-navbar-logo" href="#">
-        <img style="width:50%; margin-left:0px;margin-top:12px;"src="/B-JUI/logo.png">
+        {{--<img style="width:50%; margin-left:0px;margin-top:12px;"src="/B-JUI/logo.png">--}}
+        <img style="width:20%; margin-left:0px;margin-top:12px;"src="/B-JUI/logo.png">
     </a>
 </div>
 <nav id="bjui-navbar-collapse">

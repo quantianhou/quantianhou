@@ -28,7 +28,7 @@
 <script src="/B-JUI/BJUI/js/jquery-1.7.2.min.js"></script>
 <script src="/B-JUI/BJUI/js/jquery.cookie.js"></script>
 <!--[if lte IE 9]>
-<script src="BJUI/other/jquery.iframe-transport.js"></script>    
+<script src="BJUI/other/jquery.iframe-transport.js"></script>
 <![endif]-->
 <!-- BJUI.all 分模块压缩版 -->
 <script src="/B-JUI/BJUI/js/bjui-all.js"></script>
@@ -65,7 +65,7 @@
 <script type="text/javascript">
 $(function() {
 
-	
+
 
 
     BJUI.init({
@@ -86,25 +86,25 @@ $(function() {
         debug        : true,    // [可选]调试模式 [true|false，默认false]
         theme        : 'sky' // 若有Cookie['bjui_theme'],优先选择Cookie['bjui_theme']。皮肤[五种皮肤:default, orange, purple, blue, red, green]
     })
-    
+
     // main - menu
     $('#bjui-accordionmenu')
         .collapse()
         .on('hidden.bs.collapse', function(e) {
             $(this).find('> .panel > .panel-heading').each(function() {
                 var $heading = $(this), $a = $heading.find('> h4 > a')
-                
+
                 if ($a.hasClass('collapsed')) $heading.removeClass('active')
             })
         })
         .on('shown.bs.collapse', function (e) {
             $(this).find('> .panel > .panel-heading').each(function() {
                 var $heading = $(this), $a = $heading.find('> h4 > a')
-                
+
                 if (!$a.hasClass('collapsed')) $heading.addClass('active')
             })
         })
-    
+
     $(document).on('click', 'ul.menu-items > li > a', function(e) {
         var $a = $(this), $li = $a.parent(), options = $a.data('options').toObj()
         var onClose = function() {
@@ -114,7 +114,7 @@ $(function() {
             $('#bjui-accordionmenu').find('ul.menu-items > li').removeClass('switch')
             $li.addClass('switch')
         }
-        
+
         $li.addClass('active')
         if (options) {
             options.url      = $a.attr('href')
@@ -137,14 +137,14 @@ STEP = 0;
 //菜单-事件
 function MainMenuClick(event, treeId, treeNode) {
     event.preventDefault()
-    
+
     if (treeNode.isParent) {
         var zTree = $.fn.zTree.getZTreeObj(treeId)
-        
+
         zTree.expandNode(treeNode, !treeNode.open, false, true, true)
         return
     }
-    
+
     if (treeNode.target && treeNode.target == 'dialog')
         $(event.target).dialog({id:treeNode.tabid, url:treeNode.url, title:treeNode.name})
     else

@@ -18,13 +18,8 @@
                             <label for="">状态</label>
                             <select name="status" id="status"  data-toggle="selectpicker">
                                 <option value="" selected>请选择</option>
-                                <option value="1">新增</option>
-                                <option value="2">待审核</option>
-                                <option value="3">退回</option>
-                                <option value="4">通过</option>
-                                <option value="5">拒绝</option>
-                                <option value="7">签约</option>
-                                <option value="8">取消签约</option>
+                                <option value="!7">冻结</option>
+                                <option value="7">正常</option>
                             </select>
                         </td>
                     </tr>
@@ -45,9 +40,9 @@
                         </td>
                         <td class="">
                             <label for="">创建日期</label>
-                            <input type="text" name="created_at_start" id="created_at_start" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
+                            <input type="text" name="created_at_start" id="created_at_start" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
                             -
-                            <input type="text" name="created_at_end" id="created_at_end" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
+                            <input type="text" name="created_at_end" id="created_at_end" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
                         </td>
                     </tr>
                     <tr>
@@ -57,9 +52,9 @@
                         </td>
                         <td class="">
                             <label for="">更新日期</label>
-                            <input type="text" name="updated_at_start" id="updated_at_start" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
+                            <input type="text" name="updated_at_start" id="updated_at_start" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
                             -
-                            <input type="text" name="updated_at_end" id="updated_at_end" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
+                            <input type="text" name="updated_at_end" id="updated_at_end" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
                         </td>
                     </tr>
                     <tr>

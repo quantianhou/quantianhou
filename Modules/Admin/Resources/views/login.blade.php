@@ -1,161 +1,100 @@
-<!DOCTYPE html>
-<html>
+<html lang="zh-cn">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>系统登录</title>
-    <script src="/B-JUI/BJUI/js/jquery-1.7.2.min.js"></script>
-    <link href="/B-JUI/BJUI/themes/css/bootstrap.min.css" rel="stylesheet">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link href="/B-JUI/login/pc.css" rel="stylesheet">
+    <link rel="stylesheet" href="/B-JUI/login/global.css" media="all">
+    <link rel="stylesheet" href="/B-JUI/login/layui.css" media="all">
     <style type="text/css">
-        * {
-            font-family: "Verdana", "Tahoma", "Lucida Grande", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
+        .blk_div{
+            width:150px;height:120;margin:20px;float:left;
         }
-
-        body {
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
+        .blk_table{
+            height:100%;
+            width:100%;
+            background-color:#c2c2c2;
         }
-
-        a:link {
-            color: #285e8e;
-        }
-
-        .main_box {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            margin-top: -180px;
-            margin-left: -300px;
-            padding: 30px;
-            width: 600px;
-            height: 340px;
-            background: #FAFAFA;
-            background: rgba(255, 255, 255, 0.5);
-            border: 1px #DDD solid;
-            border-radius: 5px;
-            -webkit-box-shadow: 1px 5px 8px #888888;
-            -moz-box-shadow: 1px 5px 8px #888888;
-            box-shadow: 1px 5px 8px #888888;
-        }
-
-        .main_box .setting {
-            position: absolute;
-            top: 5px;
-            right: 10px;
-            width: 10px;
-            height: 10px;
-        }
-
-        .main_box .setting a {
-            color: #FF6600;
-        }
-
-        .main_box .setting a:hover {
-            color: #555;
-        }
-
-        .login_logo {
-            margin-bottom: 20px;
-            height: 45px;
-            text-align: center;
-        }
-
-        .login_logo img {
-            height: 45px;
-        }
-
-        .login_msg {
-            text-align: center;
-            font-size: 16px;
-        }
-
-        .login_form {
-            padding-top: 20px;
-            font-size: 16px;
-        }
-
-        .login_box .form-control {
-            display: inline-block;
-            *display: inline;
-            zoom: 1;
-            width: auto;
-            font-size: 18px;
-        }
-
-        .login_box .form-control.x319 {
-            width: 319px;
-        }
-
-        .login_box .form-control {
-            width: 164px;
-        }
-
-        .login_box .form-group {
-            margin-bottom: 20px;
-        }
-
-        .login_box .form-group label.t {
-            width: 120px;
-            text-align: right;
-            cursor: pointer;
-        }
-
-        .login_box .form-group.space {
-            padding-top: 15px;
-            border-top: 1px #FFF dotted;
-        }
-
-        .login_box .form-group img {
-            margin-top: 1px;
-            height: 32px;
-            vertical-align: top;
-        }
-
-        .login_box .m {
-            cursor: pointer;
-        }
-
-        .bottom {
-            text-align: center;
-            font-size: 12px;
+        .blk_table td{
+            color:white;
         }
     </style>
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            width:100%;
+        }
+    </style>
+    <title>药美康臣-用户登录 </title>
 </head>
-<body style="background-image:url('/B-JUI/banner.jpg') ">
-<div class="main_box">
-    <div class="login_box">
-        <div class="login_form">
-            <div id="login_form">
-                <input type="hidden" id='isAli' name='isAli' value=''/>
-                <div id='dfgdf' class="form-group">
-                    <label for="js_username" class="t">用户名：</label>
-                    <input id="js_username" value="" name="user_name" type="text" class="form-control x319 in" autocomplete="off">
-                </div>
-                <div class="form-group">
-                    <label for="js_password" class="t">密　码：</label>
-                    <input id="js_password" value="" name="password" type="password" class="form-control x319 in">
-                </div>
-                <div class="form-group space" style="margin-left:50px">
-                    <label class="t"></label>　　　
-                    <input type="submit" id="login_ok" value="&nbsp;登&nbsp;录&nbsp;" class="btn btn-primary btn-lg">&nbsp;&nbsp;&nbsp;&nbsp;
-                    {{--<a value="&nbsp;重&nbsp;置&nbsp;" class="btn btn-default btn-lg">&nbsp;重&nbsp;置&nbsp;</a>--}}
-                </div>
-            </div>
+<body style="overflow-y:hidden;"><input value="/merp" id="ctx" type="hidden">
+<link href="/B-JUI/login/style.css" rel="stylesheet">
+
+<img alt="" src="/B-JUI/login/5.png" style="position:absolute;z-index:0;overflow-y: hidden" id="loginbg" width="100%">
+
+<div class="login_c">
+    <div class="login_m">
+        <table width="100%" align="center">
+            <tbody><tr>
+                <td>
+
+                </td>
+            </tr>
+            </tbody></table>
+        <div class="panel" id="lg_panel" style="top: 311px; left: 800px;" align="center">
+            <span>欢迎登陆-药美康臣</span>
+            <p class="loginPrompt" id="errMsg"></p>
+            <br>
+            <form id="login_form" action="/merp/pc/signin.do" method="post">
+	            <span class="ipt">
+	            <i class="fa fa-user" style="font-size:18px;position:absolute;margin-left:20px;margin-top:11px;"></i>
+	            <input id="js_username" name="username" class="easyui-validatebox formText2 validatebox-text validatebox-invalid" placeholder="请输入用户名" style="width:220px; height:40px;font-size:15px; line-height:40px;margin-left:10px;" data-options="required:true" title="" type="text">
+	            </span>
+	            <span class="ipt">
+	            <i class="fa fa-lock" style="font-size:20px;position:absolute;margin-left:20px;margin-top:11px;"></i>
+	            <input id="js_password" name="password" autocomplete="off" class="easyui-validatebox formText2 validatebox-text validatebox-invalid" placeholder="请输入您的密码" style="width:220px; height:40px;font-size:15px; line-height:40px;margin-left:10px;" data-options="required:true" title="" type="password">
+	            </span>
+	            <span class="ipt">
+	            <input id="login_ok" class="layui-btn layui-btn-big layui-btn-normal layui-btn-radius" style="margin-left:-5px;width:250px" value="登&nbsp;&nbsp;录" type="button">
+	            </span>
+                <input value="" id="screen_width" name="width" type="hidden">
+                <input value="" id="screen_height" name="height" type="hidden">
+                <input value="" id="loginmac" name="loginmac" type="hidden">
+            </form>
         </div>
     </div>
-
-    <div class="bottom">Copyright &copy; 2018 </div>
 </div>
-</body>
-</html>
+<div class="login_b" style="display: none;">©2018 药美康臣-版权所有</div>
+
+<div class="panel window" style="display: none; width: 238px; left: 835px; top: 238px;"><div class="panel-header panel-header-noborder window-header" style="width: 238px;"><div class="panel-title">打印模板选择</div><div class="panel-tool"><a href="javascript:void(0)" class="panel-tool-close"></a></div></div><div id="printWindowSelect" class="easyui-window panel-body panel-body-noborder window-body" title="" data-options="modal:true,closed:true,collapsible:false,minimizable:false,maximizable:false,close:function(){$('#printSelectId').html('');}" style="width: 236px; height: 134px;">
+
+    </div></div><div class="window-shadow" style="display: none; left: 835px; top: 238px;"></div><div class="window-mask" style="display: none; width: 1920px; height: 1058px;"></div><div class="panel window" style="display: none; width: 0px; left: 954px; top: 305px;"><div class="panel-header panel-header-noborder window-header" style="width: 0px;"><div class="panel-title">.</div><div class="panel-tool"><a href="javascript:void(0)" class="panel-tool-close"></a></div></div><div id="otherWindow" class="easyui-window panel-body panel-body-noborder window-body" title="" data-options="modal:false,closed:true,collapsible:false,minimizable:false,maximizable:false,resizable:false" style="width: 0px; height: 0px;">
+
+    </div></div><div class="window-shadow" style="display: none; left: 954px; top: 305px;"></div><div class="panel window" style="display: none; width: 588px; left: 660px; top: 148px;"><div class="panel-header panel-header-noborder window-header" style="width: 588px;"><div class="panel-title">查看消息通知</div><div class="panel-tool"><a href="javascript:void(0)" class="panel-tool-collapse"></a><a href="javascript:void(0)" class="panel-tool-min"></a><a href="javascript:void(0)" class="panel-tool-max"></a><a href="javascript:void(0)" class="panel-tool-close"></a></div></div><div id="msgWindow" class="easyui-window panel-body panel-body-noborder window-body" title="" data-options="modal:false,closed:true" style="width: 586px; height: 314px;">
+
+    </div></div><div class="window-shadow" style="display: none; left: 660px; top: 148px;"></div><div class="layui-layer-move"></div>
+</body></html>
+
+
+<script src="/B-JUI/BJUI/js/jquery-1.7.2.min.js"></script>
 <script src="http://static.littleobean.com/js/layer3.0/layer.js"></script>
 <script type="text/javascript">
+    var layerid = null;
+    document.onkeydown = function(){                //网页内按下回车触发
+        if(event.keyCode==13)
+        {
+            if(layerid==null){
+                document.getElementById("login_ok").click();
+            }else{
+                layerid = null;
+                layer.closeAll();
+            }
+            return false;
+        }
+    }
     $(function () {
         $("#login_ok").click(function () {
             var data = {username: $('#js_username').val(), password: $('#js_password').val()};
             if (!data.username || !data.password) {
-                layer.alert('用户名或密码为空');
+                layerid = layer.alert('用户名或密码为空');
                 return false;
             }
 
@@ -166,7 +105,7 @@
                 dataType: 'json',
                 success: function (result) {
                     if (result.error > 0) {
-                        return layer.alert(result.info);
+                        return (layerid = layer.alert(result.info), 0);
                     }
                     window.location.href = '/index';
                 },

@@ -1,0 +1,18 @@
+.login_h{ width:1000px; height:90px; margin:0 auto;}
+.login_h .left{width:500px; height:80px; float:left; color:#000; font-size:30px; line-height:80px;font-weight: bold; padding-top:5px;}
+.login_h .right{width:300px; height:80px; float:right; color:#888; }
+.login_h .right li{float:right; margin:50px 8px  0 8px;}
+.login_h .right li a{ color:#888; }
+.login_h .right li a:hover{color:#06c; text-decoration:none;}
+.login_c{background:#0C2336;}
+.login_m .loginPrompt{margin-left: 30px;font-family:"微软雅黑", "微软雅黑", Arial, sans-serif, Verdana, Tahoma;color: red}
+.login_m{ height:100%;width:100%;} 
+.login_m .panel{ width:330px; height:340px; position:relative;}
+.login_m .panel span{font-size:28px; color:#E9C343; height:40px; line-height:40px; display:block; font-family:"微软雅黑", "微软雅黑", Arial, sans-serif, Verdana, Tahoma;}
+.login_m .panel .ipt{margin:10px 30px 10px 30px; display:block; color:#333;}
+.login_m .panel .ipt .formText2{padding-left:35px;border:1px solid rgb(221,221,221);border-radius:5px}
+.login_m .panel .but{background:rgb(94,197,251);border-radius:5px; width:255px; height:44px;display:block; margin:10px 30px 0px 30px;font-size:20px; color:#fff; text-align:center; line-height:44px; cursor:pointer; border:0px;}
+.login_m .panel .but:hover{text-decoration:none; background:rgb(224,237,254)}
+.login_m .panel .bj{width:100%; height:40px; border-top:1px solid #e6ecf0;float:right;position:absolute; bottom:-10px; z-index:1;}
+.login_m .panel .bj a{color:#fff;float:right; margin-right:30px; line-height:40px;}
+.login_b{width:1004px; height:40px; margin:0 auto; text-align:center; color:#888; padding-top:20px;}

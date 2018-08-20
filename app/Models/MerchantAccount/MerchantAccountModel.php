@@ -33,7 +33,12 @@ class MerchantAccountModel extends Model
 
     public function getUserStatusNameAttribute()
     {
-        return array_get([1 => '正常', 2 => '禁用'], $this->user_status);
+        if($this->status != 7){
+            return "冻结";
+        }else{
+            return "正常";
+        }
+       // return array_get([1 => '正常', 2 => '禁用'], $this->user_status);
     }
 
     /**

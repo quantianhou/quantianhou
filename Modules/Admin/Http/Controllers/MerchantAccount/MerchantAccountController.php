@@ -49,7 +49,12 @@ class MerchantAccountController extends AdminController
             $where['a_merchant.merchant_code'] = $merchant_code;
         }
         if(!empty($status)){
-            $where['a_merchant.status'] = $status;
+            if($status == 7){
+                $where[] = ['a_merchant.status','=', 7];
+            }
+            if($status == "!7"){
+                $where[] = ['a_merchant.status','<>', 7];
+            }
         }
         if(!empty($address_detail)){
             $where[] = ['a_merchant.address_detail','LIKE','%'.$address_detail.'%'];
@@ -59,6 +64,8 @@ class MerchantAccountController extends AdminController
             $byAddAdminOrUpdateAdmin = 'add';
         }
         if(!empty($created_at_start) && !empty($created_at_end)){
+            $created_at_start .= " 00:00:00";
+            $created_at_end .= " 23:59:59";
             $where[] = ['users.created_at','>=',$created_at_start];
             $where[] = ['users.created_at','<=',$created_at_end];
         }
@@ -67,6 +74,8 @@ class MerchantAccountController extends AdminController
             $byAddAdminOrUpdateAdmin = 'update';
         }
         if(!empty($updated_at_start) && !empty($updated_at_end)){
+            $updated_at_start .= " 00:00:00";
+            $updated_at_end .= " 23:59:59";
             $where[] = ['users.updated_at','>=',$updated_at_start];
             $where[] = ['users.updated_at','<=',$updated_at_end];
         }
