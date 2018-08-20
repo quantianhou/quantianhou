@@ -466,8 +466,8 @@
     }
     $(this).bjuiajax('doAjax', obj)
 
-    function checkerror() {
-        alert('dfgh');
+    function checkerror(res) {
+        $(document).alertmsg('error',res.info);
     }
 
 </script>
