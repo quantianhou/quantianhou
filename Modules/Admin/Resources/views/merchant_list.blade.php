@@ -248,6 +248,10 @@
         var id_arr = [];
         for(var k in selectedData){
             if(!isNaN(k)){//过滤
+                if(selectedData[k]['status'] == 4) {
+                    BJUI.alertmsg('error', "商家["+selectedData[k]['merchant_name']+"]已通过审核！");
+                    return;
+                }
                 var d = selectedData[k];
                 id_arr.push(d.id);
             }
