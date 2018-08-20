@@ -116,7 +116,7 @@
 
     function toimages(obj,index,v) {
         parent.GIMG = {id:v,index:index}
-        $(obj).navtab({id:'toimages', url:'/toimages', title:'商品图片'});
+        $(obj).dialog({id:'toimages', url:'/toimages', title:'商品图片'});
     }
 
 </script>
