@@ -385,9 +385,22 @@
     $('#goodsid').val(parent.GID);
 
     //输入联动
-    $('#single_name,#brand,#specifications').on('input',function(){
-        alert('7489');
+    $('#single_name,#specifications').on('input',function(){
+        inputInit();
     });
+    $('#brand').on('change',function(){
+        inputInit();
+    });
+
+    function inputInit() {
+        var single_name = $('#single_name').val();
+        var specifications = $('#specifications').val();
+        var brand = $('#brand').val();
+
+        $('#name').val(brand+'，'+single_name+'，'+specifications);
+        $('#show_name').val('【'+brand+'】'+single_name);
+        $('#search_words').val(brand+'，'+single_name);
+    }
 
     //获取两个分类
     var obj = {
