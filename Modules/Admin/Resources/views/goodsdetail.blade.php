@@ -391,7 +391,7 @@
     $.CurrentNavtab.find('#specifications').on('input',function(){
         inputInit();
     });
-    $.CurrentNavtab.find(document).on('change','#brand',function(){
+    $.CurrentNavtab.find('form').on('change','#brand',function(){
         inputInit();
     });
 
