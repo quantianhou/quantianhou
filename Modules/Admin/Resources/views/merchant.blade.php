@@ -125,7 +125,7 @@
 
                 <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>详细地址：</label>
+                        <label class="label-control"><span style="color:red">*</span>选择地区：</label>
                     </td>
                     <td>
                         <div class="row-input">
@@ -142,6 +142,14 @@
                                 <option value="">--区县--</option>
                             </select>
                         </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" width="300px;">
+                        <label class="label-control"><span style="color:red">*</span>详细地址：</label>
+                    </td>
+                    <td>
+                        <input type="text" placeholder="请填写详细地址" name="address_detail" size="30" data-rule="required"><span></span>
                     </td>
                 </tr>
 
