@@ -382,23 +382,23 @@
     </ul>
 </div>
 <script>
-    $('#goodsid').val(parent.GID);
+    $.CurrentNavtab.find('#goodsid').val(parent.GID);
 
     //输入联动
-    $('#single_name').on('input',function(){
+    $.CurrentNavtab.find('#single_name').on('input',function(){
         inputInit();
     });
-    $('#specifications').on('input',function(){
+    $.CurrentNavtab.find('#specifications').on('input',function(){
         inputInit();
     });
-    $(document).on('change','#brand',function(){
+    $.CurrentNavtab.find(document).on('change','#brand',function(){
         inputInit();
     });
 
     function inputInit() {
-        var single_name = $('#single_name').val();
-        var specifications = $('#specifications').val();
-        var brand = $("#brand option:selected").text();
+        var single_name = $.CurrentNavtab.find('#single_name').val();
+        var specifications = $.CurrentNavtab.find('#specifications').val();
+        var brand = $.CurrentNavtab.find("#brand option:selected").text();
 
         $.CurrentNavtab.find('#name').val(brand+'，'+single_name+'，'+specifications);
         $.CurrentNavtab.find('#show_name').val('【'+brand+'】'+single_name);
