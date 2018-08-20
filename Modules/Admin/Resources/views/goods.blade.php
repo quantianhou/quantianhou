@@ -169,7 +169,7 @@
                 <tr>
                     <td>
                         <label for="single_name" class="control-label x85">成分编码：</label>
-                        <input type="text" name="goods[category_component_sn]" id="category_component_sn" value="">
+                        <input type="text" name="goods[category_component]" id="category_component_sn" value="">
                     </td>
                     <td>
                         <label for="single_name" class="control-label x85">成分名称：</label>
@@ -177,7 +177,7 @@
                     </td>
                     <td>
                         <label for="single_name" class="control-label x85">类别编码：</label>
-                        <input type="text" name="goods[category_goods_sn]" id="category_goods_sn" value="">
+                        <input type="text" name="goods[category_goods]" id="category_goods_sn" value="">
                     </td>
                     <td>
                         <label for="single_name" class="control-label x85">类别名称：</label>
