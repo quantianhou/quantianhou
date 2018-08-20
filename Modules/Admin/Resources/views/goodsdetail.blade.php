@@ -441,7 +441,7 @@
             $.CurrentNavtab.find('fieldset select').selectpicker('refresh');
 
             if(parent.GID > 0){
-                $('#sn').attr('readonly','');
+                $.CurrentNavtab.find('#sn').attr('readonly',true);
                 var obj = {
                     url : '/api/goods/detail',
                     type : 'POST',
