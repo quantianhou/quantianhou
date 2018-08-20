@@ -72,7 +72,7 @@ class GoodsController extends AdminController
             if(!empty($hasGoods)){
                 return $this->json([
                     'error' => 2001,
-                    'info' => '已存在',
+                    'info' => 'sn已存在',
                     'code' => 2001
                 ]);
             }
