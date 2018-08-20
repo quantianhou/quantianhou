@@ -385,7 +385,10 @@
     $('#goodsid').val(parent.GID);
 
     //输入联动
-    $('#single_name,#specifications').on('input',function(){
+    $('#single_name').on('input',function(){
+        inputInit();
+    });
+    $('#specifications').on('input',function(){
         inputInit();
     });
     $('#brand').on('change',function(){
@@ -397,9 +400,9 @@
         var specifications = $('#specifications').val();
         var brand = $('#brand').val();
 
-        $('#name').val(brand+'，'+single_name+'，'+specifications);
-        $('#show_name').val('【'+brand+'】'+single_name);
-        $('#search_words').val(brand+'，'+single_name);
+        $.CurrentNavtab.find('#name').val(brand+'，'+single_name+'，'+specifications);
+        $.CurrentNavtab.find('#show_name').val('【'+brand+'】'+single_name);
+        $.CurrentNavtab.find('#search_words').val(brand+'，'+single_name);
     }
 
     //获取两个分类
