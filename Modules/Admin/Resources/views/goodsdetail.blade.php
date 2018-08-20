@@ -392,7 +392,7 @@
 
             for(var i in res.brand){
                 if(i >= 0) {
-                    $.CurrentNavtab.find('fieldset #' + res.brand[i].select_name).append('<option value="' + res.brand[i].id + '">' + res.brand[i].select_option + '</option>');
+                    $.CurrentNavtab.find('fieldset #' + res.brand[i].select_name).append('<option value="' + res.brand[i].extra + '">' + res.brand[i].select_option + '</option>');
                 }
             }
 
@@ -403,7 +403,7 @@
                     for(var j=1;j<res.goods[i].level;j++){
                         prefix += ' -- ';
                     }
-                    $.CurrentNavtab.find('fieldset #category_goods').append('<option value="'+res.goods[i].id+'">'+prefix+res.goods[i].category_name+'</option>');
+                    $.CurrentNavtab.find('fieldset #category_goods').append('<option value="'+res.goods[i].category_sn+'">'+prefix+res.goods[i].category_name+'</option>');
                 }
             }
 
@@ -413,34 +413,36 @@
                     for(var j=1;j<res.component[i].level;j++){
                         prefix += ' -- ';
                     }
-                    $.CurrentNavtab.find('fieldset #category_component').append('<option value="'+res.component[i].id+'">'+prefix+res.component[i].category_name+'</option>');
+                    $.CurrentNavtab.find('fieldset #category_component').append('<option value="'+res.component[i].category_sn+'">'+prefix+res.component[i].category_name+'</option>');
                 }
             }
 
             $.CurrentNavtab.find('fieldset select').selectpicker('refresh');
+
+            if(parent.GID > 0){
+                var obj = {
+                    url : '/api/goods/detail',
+                    type : 'POST',
+                    data : {id:parent.GID},
+                    callback : function (res) {
+                        for(var i in res.data.extra){
+                            $.CurrentNavtab.find('fieldset #'+i).val(res.data.extra[i]);
+                        }
+
+                        //编辑器
+                        res.data.extra && KindEditor.html("#goods_desc", res.data.extra.goods_desc);
+                        for(var i in res.data.goods){
+                            $.CurrentNavtab.find('fieldset #'+i).val(res.data.goods[i]);
+                        }
+
+                        $('fieldset select').selectpicker('refresh');
+                    }
+                }
+                $(this).bjuiajax('doAjax', obj)
+            }
         }
     }
     $(this).bjuiajax('doAjax', obj)
 
-    if(parent.GID > 0){
-        var obj = {
-            url : '/api/goods/detail',
-            type : 'POST',
-            data : {id:parent.GID},
-            callback : function (res) {
-                for(var i in res.data.extra){
-                    $.CurrentNavtab.find('fieldset #'+i).val(res.data.extra[i]);
-                }
 
-                //编辑器
-                res.data.extra && KindEditor.html("#goods_desc", res.data.extra.goods_desc);
-                for(var i in res.data.goods){
-                    $.CurrentNavtab.find('fieldset #'+i).val(res.data.goods[i]);
-                }
-
-                $('fieldset select').selectpicker('refresh');
-            }
-        }
-        $(this).bjuiajax('doAjax', obj)
-    }
 </script>
