@@ -9,15 +9,17 @@ use Modules\Admin\Http\Controllers\BaseController;
 use Modules\admin\Http\Requests\Merchant\MerchantRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use App\Models\Config\ConfigModel;
 
 class MerchantController extends BaseController
 {
     private $merchants;
 
-    public function __construct(MerchantRepository $merchants,AreaRepository $areas)
+    public function __construct(MerchantRepository $merchants,AreaRepository $areas,ConfigModel $config)
     {
         $this->merchants = $merchants;
         $this->areas = $areas;
+        $this->config = $config;
     }
     /**
      * Display a listing of the resource.
@@ -374,7 +376,8 @@ class MerchantController extends BaseController
 
     private function makeMerchantCode()
     {
-        return md5(time() . rand(0, 999999));
+        $merchant_code = $this->config->getMerchantCode();
+        return $merchant_code;
     }
 
     /**
