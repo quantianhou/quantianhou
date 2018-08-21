@@ -47,9 +47,9 @@
                     </td>
                     <td class="">
                         <label for="">签约时间</label>
-                        <input type="text" name="contract_time_start" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
+                        <input type="text" name="contract_time_start" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
                         -
-                        <input type="text" name="contract_time_end" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
+                        <input type="text" name="contract_time_end" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
                     </td>
                     <td class="">
                         <label for="">合同编号</label>
@@ -91,9 +91,9 @@
                     </td>
                     <td class="">
                         <label for="">合同有效期</label>
-                        <input type="text" name="contract_start_time" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
+                        <input type="text" name="contract_start_time" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
                         -
-                        <input type="text" name="contract_end_time" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
+                        <input type="text" name="contract_end_time" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
                     </td>
                     {{--<td class="">--}}
                         {{--<label for="">档案类型</label>--}}
@@ -107,9 +107,9 @@
                 <tr>
                     <td class="">
                         <label for="">药证截止日期</label>
-                        <input type="text" name="drug_license_expriy_date_start" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
+                        <input type="text" name="drug_license_expriy_date_start" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
                         -
-                        <input type="text" name="drug_license_expriy_date_end" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
+                        <input type="text" name="drug_license_expriy_date_end" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
                     </td>
                     <td class="">
                         <button id="merchant_list_queryBtn" type="submit" class="btn btn-default" data-icon="search" data-toggle="">搜索</button>

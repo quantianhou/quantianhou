@@ -48,19 +48,23 @@ class MerchantController extends BaseController
                         if($val['name'] == 'contract_time_start'){
                             $type = '>=';
                             $val['name'] = 'contract_time';
+                            $val['value'] .= ' 00:00:00';
                         }
                         if($val['name'] == 'contract_time_end'){
                             $type = '<=';
                             $val['name'] = 'contract_time';
+                            $val['value'] .= ' 23:59:59';
                         }
                     }
                     //合同有效日期
                     if(in_array($val['name'],["contract_start_time",'contract_end_time'])){
                         if($val['name'] == 'contract_start_time'){
                             $type = '<=';
+                            $val['value'] .= ' 00:00:00';
                         }
                         if($val['name'] == 'contract_end_time'){
                             $type = '>=';
+                            $val['value'] .= ' 23:59:59';
                         }
                     }
                     //药证截止日期
@@ -68,10 +72,12 @@ class MerchantController extends BaseController
                         if($val['name'] == 'drug_license_expriy_date_start'){
                             $type = '>=';
                             $val['name'] = 'drug_license_expriy_date';
+                            $val['value'] .= ' 00:00:00';
                         }
                         if($val['name'] == 'drug_license_expriy_date_end'){
                             $type = '<=';
                             $val['name'] = 'drug_license_expriy_date';
+                            $val['value'] .= ' 23:59:59';
                         }
                     }
                     $filters[] = [$val['name'],$type, $val['value']];
