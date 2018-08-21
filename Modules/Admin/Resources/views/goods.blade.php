@@ -169,11 +169,11 @@
                 <tr>
                     <td>
                         <label for="single_name" class="control-label x85">成分编码：</label>
-                        <input type="text" name="goods[category_component]" id="category_component_sn" value="">
+                        <input type="text" name="goods[component]" id="category_component_sn" value="">
                     </td>
                     <td>
                         <label for="single_name" class="control-label x85">成分名称：</label>
-                        <input type="text" name="goods[category_component_name]" id="category_component_name" value="">
+                        <input type="text" name="other[component_name]" id="category_component_name" value="">
                     </td>
                     <td>
                         <label for="single_name" class="control-label x85">类别编码：</label>
@@ -248,7 +248,7 @@
                 {name: 'approval_number', width: 150, align:'center', label: '批准文号'},
                 {name: 'company', width: 150, align:'center', label: '生产企业'},
                 {name: 'place', width: 150, align:'center', label: '产地'},
-                {name: 'category_component_sn', width: 150, align:'center', label: '成分编码'},
+                {name: 'component', width: 150, align:'center', label: '成分编码'},
                 {name: 'category_goods_sn', width: 150, align:'center', label: '类别编码'},
                 {name: 'category_goods_name', width: 150, align:'center', label: '类别名称'},
                 {name: 'updated_at', width: 150, align:'center', label: '操作时间'},

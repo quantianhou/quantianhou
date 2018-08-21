@@ -55,6 +55,11 @@ class GoodsController extends AdminController
                 }
                 $k== 'sn_start' && $filters[] = ['sn','>=',$v];
                 $k== 'sn_end' && $filters[] = ['sn','<=',$v];
+                $k== 'component_name' && $filters[] = ['component','=',DataModel::where([
+                        'select_name' => 'component',
+                        'select_option' => $v
+                    ])->first()->extra ?? ''];
+
             }
         }
 
