@@ -7,7 +7,7 @@ class ComponentModel extends BaseModel {
 
     protected  $table = 'a_category_component';
 
-    protected $fillable = ['category_name','parent_id','category_sn'];
+    protected $fillable = ['category_name','parent_id','category_sn','control_code'];
 
     public function getId($code = '' , $names = ''){
 

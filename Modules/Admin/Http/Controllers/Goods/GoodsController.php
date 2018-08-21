@@ -35,11 +35,19 @@ class GoodsController extends AdminController
         $filters = [];
         $goods = $request->get('goods');
         $other = $request->get('other');
+        $like = $request->get('like');
         if(!empty($goods)){
             foreach ($goods as $k => $v){
                 $v && $filters[] = [$k,'=',$v];
             }
         }
+
+        if(!empty($like)){
+            foreach ($like as $k => $v){
+                $v && $filters[] = [$k,'like','%'.$v.'%'];
+            }
+        }
+
         if(!empty($other)){
             foreach ($other as $k => $v){
                 if(!$v){
@@ -47,10 +55,15 @@ class GoodsController extends AdminController
                 }
                 $k== 'sn_start' && $filters[] = ['sn','>=',$v];
                 $k== 'sn_end' && $filters[] = ['sn','<=',$v];
+                $k== 'component_name' && $filters[] = ['component','=',DataModel::where([
+                        'select_name' => 'component',
+                        'select_option' => $v
+                    ])->first()->extra ?? ''];
+
             }
         }
 
-        $pageSize = $request->get('pageSize', 2);
+        $pageSize = $request->get('pageSize', 20);
         $pageCurrent = $request->get('pageCurrent');
         $list =  $this->goods->getListByWhere($filters, ['*'], [], $pageSize, $pageCurrent);
 
@@ -72,7 +85,7 @@ class GoodsController extends AdminController
             if(!empty($hasGoods)){
                 return $this->json([
                     'error' => 2001,
-                    'info' => '已存在',
+                    'info' => 'sn已存在',
                     'code' => 2001
                 ]);
             }
@@ -123,9 +136,12 @@ class GoodsController extends AdminController
      */
     public function options(){
         //品牌
-        $brand = $this->dataModel->where([
-            ['id','>',0]
-        ])->get();
+        $brand = $this->dataModel->whereIn('select_name',['brand'])->limit(100)->get()->toArray();
+        $component = $this->dataModel->whereIn('select_name',['component'])->limit(100)->get()->toArray();
+        $data = $this->dataModel->whereIn('select_name',['control_code','dosage_form','save_method','unit'])->get()->toArray();
+
+        $data = array_merge($data,$brand);
+        $data = array_merge($data,$component);
 
         //商品分类
         $category_goods = $this->categoryGoodsModel->get();
@@ -134,10 +150,34 @@ class GoodsController extends AdminController
         $category_component = $this->categoryComponentModel->get();
 
         return $this->json([
-            'brand' => $brand,
-            'goods' => self::merge($category_goods),
-            'component' => self::merge2($category_component),
+            'brand' => $data,
+            'goods' => $category_goods,
+            'component' => $category_component,
         ]);
+
+    }
+
+    /**
+     * 商品图片
+     */
+    public function images(Request $request){
+
+        $id = $request->get('id');
+        $index = $request->get('index');
+
+        $goods = \App\Models\Goods\GoodsModel::find($id);
+
+        $images = json_decode($goods->images,true);
+        $data = [];
+        if($index == 1){//大图
+            $data['images'] = $images['big'] ?? [];
+        }else if($index == 2){//中图
+            $data['images'] = $images['middle'] ?? [];
+        }else{//小图
+            $data['images'] = $images['small'] ?? [];
+        }
+
+        return $this->json($data);
 
     }
 

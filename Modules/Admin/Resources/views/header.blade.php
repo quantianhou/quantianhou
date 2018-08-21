@@ -4,7 +4,8 @@
         <i class="fa fa-bars"></i>
     </button>
     <a class="bjui-navbar-logo" href="#">
-        <img style="width:50%; margin-left:0px;margin-top:12px;"src="/B-JUI/logo.png">
+        {{--<img style="width:50%; margin-left:0px;margin-top:12px;"src="/B-JUI/logo.png">--}}
+        <img style="width:20%; margin-left:0px;margin-top:12px;"src="/B-JUI/logo.png">
     </a>
 </div>
 <nav id="bjui-navbar-collapse">
@@ -47,7 +48,13 @@
                 if (!(i >= 0)) {
                     continue;
                 }
-                appendStr += '<li><a href="javascript:;" data-toggle="slidebar"><i class="fa fa-database"></i> ' + result.data[i].name + '</a>\
+                var cls = '';
+//                if(i == 0){
+//                    cls = 'class="active"';
+//                }else{
+//                    cls = '';
+//                }
+                appendStr += '<li '+cls+'><a href="javascript:;" data-toggle="slidebar"><i class="fa fa-database"></i> ' + result.data[i].name + '</a>\
                         <div class="items hide" data-noinit="true">\
                              <ul class="menu-items" data-faicon="table">';
                 mix = result.data[i].child;

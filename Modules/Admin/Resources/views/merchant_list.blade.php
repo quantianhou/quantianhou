@@ -47,9 +47,9 @@
                     </td>
                     <td class="">
                         <label for="">签约时间</label>
-                        <input type="text" name="contract_time_start" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
+                        <input type="text" name="contract_time_start" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
                         -
-                        <input type="text" name="contract_time_end" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
+                        <input type="text" name="contract_time_end" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
                     </td>
                     <td class="">
                         <label for="">合同编号</label>
@@ -91,9 +91,9 @@
                     </td>
                     <td class="">
                         <label for="">合同有效期</label>
-                        <input type="text" name="contract_start_time" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
+                        <input type="text" name="contract_start_time" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
                         -
-                        <input type="text" name="contract_end_time" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
+                        <input type="text" name="contract_end_time" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
                     </td>
                     {{--<td class="">--}}
                         {{--<label for="">档案类型</label>--}}
@@ -107,9 +107,9 @@
                 <tr>
                     <td class="">
                         <label for="">药证截止日期</label>
-                        <input type="text" name="drug_license_expriy_date_start" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
+                        <input type="text" name="drug_license_expriy_date_start" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
                         -
-                        <input type="text" name="drug_license_expriy_date_end" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
+                        <input type="text" name="drug_license_expriy_date_end" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
                     </td>
                     <td class="">
                         <button id="merchant_list_queryBtn" type="submit" class="btn btn-default" data-icon="search" data-toggle="">搜索</button>
@@ -139,10 +139,6 @@
 			filterThead: false,
 			columns: [
                 {name:'id', width: 100,align:'center',label:'ID',hide:'false'},
-                {name:'merchant_code', width: 150,align:'center',label:'商家编码'},
-                {name:'address_province', width: 150,align:'center',label:'省'},
-                {name:'address_city', width: 150,align:'center',label:'市'},
-                {name:'address_district', width: 150,align:'center',label:'区'},
                 {name: 'merchant_name', width: 150, align:'center', label: '商家名称'},
                 {name: 'merchant_short_name', width: 180, align:'center', label: '商家简称'},
                 {name: 'merchant_contacts', width: 180, align:'center', label: '商家联系人'},
@@ -159,6 +155,10 @@
                 {name: 'contract_cancel_time', width: 70, align:'center', label: '取消签约时间'},
                 {name: 'contract_start_time', width: 70, align:'center', label: '合同有效期'},
                 {name: 'contract_end_time', width: 70, align:'center', label: '合同有效期'},
+                {name:'merchant_code', width: 150,align:'center',label:'商家编码'},
+                {name:'address_province', width: 150,align:'center',label:'省'},
+                {name:'address_city', width: 150,align:'center',label:'市'},
+                {name:'address_district', width: 150,align:'center',label:'区'},
 			],
 			dataUrl: 'api/merchants/index',
 			editUrl: 'api/merchant',
@@ -248,6 +248,10 @@
         var id_arr = [];
         for(var k in selectedData){
             if(!isNaN(k)){//过滤
+                if(selectedData[k]['status'] == 4) {
+                    BJUI.alertmsg('error', "商家["+selectedData[k]['merchant_name']+"]已通过审核！");
+                    return;
+                }
                 var d = selectedData[k];
                 id_arr.push(d.id);
             }

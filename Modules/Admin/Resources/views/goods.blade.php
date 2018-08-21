@@ -12,7 +12,7 @@
         type : 'POST',
         callback : function (res) {
             for(var i in res.brand){
-                $('fieldset #'+res.brand[i].select_name).append('<option value="'+res.brand[i].id+'">'+res.brand[i].select_option+'</option>');
+                $('fieldset #'+res.brand[i].select_name).append('<option value="'+res.brand[i].extra+'">'+res.brand[i].select_option+'</option>');
             }
 
             //category_goods
@@ -22,7 +22,7 @@
                     for(var j=1;j<res.goods[i].level;j++){
                         prefix += ' -- ';
                     }
-                    $('fieldset #category_goods').append('<option value="'+res.goods[i].id+'">'+prefix+res.goods[i].category_name+'</option>');
+                    $('fieldset #category_goods').append('<option value="'+res.goods[i].category_sn+'">'+prefix+res.goods[i].category_name+'</option>');
                 }
             }
 
@@ -49,15 +49,23 @@
         for(var ii in choose){
             json[ii] = choose[ii].id;
         }
-        var obj = {
-            url : '/api/goods/delete',
-            type : 'POST',
-            data : {id:json},
-            callback : function (res) {
-                return $(document).alertmsg('error', '已删除');
+
+        $(document).alertmsg('confirm', '确定删除？', {
+            okCall: function () {
+
+                var obj = {
+                    url : '/api/goods/delete',
+                    type : 'POST',
+                    data : {id:json},
+                    callback : function (res) {
+                        $('#goods_list').datagrid('refresh');
+                    }
+                }
+                $(this).bjuiajax('doAjax', obj)
+
             }
-        }
-        $(this).bjuiajax('doAjax', obj)
+        })
+
     }
 
     //编辑
@@ -107,6 +115,18 @@
         return obj;
     }
 
+    function images(v) {
+
+        return '<a onclick="toimages(this,1,'+v+')">大图</a>&nbsp;&nbsp;&nbsp;' +
+            '<a onclick="toimages(this,2,'+v+')">中图</a>&nbsp;&nbsp;&nbsp;' +
+            '<a onclick="toimages(this,3,'+v+')">小图</a>';
+    }
+
+    function toimages(obj,index,v) {
+        parent.GIMG = {id:v,index:index}
+        $(obj).dialog({id:'toimages', url:'/toimages', title:'商品图片',width:800,height:600});
+    }
+
 </script>
 <div class="bjui-pageContent">
     <form action="" id="goods_search">
@@ -117,7 +137,7 @@
                 <tr>
                     <td>
                         <label for="single_name" class="control-label x85">商品编码：</label>
-                        <input type="text" name="goods[sn]" id="sn" value="">
+                        <input type="text" name="like[sn]" id="sn" value="">
                     </td>
                     <td>
                         <label for="single_name" class="control-label x85">编码区间：</label>
@@ -129,7 +149,7 @@
                     </td>
                     <td>
                         <label for="single_name" class="control-label x85">商品名称：</label>
-                        <input type="text" name="goods[name]" id="name" value="">
+                        <input type="text" name="like[name]" id="name" value="">
                     </td>
                 </tr>
 
@@ -142,7 +162,7 @@
                     </td>
                     <td>
                         <label for="single_name" class="control-label x85">国际码：</label>
-                        <input type="text" name="goods[nation_sn]" id="nation_sn" value="">
+                        <input type="text" name="like[nation_sn]" id="nation_sn" value="">
                     </td>
                     <td>
                         <label for="single_name" class="control-label x85">批准文号：</label>
@@ -157,15 +177,15 @@
                 <tr>
                     <td>
                         <label for="single_name" class="control-label x85">成分编码：</label>
-                        <input type="text" name="goods[category_component_sn]" id="category_component_sn" value="">
+                        <input type="text" name="goods[component]" id="category_component_sn" value="">
                     </td>
                     <td>
                         <label for="single_name" class="control-label x85">成分名称：</label>
-                        <input type="text" name="goods[category_component_name]" id="category_component_name" value="">
+                        <input type="text" name="other[component_name]" id="category_component_name" value="">
                     </td>
                     <td>
                         <label for="single_name" class="control-label x85">类别编码：</label>
-                        <input type="text" name="goods[category_goods_sn]" id="category_goods_sn" value="">
+                        <input type="text" name="goods[category_goods]" id="category_goods_sn" value="">
                     </td>
                     <td>
                         <label for="single_name" class="control-label x85">类别名称：</label>
@@ -194,7 +214,7 @@
                     </td>
                     <td>
                         <label for="single_name" class="control-label x85">显示名称：</label>
-                        <input type="text" name="goods[show_name]" id="show_name" value="">
+                        <input type="text" name="like[show_name]" id="show_name" value="">
                     </td>
                     <td>
                         <label for="single_name" class="control-label x85">&nbsp;</label>
@@ -227,6 +247,7 @@
 			columns: [
                 {name:'id', width: 100,align:'center',label:'ID',hide:'false'},
                 {name:'sn', width: 150,align:'center',label:'商家编码'},
+                {name:'id', width: 150,align:'center',label:'图片',render:images},
                 {name: 'name', width: 150, align:'center', label: '商品名称'},
                 {name: 'show_name', width: 150, align:'center', label: '显示名称'},
                 {name: 'specifications', width: 150, align:'center', label: '规格'},
@@ -235,7 +256,7 @@
                 {name: 'approval_number', width: 150, align:'center', label: '批准文号'},
                 {name: 'company', width: 150, align:'center', label: '生产企业'},
                 {name: 'place', width: 150, align:'center', label: '产地'},
-                {name: 'category_component_sn', width: 150, align:'center', label: '成分编码'},
+                {name: 'component', width: 150, align:'center', label: '成分编码'},
                 {name: 'category_goods_sn', width: 150, align:'center', label: '类别编码'},
                 {name: 'category_goods_name', width: 150, align:'center', label: '类别名称'},
                 {name: 'updated_at', width: 150, align:'center', label: '操作时间'},
@@ -244,7 +265,7 @@
 			paging: {total:50, pageSize:20},
 			showCheckboxcol: true,
 			fullGrid: false,
-			height:550,
+			height:350,
 			width:'100',
             linenumberAll:true,
             showLinenumber:true,

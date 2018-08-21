@@ -225,10 +225,13 @@ abstract class EloquentRepository implements RepositoryInterface
         })->count();
     }
 
-    public function getListByWhere($filters = [], $columns = ['*'], $with = [], $pageCount = 0, $page)
+    public function getListByWhere($filters = [], $columns = ['*'], $with = [], $pageCount = 0, $page, $order ='', $order_direction='')
     {
-        $result = $this->model
-            ->with($with)
+        $model = $this->model->with($with);
+        if(isset($order) && !empty($order)) {
+            $model->orderBy($order, $order_direction);
+        }
+        $result = $model
             ->whereNested(function ($query) use ($filters) {
                 if (empty($query)) return;
                 foreach ($filters as $filter) {

@@ -46,6 +46,44 @@ class ExcelController extends AdminController
         })->export('xls');
     }
 
+    /**
+     * 临时导入
+     */
+    public function tmp(){
+
+        dd(ComponentModel::count());
+
+        Excel::load('./e.xls', function($reader) {
+            $data = $reader->all();
+
+            foreach ($data as $v){
+
+
+//                //成分分类
+//                ComponentModel::firstOrCreate([
+//                    'category_name' => $v['成份分类名称'],
+//                    'category_sn' => $v['成份分类编码'],
+//                    'control_code' => $v['成份控制码']
+//                ]);
+
+                //成分
+//                DataModel::firstOrCreate(
+//                    [
+//                        'select_name' => 'component',
+//                        'select_option' => $v['成份名称'],
+//                        'extra' => $v['成份编码'],
+//                        'parent_extra' => $v['成份分类编码']
+//                    ]
+//                );
+            }
+        });
+
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function import(Request $request){
 
         Excel::load($_FILES['file']['tmp_name'], function($reader) {
@@ -135,7 +173,7 @@ class ExcelController extends AdminController
         $goods->show_name = $data["显示名称"];
         $goods->nation_sn = $data["国际条码"];
         $goods->approval_number = $data["批准文号"];
-        $goods->brand = $this->dataModel->getId('brand',$data["品牌名称"],$data['品牌编码']);
+        $goods->brand = $data["品牌编码"];
         $goods->company = $data["生产企业"];
         $goods->place = $data["产地"];
         $goods->alias = $data["别名"];
@@ -149,14 +187,14 @@ class ExcelController extends AdminController
         $goods->easy_smell = $data["易串味"];
         $goods->curing = $data["重点养护"];
         $goods->save_method = $data["存储方式"];
-        $goods->component = $this->dataModel->getId('component',$data["成份名称"],$data['成份编码']);
-        $goods->category_goods = $this->goodsCategoryModel->getId($data["类别编码"],$data["类别名称"]);
+        $goods->component = $data['成份编码'];
+        $goods->category_goods = $data["类别编码"];
         $goods->category_goods_sn = $data["类别编码"];
         $goods->category_goods_name = $data["类别名称"];
-        $goods->category_component = $this->componentModel->getId($data["成份分类"],$data["成份分类名称"]);
+        $goods->category_component = $data["成份分类"];
         $goods->category_component_sn = $data["成份分类"];
         $goods->category_component_name = $data["成份分类名称"];
-        $goods->control_code = $this->dataModel->getId('control_code',$data['商品显示控制名称'],$data["商品显示控制码"]);
+        $goods->control_code = $data['商品显示控制码'];
         $goods->service_information = $data["是否触发服务信息"];
         $goods->search_words = $data["搜索用词"];
         $goods->reference_price = $data["全维价"];
@@ -181,27 +219,28 @@ class ExcelController extends AdminController
         }
 
         //中图
-        $url = 'http://img.qwysfw.cn/product/middle/'.$sn[0].$sn[1].'/'.$sn[2].$sn[3].'/'.$sn[4].$sn[5].'/1.JPG';
-        $file = false;
-        if(@fopen($url, 'r')){
-            file_put_contents($dir.'/11.JPG',file_get_contents($url));
-            $s['middle'] = $dir.'/11.JPG';
-            $t[] = $dir.'/11.JPG';
+        for ($i=1;$i<8;$i++) {
+            $url = 'http://img.qwysfw.cn/product/middle/' . $sn[0] . $sn[1] . '/' . $sn[2] . $sn[3] . '/' . $sn[4] . $sn[5] . '/'.$i.'.JPG';
+            if (@fopen($url, 'r')) {
+                file_put_contents($dir . '/2' . $i . '.JPG', file_get_contents($url));
+                $s['middle'][] = $dir . '/2' . $i . '.JPG';
+                $t[] = $dir . '/2' . $i . '.JPG';
+            }
         }
 
         //小图
-        $url = 'http://img.qwysfw.cn/product/small/'.$sn[0].$sn[1].'/'.$sn[2].$sn[3].'/'.$sn[4].$sn[5].'/1.JPG';
-        $file = false;
-        if(@fopen($url, 'r')){
-            file_put_contents($dir.'/12.JPG',file_get_contents($url));
-            $s['small'] = $dir.'/12.JPG';
-            $t[] = $dir.'/12.JPG';
+        for ($i=1;$i<8;$i++) {
+            $url = 'http://img.qwysfw.cn/product/small/' . $sn[0] . $sn[1] . '/' . $sn[2] . $sn[3] . '/' . $sn[4] . $sn[5] . '/'.$i.'.JPG';
+            if (@fopen($url, 'r')) {
+                file_put_contents($dir . '/3' . $i . '.JPG', file_get_contents($url));
+                $s['small'][] = $dir . '/3' . $i . '.JPG';
+                $t[] = $dir . '/3' . $i . '.JPG';
+            }
         }
 
         //大图
         for ($i=1;$i<8;$i++){
             $url = 'http://img.qwysfw.cn/product/big/'.$sn[0].$sn[1].'/'.$sn[2].$sn[3].'/'.$sn[4].$sn[5].'/'.$i.'.JPG';
-            $file = false;
             if(@fopen($url, 'r')){
                 file_put_contents($dir.'/'.$i.'.JPG',file_get_contents($url));
                 $s['big'][] = $dir.'/'.$i.'.JPG';

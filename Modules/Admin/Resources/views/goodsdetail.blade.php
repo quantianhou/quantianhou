@@ -7,7 +7,7 @@
     }
 </style>
 <div class="bjui-pageContent">
-    <form action="/api/goods/save" id="j_form_form" class="pageForm" data-toggle="validate">
+    <form action="/api/goods/save" id="j_form_form" data-callback="checkerror" class="pageForm" data-toggle="validate">
         <input type="hidden" name="goods[id]" value="0" id="goodsid" />
         <div style="margin:15px auto 0; width:100%;">
             <fieldset>
@@ -31,7 +31,7 @@
                                 </td>
                                 <td>
                                     <label for="name" class="control-label x85">商品名称：</label>
-                                    <input type="text" name="goods[name]" id="name" value="" data-rule="required" size="50">
+                                    <input type="text" name="goods[name]" readonly id="name" value="" data-rule="required" size="50">
                                 </td>
                                 <td>
                                     <label for="single_name" class="control-label x85">通用名称：</label>
@@ -41,7 +41,7 @@
                             <tr>
                                 <td>
                                     <label for="show_name" class="control-label x85">显示名称：</label>
-                                    <input type="text" name="goods[show_name]" id="show_name" value="" data-rule="required" size="50">
+                                    <input type="text" name="goods[show_name]" readonly id="show_name" value="" data-rule="required" size="50">
                                 </td>
                                 <td>
                                     <label for="nation_sn" class="control-label x85">国际条码：</label>
@@ -179,7 +179,7 @@
                             <tr>
                                 <td colspan="3">
                                     <label for="search_words" class="control-label x85">搜索用词：</label>
-                                    <input type="text" name="goods[search_words]" id="search_words" value="" data-rule="required" size="50">
+                                    <input type="text" name="goods[search_words]" readonly id="search_words" value="" data-rule="required" size="50">
                                 </td>
                             </tr>
                             <tr>
@@ -382,7 +382,28 @@
     </ul>
 </div>
 <script>
-    $('#goodsid').val(parent.GID);
+    $.CurrentNavtab.find('#goodsid').val(parent.GID);
+
+    //输入联动
+    $.CurrentNavtab.find('#single_name').on('input',function(){
+        inputInit();
+    });
+    $.CurrentNavtab.find('#specifications').on('input',function(){
+        inputInit();
+    });
+    $.CurrentNavtab.find('form').on('change','#brand',function(){
+        inputInit();
+    });
+
+    function inputInit() {
+        var single_name = $.CurrentNavtab.find('#single_name').val();
+        var specifications = $.CurrentNavtab.find('#specifications').val();
+        var brand = $.CurrentNavtab.find("#brand option:selected").text();
+
+        $.CurrentNavtab.find('#name').val(brand+'，'+single_name+'，'+specifications);
+        $.CurrentNavtab.find('#show_name').val('【'+brand+'】'+single_name);
+        $.CurrentNavtab.find('#search_words').val(brand+'，'+single_name);
+    }
 
     //获取两个分类
     var obj = {
@@ -392,7 +413,7 @@
 
             for(var i in res.brand){
                 if(i >= 0) {
-                    $.CurrentNavtab.find('fieldset #' + res.brand[i].select_name).append('<option value="' + res.brand[i].id + '">' + res.brand[i].select_option + '</option>');
+                    $.CurrentNavtab.find('fieldset #' + res.brand[i].select_name).append('<option value="' + res.brand[i].extra + '">' + res.brand[i].select_option + '</option>');
                 }
             }
 
@@ -403,7 +424,7 @@
                     for(var j=1;j<res.goods[i].level;j++){
                         prefix += ' -- ';
                     }
-                    $.CurrentNavtab.find('fieldset #category_goods').append('<option value="'+res.goods[i].id+'">'+prefix+res.goods[i].category_name+'</option>');
+                    $.CurrentNavtab.find('fieldset #category_goods').append('<option value="'+res.goods[i].category_sn+'">'+prefix+res.goods[i].category_name+'</option>');
                 }
             }
 
@@ -413,34 +434,40 @@
                     for(var j=1;j<res.component[i].level;j++){
                         prefix += ' -- ';
                     }
-                    $.CurrentNavtab.find('fieldset #category_component').append('<option value="'+res.component[i].id+'">'+prefix+res.component[i].category_name+'</option>');
+                    $.CurrentNavtab.find('fieldset #category_component').append('<option value="'+res.component[i].category_sn+'">'+prefix+res.component[i].category_name+'</option>');
                 }
             }
 
             $.CurrentNavtab.find('fieldset select').selectpicker('refresh');
+
+            if(parent.GID > 0){
+                $.CurrentNavtab.find('#sn').attr('readonly',true);
+                var obj = {
+                    url : '/api/goods/detail',
+                    type : 'POST',
+                    data : {id:parent.GID},
+                    callback : function (res) {
+                        for(var i in res.data.extra){
+                            $.CurrentNavtab.find('fieldset #'+i).val(res.data.extra[i]);
+                        }
+
+                        //编辑器
+                        res.data.extra && KindEditor.html("#goods_desc", res.data.extra.goods_desc);
+                        for(var i in res.data.goods){
+                            $.CurrentNavtab.find('fieldset #'+i).val(res.data.goods[i]);
+                        }
+
+                        $('fieldset select').selectpicker('refresh');
+                    }
+                }
+                $(this).bjuiajax('doAjax', obj)
+            }
         }
     }
     $(this).bjuiajax('doAjax', obj)
 
-    if(parent.GID > 0){
-        var obj = {
-            url : '/api/goods/detail',
-            type : 'POST',
-            data : {id:parent.GID},
-            callback : function (res) {
-                for(var i in res.data.extra){
-                    $.CurrentNavtab.find('fieldset #'+i).val(res.data.extra[i]);
-                }
-
-                //编辑器
-                res.data.extra && KindEditor.html("#goods_desc", res.data.extra.goods_desc);
-                for(var i in res.data.goods){
-                    $.CurrentNavtab.find('fieldset #'+i).val(res.data.goods[i]);
-                }
-
-                $('fieldset select').selectpicker('refresh');
-            }
-        }
-        $(this).bjuiajax('doAjax', obj)
+    function checkerror(res) {
+        $(document).alertmsg('error',res.info);
     }
+
 </script>

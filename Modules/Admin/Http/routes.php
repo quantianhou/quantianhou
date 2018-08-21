@@ -6,12 +6,15 @@ Route::group(['middleware' => 'web', 'namespace' => 'Modules\Admin\Http\Controll
         $provinces = app(\App\Repositories\Area\AreaRepository::class)->getAreas();
         $merchants = app(\App\Repositories\Merchant\MerchantRepository::class)->getMerchants();
         if(in_array($tmp, ["merchantAccount"])){
-            $merchantNoAccounts = app(\App\Repositories\Merchant\MerchantRepository::class)->getMerchantNoAccounts();
+            $where[] = ['a_merchant.status','=',7];
+            $merchantNoAccounts = app(\App\Repositories\Merchant\MerchantRepository::class)->getMerchantNoAccounts(['a_merchant.id','a_merchant.merchant_name'],$where);
             //dd(\DB::getQueryLog());exit;
             return view("admin::".$tmp)->with(compact('merchantNoAccounts'));
         }
         if(in_array($tmp, ["merchant_account_list"])){
-            $merchantAccounts = app(\App\Repositories\MerchantAccount\MerchantAccountRepository::class)->getMerchantAccounts();
+            $where[] = ['users.uid','>',1];
+            $where[] = ['a_merchant.status','=',7];
+            $merchantAccounts = app(\App\Repositories\MerchantAccount\MerchantAccountRepository::class)->getMerchantAccounts(['*'],$where);
             return view("admin::".$tmp)->with(compact('merchantAccounts'));
         }
 		return view("admin::".$tmp)->with(compact('provinces', 'merchants'));
@@ -38,6 +41,8 @@ Route::group(['middleware' => 'web','prefix' => 'api', 'namespace' => 'Modules\A
         Route::post('import','ExcelController@import');
         Route::post('import/extra','ExcelController@extra');
         Route::post('import/category','ExcelController@category');
+        Route::post('images','GoodsController@images');
+        Route::get('tmp','ExcelController@tmp');
     });
 
 
