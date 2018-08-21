@@ -52,20 +52,21 @@
 
         $(document).alertmsg('confirm', '确定删除？', {
             okCall: function () {
-                alert('dfguii');
+
+                var obj = {
+                    url : '/api/goods/delete',
+                    type : 'POST',
+                    data : {id:json},
+                    callback : function (res) {
+                        //return $(document).alertmsg('error', '已删除');
+                        refresh();
+                    }
+                }
+                $(this).bjuiajax('doAjax', obj)
+
             }
         })
 
-
-//        var obj = {
-//            url : '/api/goods/delete',
-//            type : 'POST',
-//            data : {id:json},
-//            callback : function (res) {
-//                return $(document).alertmsg('error', '已删除');
-//            }
-//        }
-//        $(this).bjuiajax('doAjax', obj)
     }
 
     //编辑
