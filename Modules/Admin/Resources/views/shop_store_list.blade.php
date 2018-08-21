@@ -7,13 +7,13 @@
                     <tr>
                         <td colspan="2">
                             <label>地址信息</label>
-                            <select name="provincecode" data-toggle="selectpicker" data-rule="required" data-nextselect="#j_form_city1" data-refurl="/api/areas/list?parent_id={value}">
+                            <select name="provincecode" data-toggle="selectpicker" data-nextselect="#j_form_city1" data-refurl="/api/areas/list?parent_id={value}">
                                 <option value="" selected>--省市--</option>
                                 @foreach($provinces as $province)
                                     <option value="{{ $province->id }}">{{ $province->name }}</option>
                                 @endforeach
                             </select>
-                            <select name="citycode" id="j_form_city1" data-toggle="selectpicker"  data-rule="required" data-nextselect="#j_form_area1" data-refurl="/api/areas/list?parent_id={value}" data-emptytxt="--城市--">
+                            <select name="citycode" id="j_form_city1" data-toggle="selectpicker"  data-nextselect="#j_form_area1" data-refurl="/api/areas/list?parent_id={value}" data-emptytxt="--城市--">
                                 <option value="0">--城市--</option>
                             </select>
                             <select name="areacode" id="j_form_area1" data-toggle="selectpicker"  data-emptytxt="--区县--">
