@@ -41,7 +41,7 @@ class GoodsRepository extends EloquentRepository
      * 删除
      */
     public function deleteGoods($ids = []){
-        return $this->model->delete($ids);
+        return $this->model->destroy($ids);
     }
 
     /**
