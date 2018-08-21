@@ -86,7 +86,7 @@ class MerchantController extends BaseController
         }
         $pageSize = $request->get('pageSize', 10);
         $pageCurrent = $request->get('pageCurrent');
-        $list =  $this->merchants->getListByWhere($filters, ['*'], [], $pageSize, $pageCurrent);
+        $list =  $this->merchants->getListByWhere($filters, ['*'], [], $pageSize, $pageCurrent, 'updated_at', 'desc');
         foreach($list as $key=>$v){
             $list[$key]['address_province'] = $this->areas->getOneArea($v['address_province'], ['id', 'name'],1)->name;
             $list[$key]['address_city'] = $this->areas->getOneArea($v['address_city'], ['id', 'name'],1)->name;
