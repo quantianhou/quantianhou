@@ -58,7 +58,7 @@
                     type : 'POST',
                     data : {id:json},
                     callback : function (res) {
-                        //return $(document).alertmsg('error', '已删除');
+                        $('#goods_list').datagrid('refresh');
                     }
                 }
                 $(this).bjuiajax('doAjax', obj)
