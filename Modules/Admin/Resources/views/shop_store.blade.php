@@ -395,7 +395,7 @@
                 <tr>
                     <td align="left" colspan="2">
                         <button type="submit" id="confirm" class="btn btn-green">生成</button>
-                        <button type="button" onclick="$.CurrentNavtab.navtab('refresh');" class="btn btn-green">取消</button>
+                        <button type="button" onclick="$(this).navtab('closeCurrentTab');" class="btn btn-green">取消</button>
                     </td>
                 </tr>
             </table>
