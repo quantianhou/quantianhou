@@ -257,7 +257,7 @@
 			paging: {total:50, pageSize:20},
 			showCheckboxcol: true,
 			fullGrid: false,
-			height:550,
+			height:350,
 			width:'100',
             linenumberAll:true,
             showLinenumber:true,
