@@ -4,9 +4,11 @@
         type : 'POST',
         data:parent.GIMG,
         callback : function (res) {
-console.log(res);
+
             for(var i in res.images){
-                $('#iiimages').append('<image src="/'+res.images[i]+'"><br />');
+                if(i >= 0){
+                    $('#iiimages').append('<image src="/'+res.images[i]+'"><br />');
+                }
             }
         }
     }
