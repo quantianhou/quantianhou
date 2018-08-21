@@ -10,16 +10,18 @@ use Modules\admin\Http\Requests\Merchant\MerchantRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Models\Config\ConfigModel;
+use App\Models\CheckLog\CheckLogModel;
 
 class MerchantController extends BaseController
 {
     private $merchants;
 
-    public function __construct(MerchantRepository $merchants,AreaRepository $areas,ConfigModel $config)
+    public function __construct(MerchantRepository $merchants,AreaRepository $areas,ConfigModel $config,CheckLogModel $checkLog)
     {
         $this->merchants = $merchants;
         $this->areas = $areas;
         $this->config = $config;
+        $this->checkLog = $checkLog;
     }
     /**
      * Display a listing of the resource.
@@ -197,7 +199,7 @@ class MerchantController extends BaseController
                     'message' => '商家已签约，无法重复签约',
                 ];
             }
-            if($result['status'] != 4){
+            if(!in_array($result['status'], array(4,8))){
                 return [
                     'statusCode' => 200,
                     'error' => true,
@@ -218,6 +220,14 @@ class MerchantController extends BaseController
             $res = $this->merchants->updateByOtherColumn('id',$data['id'],$update_data);
             if($res)
             {
+                //插入签约日志
+                $this->checkLog->create([
+                    'check_type' => 2,//如不全详见表注释：审核类型，1为审核商家，2为签约商家，3为取消签约商家，10为审核门店，20为签约门店，30为取消签约门店，40为冻结门店
+                    'data_id' => $data['id'],
+                    'admin_id' => $admin['id'],
+                    'check_remark' => '',
+                    'data' => serialize($data)
+                ]);
                 return [
                     'statusCode' => 200,
                     'data' => $res,
@@ -269,6 +279,16 @@ class MerchantController extends BaseController
 
             if($res)
             {
+                foreach($ids as $value){
+                    //插入签约日志
+                    $this->checkLog->create([
+                        'check_type' => 3,//如不全详见表注释：审核类型，1为审核商家，2为签约商家，3为取消签约商家，10为审核门店，20为签约门店，30为取消签约门店，40为冻结门店
+                        'data_id' => $value,
+                        'admin_id' => $admin['id'],
+                        'check_remark' => '',
+                        'data' => serialize($data)
+                    ]);
+                }
                 return [
                     'statusCode' => 200,
                     'data' => $res,
