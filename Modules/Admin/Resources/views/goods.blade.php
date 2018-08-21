@@ -49,6 +49,14 @@
         for(var ii in choose){
             json[ii] = choose[ii].id;
         }
+
+        $(document).alertmsg('confirm', '确定删除？', {
+            okCall: function () {
+                alert('dfguii');
+            }
+        })
+
+
         var obj = {
             url : '/api/goods/delete',
             type : 'POST',
