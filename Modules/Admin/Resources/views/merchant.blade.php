@@ -3,7 +3,6 @@
 
     $.CurrentNavtab.find('#confirm').on('click',function(event){
         event.preventDefault();
-        console.log("aaa");
         var post_data = $.CurrentNavtab.find('.formarea').serialize();
         var oo = {
             url : '/api/merchants',
@@ -21,11 +20,14 @@
                     }
                 });
             },
-            failCallback: function (msg, options) {
-                console.log(msg, options, 1)
-            },
-            errCallback: function (json, options) {
-                console.log(json, options)
+            error: function (msg, options) {
+                res = JSON.parse(msg.responseText);
+                for(var key in res.errors){
+                    for(var k in res.errors[key]){
+                        var d = res.errors[key][k];
+                        return $(this).alertmsg('error', d), !1;
+                    }
+                }
             }
         };
 
@@ -96,7 +98,7 @@
 
                 <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control">商家logo：</label>
+                        <label class="label-control"><span style="color:red">*</span>商家logo：</label>
                     </td>
 
                     <td id="content_showimg">
@@ -250,7 +252,7 @@
 
                 <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>营业执照：</label>
+                        <label class="label-control">营业执照：</label>
                     </td>
                     <td>
                         许可证号： <input type="text" placeholder="请填写名称" name="business_license_num" size="30" data-rule="required"><br>
@@ -263,7 +265,7 @@
 
                 <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>药品经营许可证：</label>
+                        <label class="label-control">药品经营许可证：</label>
                     </td>
                     <td>
                         许可证号： <input type="text" placeholder="请填写名称" name="drug_license_num" size="30" data-rule="required"><br>
@@ -277,7 +279,7 @@
 
                 <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>法人身份证：</label>
+                        <label class="label-control">法人身份证：</label>
                     </td>
                     <td>
                         姓名： <input type="text" placeholder="请填写名称" name="legal_person_name" size="30" data-rule="required"><br>
@@ -291,7 +293,7 @@
 
                 <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>GPS证书：</label>
+                        <label class="label-control">GPS证书：</label>
                     </td>
                     <td>
                         许可证号： <input type="text" placeholder="请填写名称" name="GSP_num" size="30" data-rule="required"><br>
@@ -304,7 +306,7 @@
 
                 <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>食物流通许可证书：</label>
+                        <label class="label-control">食物流通许可证书：</label>
                     </td>
                     <td>
                         许可证号： <input type="text"  placeholder="请填写名称" name="food_licence_num" size="30" data-rule="required"><br>
@@ -317,7 +319,7 @@
 
                 <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>医疗机构许可证：</label>
+                        <label class="label-control">医疗机构许可证：</label>
                     </td>
                     <td>
                         许可证号： <input type="text" placeholder="请填写名称" name="medical_institution_num" size="30" data-rule="required"><br>
@@ -331,7 +333,7 @@
 
                 <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>医疗器械许可证：</label>
+                        <label class="label-control">医疗器械许可证：</label>
                     </td>
                     <td>
                         许可证号： <input type="text" placeholder="请填写名称" name="medical_app_num" size="30" data-rule="required"><br>
@@ -345,7 +347,7 @@
 
                 <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>互联网药品交易服务许可证：</label>
+                        <label class="label-control">互联网药品交易服务许可证：</label>
                     </td>
                     <td>
                         许可证号： <input type="text" placeholder="请填写名称" name="internet_med_tran_num" size="30" data-rule="required"><br>
@@ -360,7 +362,7 @@
 
                 <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>互联网药品信息服务许可证：</label>
+                        <label class="label-control">互联网药品信息服务许可证：</label>
                     </td>
                     <td>
                         许可证号： <input type="text" placeholder="请填写名称" name="internet_med_info_num" size="30" data-rule="required"><br>
@@ -422,8 +424,10 @@
                         }
                         if(i == 'merchant_logo' || i.indexOf('_img')!= -1){
                             console.log(i);
-                            var str = '<div style="display: inline-block; margin: 5px;"><input type="hidden" value="'+res.data[i]+'" name="'+i+'[]"><img width="100" height="100" src="http://qth-test.oss-cn-hangzhou.aliyuncs.com/'+res.data[i]+'"><a onclick="$(this).parent().remove()" style="display: block; text-align: center;">删除</a></div>';
-                            $.CurrentNavtab.find('button[data-field_name="'+i+'[]"]').after(str);
+                            if(res.data[i] != "") {//有图片时才渲染
+                                var str = '<div style="display: inline-block; margin: 5px;"><input type="hidden" value="' + res.data[i] + '" name="' + i + '[]"><img width="100" height="100" src="http://qth-test.oss-cn-hangzhou.aliyuncs.com/' + res.data[i] + '"><a onclick="$(this).parent().remove()" style="display: block; text-align: center;">删除</a></div>';
+                                $.CurrentNavtab.find('button[data-field_name="' + i + '[]"]').after(str);
+                            }
                         }
                     }
                     $.CurrentNavtab.find('select').selectpicker('refresh');
