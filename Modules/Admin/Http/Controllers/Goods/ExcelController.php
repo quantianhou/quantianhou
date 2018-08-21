@@ -221,10 +221,9 @@ class ExcelController extends AdminController
         //中图
         for ($i=1;$i<8;$i++) {
             $url = 'http://img.qwysfw.cn/product/middle/' . $sn[0] . $sn[1] . '/' . $sn[2] . $sn[3] . '/' . $sn[4] . $sn[5] . '/'.$i.'.JPG';
-            $file = false;
             if (@fopen($url, 'r')) {
                 file_put_contents($dir . '/2' . $i . '.JPG', file_get_contents($url));
-                $s['middle'] = $dir . '/2' . $i . '.JPG';
+                $s['middle'][] = $dir . '/2' . $i . '.JPG';
                 $t[] = $dir . '/2' . $i . '.JPG';
             }
         }
@@ -232,10 +231,9 @@ class ExcelController extends AdminController
         //小图
         for ($i=1;$i<8;$i++) {
             $url = 'http://img.qwysfw.cn/product/small/' . $sn[0] . $sn[1] . '/' . $sn[2] . $sn[3] . '/' . $sn[4] . $sn[5] . '/'.$i.'.JPG';
-            $file = false;
             if (@fopen($url, 'r')) {
                 file_put_contents($dir . '/3' . $i . '.JPG', file_get_contents($url));
-                $s['small'] = $dir . '/3' . $i . '.JPG';
+                $s['small'][] = $dir . '/3' . $i . '.JPG';
                 $t[] = $dir . '/3' . $i . '.JPG';
             }
         }
@@ -243,7 +241,6 @@ class ExcelController extends AdminController
         //大图
         for ($i=1;$i<8;$i++){
             $url = 'http://img.qwysfw.cn/product/big/'.$sn[0].$sn[1].'/'.$sn[2].$sn[3].'/'.$sn[4].$sn[5].'/'.$i.'.JPG';
-            $file = false;
             if(@fopen($url, 'r')){
                 file_put_contents($dir.'/'.$i.'.JPG',file_get_contents($url));
                 $s['big'][] = $dir.'/'.$i.'.JPG';
