@@ -470,7 +470,11 @@
     $(this).bjuiajax('doAjax', obj)
 
     function checkerror(res) {
-        $(document).alertmsg('error',res.info);
+        if(res.error > 0){
+            $(document).alertmsg('error',res.info);
+        }else{
+            $(document).alertmsg('info',res.info);
+        }
     }
 
 

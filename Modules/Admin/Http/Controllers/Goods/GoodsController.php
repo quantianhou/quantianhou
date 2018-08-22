@@ -94,7 +94,7 @@ class GoodsController extends AdminController
         $this->goods->saveGoods($goods,$extra);
         return $this->json([
             'data' => 200,
-            'info' => '保存',
+            'info' => '保存成功',
             'code' => 200
         ]);
     }
@@ -109,7 +109,7 @@ class GoodsController extends AdminController
         $this->goods->deleteGoods($ids);
         return $this->json([
             'data' => 200,
-            'info' => '保存',
+            'info' => '操作成功',
             'code' => 200
         ]);
     }
