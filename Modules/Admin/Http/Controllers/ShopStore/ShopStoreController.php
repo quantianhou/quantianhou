@@ -196,6 +196,7 @@ class ShopStoreController extends BaseController
             $result = $this->shopStores->update($id, $data);
             return $this->success($result, 200, '修改成功');
         }else{
+            $data['store_status'] = 2;
             $result = $this->shopStores->create($data);
             return $this->success($result, 200, '添加成功');
         }
