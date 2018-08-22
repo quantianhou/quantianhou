@@ -53,11 +53,17 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td style="position: relative;">
                                     <label for="brand" class="control-label x85">品牌名称：</label>
-                                    <select name="goods[brand]" id="brand" data-toggle="selectpicker" data-rule="required">
-
-                                    </select>
+                                    <input type="hidden" name="goods[brand]" id="brand" autocomplete="off" value="">
+                                    <input type="text" id="brand_name" autocomplete="off">
+                                    <ul class="dropdown-menu inner selectpicker" role="menu" style="max-height: 201px; overflow-y: auto; min-height: 24px; left:77px;">
+                                        <li data-original-index="0" data-value="" data-text="">
+                                            <a tabindex="0" class="">
+                                                <span class="text">暂无搜索内容</span>
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </td>
                                 <td>
                                     <label for="company" class="control-label x85">生产企业：</label>
@@ -391,14 +397,11 @@
     $.CurrentNavtab.find('#specifications').on('input',function(){
         inputInit();
     });
-    $.CurrentNavtab.find('form').on('change','#brand',function(){
-        inputInit();
-    });
 
     function inputInit() {
         var single_name = $.CurrentNavtab.find('#single_name').val();
         var specifications = $.CurrentNavtab.find('#specifications').val();
-        var brand = $.CurrentNavtab.find("#brand option:selected").text();
+        var brand = $.CurrentNavtab.find("#brand_name").val();
 
         $.CurrentNavtab.find('#name').val(brand+'，'+single_name+'，'+specifications);
         $.CurrentNavtab.find('#show_name').val('【'+brand+'】'+single_name);
@@ -470,4 +473,62 @@
         $(document).alertmsg('error',res.info);
     }
 
+
+    //初始名字
+    var ssss = '#brand_name';
+    //获取焦点展示
+    $.CurrentNavtab.find(ssss).focus(function(){
+        $(this).next().css('display','block');
+    });
+
+    //失去焦点隐藏
+    $.CurrentNavtab.find(ssss).blur(function(){
+        var _this = $(this);
+        setTimeout(function () {
+            _this.next().css('display','none');
+        },300)
+    });
+
+    //抓取接口渲染数据
+    $.CurrentNavtab.find(ssss).on('input',function(){
+        var s = $(this).val();
+        var _this = $(this);
+
+        var obj = {
+            url : '/api/goods/select/brand',
+            type : 'POST',
+            data : {value:s},
+            callback : function (res) {
+                _this.next().html('');
+                if(res.list.length>0){
+                    for(var i in res.list){
+                        if(i >= 0){
+                            _this.next().append('<li data-original-index="0" data-value="'+res.list[i].extra+'" data-text="'+res.list[i].select_option+'">\
+                            <a tabindex="0" class="">\
+                            <span class="text">'+res.list[i].select_option+'</span>\
+                            </a>\
+                            </li>');
+                        }
+
+                    }
+                }else{
+                    _this.next().append('<li data-original-index="0" data-value="" data-text="">\
+                    <a tabindex="0" class="">\
+                    <span class="text">暂无搜索内容</span>\
+                    </a>\
+                    </li>');
+                }
+
+            }
+        }
+        $(this).bjuiajax('doAjax', obj)
+
+    });
+
+    //点击选择
+    $.CurrentNavtab.find(ssss).parent().on('click','li',function(){
+        $.CurrentNavtab.find(ssss).prev().val($(this).attr('data-value'));
+        $.CurrentNavtab.find(ssss).val($(this).attr('data-text'));
+        inputInit();
+    });
 </script>

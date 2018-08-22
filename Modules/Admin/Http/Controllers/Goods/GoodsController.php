@@ -114,6 +114,26 @@ class GoodsController extends AdminController
         ]);
     }
 
+    /*
+     * 搜索获取下拉
+     */
+    public function select($type = 'brand',Request $request){
+
+        $value = $request->value;
+        $data = [];
+        if($type == 'brand' && $value){
+            $data = $this->dataModel
+                ->where('select_option','like','%'.$value.'%')
+                ->whereIn('select_name',['brand'])->limit(20)->get();
+        }
+
+
+        return $this->json([
+            'list' => $data
+        ]);
+
+    }
+
     /**
      * 获取商品信息
      */
@@ -136,11 +156,11 @@ class GoodsController extends AdminController
      */
     public function options(){
         //品牌
-        $brand = $this->dataModel->whereIn('select_name',['brand'])->limit(100)->get()->toArray();
+        //$brand = $this->dataModel->whereIn('select_name',['brand'])->limit(100)->get()->toArray();
         $component = $this->dataModel->whereIn('select_name',['component'])->limit(100)->get()->toArray();
         $data = $this->dataModel->whereIn('select_name',['control_code','dosage_form','save_method','unit'])->get()->toArray();
 
-        $data = array_merge($data,$brand);
+        //$data = array_merge($data,$brand);
         $data = array_merge($data,$component);
 
         //商品分类
