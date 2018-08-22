@@ -80,6 +80,17 @@ class GoodsController extends AdminController
         $goods = $request->get('goods');
         $extra = $request->get('extra');
 
+        $brand_text = $request->get('brand_text');
+        $brand_name = $request->get('brand_name');
+
+        if(!$brand_text || trim($brand_text) != trim($brand_name)){
+            return $this->json([
+                'error' => 2001,
+                'info' => '品牌名称不可修改 不可为空',
+                'code' => 2001
+            ]);
+        }
+
         if(!$goods['id']){
             $hasGoods = $this->goods->getBy('sn',$goods['sn']);
             if(!empty($hasGoods)){

@@ -55,8 +55,9 @@
                             <tr>
                                 <td style="position: relative;">
                                     <label for="brand" class="control-label x85">品牌名称：</label>
+                                    <input type="hidden" name="brand_text" id="brand_text" autocomplete="off" value="">
                                     <input type="hidden" name="goods[brand]" id="brand" autocomplete="off" value="">
-                                    <input type="text" id="brand_name" autocomplete="off">
+                                    <input type="text" name="brand_name" id="brand_name" autocomplete="off">
                                     <ul class="dropdown-menu inner selectpicker" role="menu" style="max-height: 201px; overflow-y: auto; min-height: 24px; left:77px;">
                                         <li data-original-index="0" data-value="" data-text="">
                                             <a tabindex="0" class="">
@@ -531,7 +532,8 @@
 
     //点击选择
     $.CurrentNavtab.find(ssss).parent().on('click','li',function(){
-        $.CurrentNavtab.find(ssss).prev().val($(this).attr('data-value'));
+        $.CurrentNavtab.find(ssss).prev().val($(this).attr('data-value')).attr('data-text',$(this).attr('data-text'));
+        $.CurrentNavtab.find('#brand_text').val($(this).attr('data-text'));
         $.CurrentNavtab.find(ssss).val($(this).attr('data-text'));
         inputInit();
     });
