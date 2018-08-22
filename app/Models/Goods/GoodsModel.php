@@ -12,6 +12,7 @@ class GoodsModel extends BaseModel {
 
     protected $appends = [
         'brand_name',
+        'brand_text',
         'category_component_sn',
         'category_goods_sn',
         'category_goods_name'
@@ -30,6 +31,15 @@ class GoodsModel extends BaseModel {
         return empty($res) ? '': $res->select_option;
     }
 
+    public function getBrandTextAttribute()
+    {
+        $res = DataModel::where([
+            'select_name' => 'brand',
+            'extra' => $this->brand
+        ])->first();
+        return empty($res) ? '': $res->select_option;
+    }
+    
     public function getCategoryComponentSnAttribute()
     {
         return $this->category_component;
