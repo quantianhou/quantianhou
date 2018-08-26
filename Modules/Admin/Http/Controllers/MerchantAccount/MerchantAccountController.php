@@ -158,6 +158,8 @@ class MerchantAccountController extends AdminController
             ];
         }
         $data = $this->makeData($request);
+        $data['app_id'] = $this->makeAppId();
+        $data['app_secret'] = $this->makeAppSecret();
         $hasUser = $this->merchants->getMerchantAccountByUsername($data['username']);
         if(!empty($hasUser->uid)){
             return [
@@ -209,6 +211,14 @@ class MerchantAccountController extends AdminController
         ];
 
         return $data;
+    }
+
+    public function makeAppId(){
+        return substr(md5(uniqid("app_id")), 8,16);
+    }
+
+    public function makeAppSecret(){
+        return md5(uniqid("app_id"));
     }
 
     public function user_hash($passwordinput, $salt) {
