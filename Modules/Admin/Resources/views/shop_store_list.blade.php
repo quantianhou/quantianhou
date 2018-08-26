@@ -7,16 +7,16 @@
                     <tr>
                         <td colspan="2">
                             <label>地址信息</label>
-                            <select name="province_code" data-toggle="selectpicker" data-rule="required" data-nextselect="#j_form_city1" data-refurl="/api/areas/list?parent_id={value}">
+                            <select name="provincecode" data-toggle="selectpicker" data-nextselect="#j_form_city1" data-refurl="/api/areas/list?parent_id={value}">
                                 <option value="" selected>--省市--</option>
                                 @foreach($provinces as $province)
                                     <option value="{{ $province->id }}">{{ $province->name }}</option>
                                 @endforeach
                             </select>
-                            <select name="city_code" id="j_form_city1" data-toggle="selectpicker"  data-rule="required" data-nextselect="#j_form_area1" data-refurl="/api/areas/list?parent_id={value}" data-emptytxt="--城市--">
+                            <select name="citycode" id="j_form_city1" data-toggle="selectpicker"  data-nextselect="#j_form_area1" data-refurl="/api/areas/list?parent_id={value}" data-emptytxt="--城市--">
                                 <option value="0">--城市--</option>
                             </select>
-                            <select name="area_code" id="j_form_area1" data-toggle="selectpicker"  data-emptytxt="--区县--">
+                            <select name="areacode" id="j_form_area1" data-toggle="selectpicker"  data-emptytxt="--区县--">
                                 <option value="0">--区县--</option>
                             </select>
                         </td>
@@ -223,6 +223,12 @@
             BJUI.alertmsg('error', "您只能勾选一条记录进行编辑！");return ;
         }
         var id = selectedData[0]['id'];
+        var _tmp_store_status = selectedData[0]['store_status'];
+
+        if(_tmp_store_status != 2)
+        {
+            BJUI.alertmsg('error', "选择的记录的门店状态不能进行签约！");return ;
+        }
         if(selectedData.length > 0)
         {
             BJUI.URLDATA.shop_store = {id: id};
@@ -240,11 +246,25 @@
         if(!selectedData || selectedData.length == 0){
             BJUI.alertmsg('error', "您需要勾选一条记录！");return ;
         }
+
+        var _tmp_info = [];
+        for(var i = 0 ; i < selectedData.length ; i ++){
+            if(selectedData[i].store_status == 1)
+            {
+                _tmp_info[i] = selectedData[i];
+            }
+        }
+
+        if(_tmp_info.length <= 0)
+        {
+            BJUI.alertmsg('error', "您选择的记录中没有可以取消合约的数据！");return ;
+        }
+
         BJUI.alertmsg('confirm', '确认取消签约吗？',{
             okCall: function () {
-                if(selectedData.length > 0)
+                if(_tmp_info.length > 0)
                 {
-                    post_data = JSON.stringify(selectedData);
+                    post_data = JSON.stringify(_tmp_info);
                     var oo = {
                         url : '/api/shop_store/cancel',
                         loadingmask:true,

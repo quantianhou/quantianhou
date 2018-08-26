@@ -80,6 +80,17 @@ class GoodsController extends AdminController
         $goods = $request->get('goods');
         $extra = $request->get('extra');
 
+        $brand_text = $request->get('brand_text');
+        $brand_name = $request->get('brand_name');
+
+        if(!$brand_text || trim($brand_text) != trim($brand_name)){
+            return $this->json([
+                'error' => 2001,
+                'info' => '品牌名称不可修改 不可为空',
+                'code' => 2001
+            ]);
+        }
+
         if(!$goods['id']){
             $hasGoods = $this->goods->getBy('sn',$goods['sn']);
             if(!empty($hasGoods)){
@@ -94,7 +105,7 @@ class GoodsController extends AdminController
         $this->goods->saveGoods($goods,$extra);
         return $this->json([
             'data' => 200,
-            'info' => '保存',
+            'info' => '保存成功',
             'code' => 200
         ]);
     }
@@ -109,9 +120,29 @@ class GoodsController extends AdminController
         $this->goods->deleteGoods($ids);
         return $this->json([
             'data' => 200,
-            'info' => '保存',
+            'info' => '操作成功',
             'code' => 200
         ]);
+    }
+
+    /*
+     * 搜索获取下拉
+     */
+    public function select($type = 'brand',Request $request){
+
+        $value = $request->value;
+        $data = [];
+        if($type == 'brand' && $value){
+            $data = $this->dataModel
+                ->where('select_option','like','%'.$value.'%')
+                ->whereIn('select_name',['brand'])->limit(20)->get();
+        }
+
+
+        return $this->json([
+            'list' => $data
+        ]);
+
     }
 
     /**
@@ -136,11 +167,11 @@ class GoodsController extends AdminController
      */
     public function options(){
         //品牌
-        $brand = $this->dataModel->whereIn('select_name',['brand'])->limit(100)->get()->toArray();
+        //$brand = $this->dataModel->whereIn('select_name',['brand'])->limit(100)->get()->toArray();
         $component = $this->dataModel->whereIn('select_name',['component'])->limit(100)->get()->toArray();
         $data = $this->dataModel->whereIn('select_name',['control_code','dosage_form','save_method','unit'])->get()->toArray();
 
-        $data = array_merge($data,$brand);
+        //$data = array_merge($data,$brand);
         $data = array_merge($data,$component);
 
         //商品分类

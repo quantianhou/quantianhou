@@ -2,10 +2,14 @@
 
 namespace Modules\admin\Http\Requests\ShopStore;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ShopStoreRequest extends FormRequest
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -57,5 +61,17 @@ class ShopStoreRequest extends FormRequest
             'institution_num' => 'required',
             'tax_register_num' => 'required',
         ];
+    }
+
+    public function messages()
+    {
+        return [
+            'required' => '缺少参数'
+        ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json(['code' => 422,'message'=>'缺少参数'], 422));
     }
 }

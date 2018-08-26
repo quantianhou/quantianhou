@@ -19,7 +19,8 @@
                     $(this).alertmsg('info', res.message, {
                         autoClose:false,
                         okCall: function () {
-                            $.CurrentNavtab.navtab('close');
+                            $('#shop-store-table').datagrid('refresh');//刷新数据列表
+                            $(this).navtab('closeCurrentTab');//成功后关闭当前tab页
                         }
                     });
                 },
