@@ -134,6 +134,36 @@ class MerchantAccountController extends AdminController
             ];
         }
     }
+    
+    //通过商家编码来给出appid和appsecrt
+    public function getAppInfo(Request $request){
+        $merchant_code = $request->get('merchant_code');
+//        var_dump($merchant_code);exit;
+        if(empty($merchant_code)){
+            return [
+                'statusCode' => 500,
+                'error' => true,
+                'message' => '参数错误',
+            ];
+        }
+        $where[] = ['a_merchant.merchant_code','=',$merchant_code];
+        $result = $this->merchants->getMerchantAccountByCode($where,['app_id','app_secret']);
+
+        if(empty($result->app_id)){
+            return [
+                'statusCode' => 500,
+                'error' => true,
+                'message' => '不存在此商户',
+            ];
+        }
+        $data['appId'] = $result->app_id;
+        $data['appSecret'] = $result->app_secret;
+        return [
+            'statusCode' => 200,
+            'message' => 'success',
+            'data' => $data
+        ];
+    }
 
     /**
      * 新增商家B端账号
