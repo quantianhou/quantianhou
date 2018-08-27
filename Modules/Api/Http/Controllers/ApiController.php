@@ -8,12 +8,23 @@ use Illuminate\Routing\Controller;
 
 class ApiController extends Controller
 {
+
+    public function __construct()
+    {
+        if (config('app.debug')) {
+            \DB::enableQueryLog();
+        }
+
+        $this->middleware(function ($request, $next) {
+            return $next($request);
+        });
+    }
     /**
      * Display a listing of the resource.
      * @return Response
      */
     public function index()
-    {exit("aa");
+    {
         return view('api::index');
     }
 
