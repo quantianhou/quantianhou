@@ -39,7 +39,7 @@
                 </td>
             </tr>
             </tbody></table>
-        <div class="panel" id="lg_panel" style="top: 311px; left: 800px;" align="center">
+        <div class="panel" id="lg_panel" style="margin: 0 auto;top: 50%;margin-top: -100px;" align="center">
             <span>欢迎登陆-药美康臣</span>
             <p class="loginPrompt" id="errMsg"></p>
             <br>
