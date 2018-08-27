@@ -53,7 +53,7 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
-    'base_url' => '.qq.im',
+    'base_url' => '.test.ymkchen.com',
 
     /*
     |--------------------------------------------------------------------------
