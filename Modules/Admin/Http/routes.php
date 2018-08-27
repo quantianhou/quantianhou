@@ -61,10 +61,11 @@ Route::group(['domain' => 'admin'.config('app.base_url')],function() {
 
         //商家管理
         Route::group(['namespace' => 'MerchantAccount'], function () {
-            Route::resource('merchantAccount', 'MerchantAccountController');
+            //Route::resource('merchantAccount', 'MerchantAccountController');
             Route::post('merchantAccount/index', 'MerchantAccountController@index');
             Route::post('merchantAccount/add', 'MerchantAccountController@add');//添加商家B端账号
             Route::post('merchantAccount/resetPasswd', 'MerchantAccountController@resetPasswd');//重置商家B端账号密码
+            Route::get('merchantAccount/getAppInfo', 'MerchantAccountController@getAppInfo');//通过商家编码来给出appid和appsecrt
         });
 
         //权限系统
