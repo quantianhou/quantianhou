@@ -3,7 +3,8 @@
 /public/upload
 /public/storage
 /storage/*.key
-/config
+/config/app.php
+/config/session.php
 /vendor
 /.idea
 /.vscode
