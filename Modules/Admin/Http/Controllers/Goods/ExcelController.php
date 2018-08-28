@@ -154,6 +154,9 @@ class ExcelController extends AdminController
     private function saveGoods($data){
 
         $sn = $data["商品编码"];
+        if(!$sn){
+            return false;
+        }
         $goods = $this->goodsModel->where([
             ['sn','=',$sn]
         ])->first();
@@ -204,7 +207,9 @@ class ExcelController extends AdminController
         $goods->use_time1 = $data["单盒服用最短天数"];
         $goods->use_time2 = $data["单盒服用最长天数"];
 
-        return $goods->save();
+        $goods->save();
+
+        $goods = null;
     }
 
     private function getimg($sn){
