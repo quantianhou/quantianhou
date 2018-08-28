@@ -163,7 +163,7 @@ class ExcelController extends AdminController
             $goods = new GoodsModel();
         }
 
-        $imgs = self::getimg($sn);
+        $imgs = json_encode([]);//self::getimg($sn);
 
         $goods->sn = $data["商品编码"];
         $goods->images = $imgs;
