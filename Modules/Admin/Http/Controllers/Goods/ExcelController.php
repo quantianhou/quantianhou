@@ -98,7 +98,7 @@ class ExcelController extends AdminController
             'data' => 200,
             'info' => 'success',
             'code' => 200
-        ]);
+        ],false);
     }
 
     public function extra(){
