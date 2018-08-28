@@ -206,6 +206,7 @@ class ShopStoreController extends BaseController
     {
         $data = [
             'id' => $request->get('id'),
+            'erp_shop_code' => $request->get('erp_shop_code'),
             'manage_type' => $request->get('manage_type'),
             'organization_type' => $request->get('organization_type'),
             'legal_person_id_num' => $request->get('legal_person_id_num'),
