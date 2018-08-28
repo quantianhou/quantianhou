@@ -1,6 +1,6 @@
 <script type="text/javascript">
     function doc_upload_success(file, data) {
-
+        $(document).alertmsg('info','导入成功');
     }
 </script>
 <div style="margin: 10px;">

@@ -31,8 +31,8 @@ class AdminController extends Controller
         });
     }
 
-    public function json($data = []){
-        config('app.debug') && $data['sql'] = \DB::getQueryLog();
+    public function json($data = [],$sign = true){
+        $sign && config('app.debug') && $data['sql'] = \DB::getQueryLog();
         return response()->json($data);
     }
 }

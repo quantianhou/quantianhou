@@ -93,7 +93,7 @@ class GoodsController extends AdminController
 
         if(!$goods['id']){
             $hasGoods = $this->goods->getBy('sn',$goods['sn']);
-            if(!empty($hasGoods)){
+            if(count($hasGoods) > 0){
                 return $this->json([
                     'error' => 2001,
                     'info' => 'sn已存在',
