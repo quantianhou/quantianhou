@@ -61,6 +61,14 @@
                         <input type="text" placeholder="机构代码" name="organization_code" size="30" data-rule="required"><span></span>
                     </td>
                 </tr>
+                <tr>
+                    <td align="right" width="300px;">
+                        <label class="label-control"><span style="color:red">*</span>ERP端门店编码：</label>
+                    </td>
+                    <td>
+                        <input type="text" placeholder="请输入ERP端门店编码，用于商品和库存同步" name="erp_shop_code" size="30" data-rule="required"><span></span>
+                    </td>
+                </tr>
 
                 <tr>
                     <td align="right" width="300px;">

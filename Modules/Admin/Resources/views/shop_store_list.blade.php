@@ -141,6 +141,7 @@
                 {name:'id', width: 100,align:'center',label:'ID',hide:'false'},
                 {name: 'a_merchant_id_name', width: 70, align:'center', label: '商家名称'},
                 {name:'shop_code', width: 150,align:'center',label:'门店编码'},
+                {name:'erp_shop_code', width: 150,align:'center',label:'ERP端门店编码'},
                 {name: 'store_short_name', width: 70, align:'center', label: '门店简称'},
                 {name: 'storename', width: 70, align:'center', label: '门店名称'},
                 {name: 'store_contacts', width: 70, align:'center', label: '门店联系人'},
