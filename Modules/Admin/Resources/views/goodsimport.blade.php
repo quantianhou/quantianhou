@@ -6,7 +6,7 @@
 <div style="margin: 10px;">
     <div id="goods_detail_up" data-toggle="upload" data-uploader="api/goods/import"
          data-file-size-limit="1024000000"
-         data-file-type-exts="*.xls"
+         data-file-type-exts="*.xls,*.xlsx"
          data-button-text="请上传商品详情"
          data-multi="true"
          data-on-upload-success="doc_upload_success"
