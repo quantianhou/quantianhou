@@ -9,6 +9,10 @@ class GoodsModel extends BaseModel {
 
     protected $fillable = ['category_name','parent_id','category_sn'];
 
+    public function thirdCategory(){
+        return $this->belongsToMany(ThirdModel::class, 'a_category_relation_map', 'category_goods_id', 'category_third_id','category_sn','id');;//a_category_relation_map
+    }
+
     public function getId($code = '' , $names = ''){
 
         $cInfo = GoodsModel::where([
