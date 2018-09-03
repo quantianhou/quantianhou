@@ -6,6 +6,7 @@ use App\Models\B\Goods\CategoryModel;
 use App\Models\B\Uniac\UniacModel;
 use App\Models\Goods\GoodsModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Modules\Api\Http\Controllers\ApiController;
 use App\Models\Category\GoodsModel as GoodsCategoryModel;
 use App\Models\B\Goods\GoodsModel as BGoodsModel;
@@ -34,18 +35,31 @@ class GoodsController extends ApiController
      */
     public function index(Request $request){
 
-        $uniacid = $request->uniacid;
+        //通过code获取uniacid
+        $merchant_code = $request->merchant_code;
+
+        if(!$merchant_code){
+            return $this->json([
+                'error' => 2010,
+                'info' => '缺少商户code',
+                'code' => 2010
+            ]);
+        }
+        $tmp = DB::table('b_users_uniaccount_relationship')->where([
+            ['merchant_code','=',$merchant_code]
+        ])->first();
+
+        if(!$tmp){
+            return $this->json([
+                'error' => 2010,
+                'info' => '该商户不存在',
+                'code' => 2010
+            ]);
+        };
+
+        $uniacid = $tmp->uni_account_id;
 
         $items = $request->items;
-//        [
-//            [
-//                'sn' => '125865',
-//                'nation_sn' => '125865',
-//                'name' => '125865',
-//                'price' => '12.90',
-//                'inventory' => 12
-//            ]
-//        ];
 
         $uniacInfo = $this->uniacModel->find($uniacid);
 
