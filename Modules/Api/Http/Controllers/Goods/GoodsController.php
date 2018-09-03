@@ -36,7 +36,7 @@ class GoodsController extends ApiController
 
         $uniacid = $request->uniacid;
 
-        $items = $request->items;;
+        $items = $request->items;
 //        [
 //            [
 //                'sn' => '125865',
