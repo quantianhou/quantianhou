@@ -35,29 +35,35 @@ class GoodsController extends ApiController
      */
     public function index(Request $request){
 
-        //通过code获取uniacid
-        $merchant_code = $request->merchant_code;
+        if(!isset($request->uniacid)){
+            //通过code获取uniacid
+            $merchant_code = $request->merchant_code;
 
-        if(!$merchant_code){
-            return $this->json([
-                'error' => 2010,
-                'info' => '缺少商户code',
-                'code' => 2010
-            ]);
+            if(!$merchant_code){
+                return $this->json([
+                    'error' => 2010,
+                    'info' => '缺少商户code',
+                    'code' => 2010
+                ]);
+            }
+            $tmp = DB::table('b_users_uniaccount_relationship')->where([
+                ['merchant_code','=',$merchant_code]
+            ])->first();
+
+            if(!$tmp){
+                return $this->json([
+                    'error' => 2010,
+                    'info' => '该商户不存在',
+                    'code' => 2010
+                ]);
+            };
+
+            $uniacid = $tmp->uni_account_id;
+        }else{
+            $uniacid = $request->uniacid;
         }
-        $tmp = DB::table('b_users_uniaccount_relationship')->where([
-            ['merchant_code','=',$merchant_code]
-        ])->first();
 
-        if(!$tmp){
-            return $this->json([
-                'error' => 2010,
-                'info' => '该商户不存在',
-                'code' => 2010
-            ]);
-        };
 
-        $uniacid = $tmp->uni_account_id;
 
         $items = $request->items;
 
