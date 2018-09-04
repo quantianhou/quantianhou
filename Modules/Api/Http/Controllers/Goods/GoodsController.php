@@ -93,7 +93,7 @@ class GoodsController extends ApiController
 
             //获取a端商品
             $goodsInfo = $this->goodsModel->where([
-                ['sn','=',$item['nation_sn']]
+                ['nation_sn','=',$item['nation_sn']]
             ])->first();
 
             //不存在商品返回
