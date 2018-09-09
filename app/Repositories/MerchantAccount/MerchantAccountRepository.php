@@ -49,5 +49,16 @@ class MerchantAccountRepository extends EloquentRepository
         return $result;
     }
 
+    //通过商家编码来给出appid和appsecrt
+    public function getMerchantAccountByCode($where, $field = ['*'])
+    {
+        $model = $this->model->rightJoin('a_merchant', 'users.a_merchant_id', '=', 'a_merchant.id')->where([
+            ['users.uid','>',1]
+        ]);
+        $model->where($where);
+        $result = $model->select($field)->first();
+        return $result;
+    }
+
     
 }

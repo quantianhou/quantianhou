@@ -92,6 +92,8 @@
                 {name:'full_address', width: 150,align:'center',label:'商家地址'},
                 {name:'user_status_name', width: 100,align:'center',label:'状态'},
                 {name:'sms_balance', width: 100,align:'center',label:'短信余量'},
+                {name:'app_id', width: 100,align:'center',label:'AppId'},
+                {name:'app_secret', width: 100,align:'center',label:'AppSecret'},
                 {name:'username', width: 150,align:'center',label:'当面支付是否开通',hide:'false'},
                 {name:'add_admin', width: 150,align:'center',label:'创建人'},
                 {name:'user_created_at', width: 150,align:'center',label:'创建时间'},
