@@ -12,6 +12,10 @@ Route::group(['domain' => 'api'.config('app.base_url')],function() {
         //商品推送接口
         Route::group(['prefix' => 'goods', 'namespace' => 'Goods'], function () {
             Route::any('/', 'GoodsController@index');
+            //异步接受商品库存接口
+            Route::any('/erp', 'ErpCallBackController@getjavadata');
+            Route::any('/erpback', 'ErpCallBackController@erpback');
+
         });
     });
 
