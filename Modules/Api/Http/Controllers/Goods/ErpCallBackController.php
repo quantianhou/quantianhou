@@ -10,6 +10,7 @@ class ErpCallBackController extends ApiController
 
     public function erpback(){
         file_put_contents('1.txt',var_export($_POST,true),FILE_APPEND);
+        echo 'success';
     }
 
     //获取java库存与价格
