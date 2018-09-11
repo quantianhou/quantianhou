@@ -9,9 +9,33 @@ use Modules\Api\Http\Controllers\ApiController;
 class ErpCallBackController extends ApiController
 {
 
-    public function erpback(){
+    public function erpback(Request $request){
         file_put_contents('1.txt',var_export($_POST,true),FILE_APPEND);
-        echo 'success';
+
+        $data = $request->data;
+
+        if(empty($data)){
+            exit('success');
+        }
+
+        foreach ($data as $v){
+            $store = DB::table('ewei_shop_store')->where('erp_shop_code',$v['storeNo'])->first();
+
+            if(!$store){
+                continue;
+            }
+
+            //更新门店商品
+            $good = GoodsModel::where([
+                ['shop_id','=',$store->id],
+                ['goodssn','=',$v['goodsNo']]
+            ])->first();
+            $good -> productprice = $v['goodsPrice'];
+            $good -> total = $v['goodsStock'];
+            $good -> save();
+        }
+
+        exit('success');
     }
 
     //获取java库存与价格
