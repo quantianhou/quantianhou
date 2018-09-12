@@ -156,7 +156,13 @@ function MainMenuClick(event, treeId, treeNode) {
 <link type="text/css" rel="stylesheet" href="/B-JUI/js/syntaxhighlighter-2.1.382/styles/shThemeEclipse.css"/>
 <script type="text/javascript" src="/B-JUI/js/syntaxhighlighter-2.1.382/scripts/brush.js"></script>
 <link href="/B-JUI/doc/doc.css" rel="stylesheet">
-
+<style>
+    .shousuo {
+        background: #108ee9 !important;
+        color: #fff !important;
+        border: 1px solid #108ee9 !important;
+    }
+</style>
 <script type="text/javascript">
 $(function(){
     SyntaxHighlighter.config.clipboardSwf = '/js/syntaxhighlighter-2.1.382/scripts/clipboard.swf'

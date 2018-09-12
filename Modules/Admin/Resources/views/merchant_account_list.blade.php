@@ -59,7 +59,8 @@
                     </tr>
                     <tr>
                         <td class="">
-                            <button id="merchant_account_list_queryBtn" type="button" class="btn btn-default" data-icon="search" data-toggle="">搜索</button>
+                            <button id="merchant_account_list_queryBtn" type="button" class="btn btn-default shousuo" data-icon="search" data-toggle="">搜索</button>
+                            <button type="reset" class="btn-default">清空</button>
                         </td>
                         {{--<td colspan="3">--}}
                             {{--<div class="alert alert-warning form-inline"><i class="fa fa-warning"></i> <strong>Class说明：</strong>JS会为text或textarea自动加上Class[form-control]。</div>--}}

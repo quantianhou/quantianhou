@@ -31,7 +31,7 @@
                                 </td>
                                 <td>
                                     <label for="name" class="control-label x85">商品名称：</label>
-                                    <input type="text" name="goods[name]" readonly id="name" value="" data-rule="required" size="50">
+                                    <input type="text" name="goods[name]" readonly id="name" value="" data-rule="" size="50">
                                 </td>
                                 <td>
                                     <label for="single_name" class="control-label x85">通用名称：</label>
@@ -41,7 +41,7 @@
                             <tr>
                                 <td>
                                     <label for="show_name" class="control-label x85">显示名称：</label>
-                                    <input type="text" name="goods[show_name]" readonly id="show_name" value="" data-rule="required" size="50">
+                                    <input type="text" name="goods[show_name]" readonly id="show_name" value="" data-rule="" size="50">
                                 </td>
                                 <td>
                                     <label for="nation_sn" class="control-label x85">国际条码：</label>
@@ -186,7 +186,8 @@
                             <tr>
                                 <td colspan="3">
                                     <label for="search_words" class="control-label x85">搜索用词：</label>
-                                    <input type="text" name="goods[search_words]" readonly id="search_words" value="" data-rule="required" size="50">
+                                    <input type="text" name="goods[search_words]" id="" value="" data-rule="" style="width:200px !important;">
+                                    <input type="text" name="goods[search_words]" readonly id="search_words" value="" data-rule="" style="width:400px !important;">
                                 </td>
                             </tr>
                             <tr>

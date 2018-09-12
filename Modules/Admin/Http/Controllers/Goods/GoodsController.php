@@ -96,7 +96,7 @@ class GoodsController extends AdminController
             if(count($hasGoods) > 0){
                 return $this->json([
                     'error' => 2001,
-                    'info' => 'sn已存在',
+                    'info' => '商品编码已存在',
                     'code' => 2001
                 ]);
             }
