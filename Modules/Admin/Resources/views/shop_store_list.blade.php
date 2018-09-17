@@ -114,7 +114,8 @@
                     </tr>
                     <tr>
                         <td colspan="6" style="text-align: center">
-                            <button type="submit" class="btn btn-default" data-icon="search" data-toggle="">搜索</button>
+                            <button type="submit" class="btn btn-default shousuo" data-icon="search" data-toggle="">搜索</button>
+                            <button type="reset" class="btn-default">清空</button>
                         </td>
                     </tr>
                 </tbody>
@@ -170,7 +171,7 @@
                 showCheckboxcol: true,
                 fullGrid: false,
                 delPK:'id',
-                height:350,
+                height:550,
                 width:'100',
                 linenumberAll:true,
                 showLinenumber:true,

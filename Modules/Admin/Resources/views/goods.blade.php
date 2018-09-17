@@ -76,7 +76,7 @@
         }
 
         parent.GID = choose[0].id;
-        $(obj).navtab({id:'goodsdetail', url:'/goodsdetail', title:'商品编辑'});
+        $(obj).navtab({id:'goodsdetail2', url:'/goodsdetail', title:'商品编辑'});
     }
 
     //导入
@@ -281,7 +281,8 @@
                     </td>
                     <td>
                         <label for="single_name" class="control-label x85">&nbsp;</label>
-                        <button id="goodlist" type="button" class="btn btn-default" data-icon="search" data-toggle="">搜索</button>
+                        <button id="goodlist" type="button" class="btn btn-default shousuo" data-icon="search" data-toggle="">搜索</button>
+                        <button type="reset" class="btn-default">清空</button>
                     </td>
                 </tr>
 
@@ -328,7 +329,7 @@
 			paging: {total:50, pageSize:20},
 			showCheckboxcol: true,
 			fullGrid: false,
-			height:350,
+			height:550,
 			width:'100',
             linenumberAll:true,
             showLinenumber:true,
