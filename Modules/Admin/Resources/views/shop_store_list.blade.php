@@ -20,7 +20,7 @@
                                 <option value="0">--区县--</option>
                             </select>
                         </td>
-                        <td>
+                        <td colspan="2">
                             <label>门店状态</label>
                             <select name="store_status" >
                                 <option value="">--请选择--</option>
@@ -39,7 +39,7 @@
                                 <option value="3">其他企业</option>
                             </select>
                         </td>
-                        <td colspan="2">
+                        <td >
                             <label>经营方式</label>
                             <select name="manage_type" >
                                 <option value="">--请选择--</option>
@@ -47,55 +47,45 @@
                                 <option value="2">非连锁</option>
                             </select>
                         </td>
-                        {{--<td>--}}
-                            {{--<label>档案类型</label>--}}
-                            {{--<select name="manage_type" >--}}
-                                {{--<option value="">--请选择--</option>--}}
-                                {{--<option value="1">加盟</option>--}}
-                                {{--<option value="2">注册</option>--}}
-                            {{--</select>--}}
-                        {{--</td>--}}
                     </tr>
                     <tr>
-                        <td colspan="2">
+                        <td >
                             <label>商家名称</label>
                             <input type="text" name="a_merchant_name" id="">
                         </td>
-                        <td colspan="2">
+                        <td >
                             <label>签约人</label>
-                            <input type="text" name="contractor" id="">
+                            <input type="text" name="contract_operator" id="">
                         </td>
-                        <td colspan="2">
-                            <label>门店联系人</label>
-                            <input type="text" name="store_contacts" id="">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
+                        <td >
                             <label>门店编码</label>
-                            <input type="text" name="store_code" id="">
+                            <input type="text" name="shop_code" id="">
                         </td>
-                        <td colspan="2">
+                        <td >
                             <label>门店名称</label>
                             <input type="text" name="storename" id="">
                         </td>
-                        <td colspan="2">
+                        <td >
                             <label>门店简称</label>
                             <input type="text" name="store_short_name" id="">
                         </td>
+                        <td >
+                            <label>合同编号</label>
+                            <input type="text" name="contract_num" id="">
+                        </td>
                     </tr>
                     <tr>
-                        <td colspan="3">
+                        <td >
+                            <label>门店联系人</label>
+                            <input type="text" name="store_contacts" id="">
+                        </td>
+                        <td colspan="2">
                             <label>营业执照号</label>
                             <input type="text" name="business_license_num" id="">
                         </td>
-                        <td colspan="3">
+                        <td colspan="2">
                             <label>药品经营许可证号</label>
                             <input type="text" name="drug_license_num" id="">
-                        </td>
-                        <td colspan="2">
-                        <label>合同编号</label>
-                        <input type="text" name="contract_num" id="">
                         </td>
                     </tr>
                     <tr>
@@ -214,7 +204,7 @@
             title:'编辑门店'
         })
     }
-    
+
     function openSigning() {
         //获得勾选数据
         var selectedData = $('#shop-store-table').data('selectedDatas');
@@ -241,7 +231,7 @@
             })
         }
     }
-    
+
     function openCancelSigning() {
         //获得勾选数据
         var selectedData = $('#shop-store-table').data('selectedDatas');
