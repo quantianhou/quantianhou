@@ -293,7 +293,7 @@
                         <label class="label-control">营业执照：</label>
                     </td>
                     <td>
-                        许可证号： <input type="text" placeholder="请填写名称" name="business_license_num" size="30" data-rule="required"><br>
+                        许可证号： <input type="text" placeholder="请填写名称" name="business_license_num" size="30" ><br>
                         有效期： <input type="text" name="business_license_expiry_date" value="2018-10-01" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
                         <div class="">
                             <button class="btn btn-success role-upload-image" data-field_name="business_license_img[]">附件上传</button>
@@ -306,7 +306,7 @@
                         <label class="label-control">药品经营许可证：</label>
                     </td>
                     <td>
-                        许可证号： <input type="text" placeholder="请填写名称" name="drug_license_num" size="30" data-rule="required"><br>
+                        许可证号： <input type="text" placeholder="请填写名称" name="drug_license_num" size="30" ><br>
                         有效期： <input type="text" name="drug_license_expriy_date" value="2016-10-01" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
                         <div class="content_showimg">
                             <button class="btn btn-success role-upload-image" data-field_name="drug_license_img[]">附件上传</button>
@@ -320,7 +320,7 @@
                         <label class="label-control">法人身份证：</label>
                     </td>
                     <td>
-                        姓名： <input type="text" placeholder="请填写名称" name="legal_person_name" size="30" data-rule="required"><br>
+                        姓名： <input type="text" placeholder="请填写名称" name="legal_person_name" size="30" ><br>
                         身份证号： <input type="text" name="legal_person_id_num" >
 
                         <div class="">
@@ -334,7 +334,7 @@
                         <label class="label-control">GPS证书：</label>
                     </td>
                     <td>
-                        许可证号： <input type="text" placeholder="请填写名称" name="GSP_num" size="30" data-rule="required"><br>
+                        许可证号： <input type="text" placeholder="请填写名称" name="GSP_num" size="30" ><br>
                         有效期： <input type="text" value="2016-10-01" name="GSP_expriy_date" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
                         <div class="">
                             <button class="btn btn-success role-upload-image" data-field_name="GSP_img[]">附件上传</button>
@@ -347,7 +347,7 @@
                         <label class="label-control">食物流通许可证书：</label>
                     </td>
                     <td>
-                        许可证号： <input type="text"  placeholder="请填写名称" name="food_licence_num" size="30" data-rule="required"><br>
+                        许可证号： <input type="text"  placeholder="请填写名称" name="food_licence_num" size="30" ><br>
                         有效期： <input type="text" value="2016-10-01" data-toggle="datepicker" name="food_licence_expriy_date" data-pattern="yyyy-MM-dd">
                         <div class="content_showimg">
                             <button class="btn btn-success role-upload-image" data-field_name="food_licence_img[]">附件上传</button>
@@ -360,7 +360,7 @@
                         <label class="label-control">医疗机构许可证：</label>
                     </td>
                     <td>
-                        许可证号： <input type="text" placeholder="请填写名称" name="medical_institution_num" size="30" data-rule="required"><br>
+                        许可证号： <input type="text" placeholder="请填写名称" name="medical_institution_num" size="30" ><br>
                         有效期： <input type="text" name="medical_institution_expriy_date" value="2016-10-01" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
 
                         <div class="content_showimg">
@@ -374,7 +374,7 @@
                         <label class="label-control">医疗器械许可证：</label>
                     </td>
                     <td>
-                        许可证号： <input type="text" placeholder="请填写名称" name="medical_app_num" size="30" data-rule="required"><br>
+                        许可证号： <input type="text" placeholder="请填写名称" name="medical_app_num" size="30" ><br>
                         有效期： <input type="text" name="medical_app_expriy_date" value="2016-10-01" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
 
                         <div class="content_showimg">
@@ -388,7 +388,7 @@
                         <label class="label-control">互联网药品交易服务许可证：</label>
                     </td>
                     <td>
-                        许可证号： <input type="text" placeholder="请填写名称" name="internet_med_tran_num" size="30" data-rule="required"><br>
+                        许可证号： <input type="text" placeholder="请填写名称" name="internet_med_tran_num" size="30" ><br>
                         有效期： <input type="text" name="internet_med_tran_expriy_date" value="2016-10-01" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
 
                         <div class="content_showimg">
