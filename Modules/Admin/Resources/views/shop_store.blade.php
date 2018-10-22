@@ -321,7 +321,7 @@
                     </td>
                     <td>
                         姓名： <input type="text" placeholder="请填写名称" name="legal_person_name" size="30" data-rule="required"><br>
-                        身份证号： <input type="text" value="2016-10-01" name="legal_person_id_num" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
+                        身份证号： <input type="text" name="legal_person_id_num" >
 
                         <div class="">
                             <button class="btn btn-success role-upload-image" data-field_name="legal_person_img[]">照片</button>
