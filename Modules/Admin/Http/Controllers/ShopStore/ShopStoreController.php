@@ -2,8 +2,11 @@
 
 namespace Modules\Admin\Http\Controllers\ShopStore;
 
+use App\Models\Merchant\Merchant;
+use App\Models\ShopStore\ShopStore;
 use App\Repositories\ShopStore\ShopStoreRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Modules\Admin\Http\Controllers\BaseController;
 use Modules\admin\Http\Requests\ShopStore\ShopStoreRequest;
 use App\Repositories\Area\AreaRepository;
@@ -26,9 +29,11 @@ class ShopStoreController extends BaseController
      */
     public function index(Request $request)
     {
-        $filters = [];
+        $filters = $with = [];
 
         $search_data = $request->get('post_data');
+        $a_merchant_name = '';
+        $a_merchant_id = [];
         if(!empty($search_data))
         {
             foreach($search_data as $key => $val)
@@ -57,17 +62,46 @@ class ShopStoreController extends BaseController
                             $fname = 'contract_end_time';
                             $ftype = '<=';
                             break;
+                        case 'a_merchant_name':
+                            if(!empty($val['value']))
+                            {
+                                $a_merchant_name = $val['value'];
+                            }
+                            $fname = $fvalue = '';
+                            break;
                     }
+                    if(!empty($fname) && !empty($ftype))
+                    {
+                        $filters[] = [$fname,$ftype, $fvalue];
+                    }
+                }
+            }
+            if(!empty($a_merchant_name))
+            {
+                $merchat_model = new Merchant();
+                $a_merchant_list =  $merchat_model->where('merchant_name','like','%'.$a_merchant_name.'%')->get();
 
-                    $filters[] = [$fname,$ftype, $fvalue];
+                if($a_merchant_list->isEmpty())
+                {
+                    $filters[] = ['a_merchant_id','=',['999999999999']];
+                }else{
+                    $a_merchant_info = $a_merchant_list->toArray();
+                    $a_merchant_id = array_column($a_merchant_info,'id');
+                    $filters[] = ['a_merchant_id','in',$a_merchant_id];
                 }
             }
         }
 
+//        dd($filters);
         $pageSize = $request->get('pageSize', 10);
         $pageCurrent = $request->get('pageCurrent');
-        $list =  $this->shopStores->getListByWhere($filters, ['*'], [], $pageSize,$pageCurrent);
-//        print_r($list);exit;
+//        DB::connection()->enableQueryLog();
+
+        $list =  $this->shopStores->getListByWhere($filters, ['*'], $with, $pageSize,$pageCurrent);
+
+//        $log = DB::getQueryLog();
+//        dd($log);
+//        dd($list);exit;
         return $this->pageSuccess($list);
     }
 

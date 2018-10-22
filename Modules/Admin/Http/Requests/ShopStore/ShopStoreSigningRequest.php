@@ -29,4 +29,7 @@ class ShopStoreSigningRequest extends FormRequest
             'contract_end_time' => 'required',
         ];
     }
+
+
+
 }

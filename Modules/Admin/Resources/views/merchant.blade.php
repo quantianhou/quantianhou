@@ -283,7 +283,7 @@
                     </td>
                     <td>
                         姓名： <input type="text" placeholder="请填写名称" name="legal_person_name" size="30" data-rule="required"><br>
-                        身份证号： <input type="text" value="2016-10-01 10:01:01" name="legal_person_id_num" data-toggle="datepicker" data-pattern="yyyy-MM-dd HH:mm:ss">
+                        身份证号： <input type="text" name="legal_person_id_num">
 
                         <div class="content_showimg">
                             <button class="btn btn-success role-upload-image" type="button" data-field_name="legal_person_img[]">照片</button>
@@ -424,7 +424,7 @@
                         }
                         if(i == 'merchant_logo' || i.indexOf('_img')!= -1){
                             console.log(i);
-                            if(res.data[i] != "") {//有图片时才渲染
+                            if(res.data[i] != "") {//有图片时才渲染s
                                 var str = '<div style="display: inline-block; margin: 5px;"><input type="hidden" value="' + res.data[i] + '" name="' + i + '[]"><img width="100" height="100" src="http://qth-test.oss-cn-hangzhou.aliyuncs.com/' + res.data[i] + '"><a onclick="$(this).parent().remove()" style="display: block; text-align: center;">删除</a></div>';
                                 $.CurrentNavtab.find('button[data-field_name="' + i + '[]"]').after(str);
                             }

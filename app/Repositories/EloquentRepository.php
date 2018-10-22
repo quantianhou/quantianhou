@@ -236,7 +236,13 @@ abstract class EloquentRepository implements RepositoryInterface
                 if (empty($query)) return;
                 foreach ($filters as $filter) {
                     //print_r($filter);exit;
-                    $query->where($filter[0], $filter[1], $filter[2]);
+                    if(isset($filter[1]) && $filter[1] == 'in')
+                    {
+                        $query->whereIn($filter[0],  $filter[2]);
+                    }else{
+                        $query->where($filter[0], $filter[1], $filter[2]);
+                    }
+
                 }
             });
         if ($pageCount) {
