@@ -263,6 +263,9 @@ class ExcelController extends AdminController
 
     private function saveExtra($data){
 
+        if(!trim($data["商品编码"])){
+            return false;
+        }
         $goods = $this->goodsModel->where([
             ['sn','=',$data["商品编码"]]
         ])->first();
