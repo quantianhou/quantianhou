@@ -130,6 +130,7 @@ class GoodsController extends ApiController
             ],[
                 'uniacid'   => $uniacid,
                 'title' => $item['name'],
+                'guige' => $goodsInfo->specifications ?? '',
                 'goodssn'   => $item['sn'],
                 'productsn' => $item['nation_sn'],
                 'productprice'  => $item['price'],
