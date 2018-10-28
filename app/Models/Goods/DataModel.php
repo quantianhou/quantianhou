@@ -25,7 +25,7 @@ class DataModel extends BaseModel {
 //            $dataInfo->save();
         }
 
-        return $dataInfo->id;
+        return $dataInfo->extra;
 
     }
 }
