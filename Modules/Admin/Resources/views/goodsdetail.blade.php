@@ -5,6 +5,10 @@
     input.input30{
         width: 30% !important;
     }
+
+    .ke-dialog-content input{
+        width: auto !important;
+    }
 </style>
 <div class="bjui-pageContent"     >
     <form action="/api/goods/save" id="j_form_form" data-callback="checkerror" class="pageForm" data-toggle="validate">
