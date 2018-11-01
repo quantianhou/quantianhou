@@ -98,12 +98,22 @@ class GoodsController extends ApiController
         foreach ($items as $item){
 
             //获取a端商品
+            $where = [];
+            if(isset($item['nation_sn'])){
+                $where = ['nation_sn','=',$item['nation_sn']];
+            }elseif(isset($item['sn'])){
+                $where = ['sn','=',$item['sn']];
+            }
+
+            if(empty($where)){
+                continue;
+            }
             $goodsInfo = $this->goodsModel->where([
-                ['nation_sn','=',$item['nation_sn']]
+                $where
             ])->first();
 
             //不存在商品返回
-            if(!$goodsInfo || empty($item['sn']) || empty($item['nation_sn'])){
+            if(!$goodsInfo){
                 continue;
             }
 
@@ -124,10 +134,18 @@ class GoodsController extends ApiController
                 'level' => 1
             ]);
 
+            $sign = [];
+            if(isset($item['nation_sn'])){
+                $sign = [
+                    'productsn' => $item['nation_sn']
+                ];
+            }elseif(isset($item['sn'])){
+                $sign = [
+                    'goodssn' => $item['sn']
+                ];
+            }
             //导入当前商品
-            $this->bGoodsModel->firstOrCreate([
-                'productsn' => $item['nation_sn']
-            ],[
+            $this->bGoodsModel->firstOrCreate($sign,[
                 'uniacid'   => $uniacid,
                 'title' => $item['name'],
                 'guige' => $goodsInfo->specifications ?? '',
