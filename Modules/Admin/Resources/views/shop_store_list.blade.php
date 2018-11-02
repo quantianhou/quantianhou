@@ -4,110 +4,118 @@
             <legend>搜索条件</legend>
             <table class="table table-condensed table-hover">
                 <tbody>
-                    <tr>
-                        <td colspan="2">
-                            <label>地址信息</label>
-                            <select name="provincecode" data-toggle="selectpicker" data-nextselect="#j_form_city1" data-refurl="/api/areas/list?parent_id={value}">
-                                <option value="" selected>--省市--</option>
-                                @foreach($provinces as $province)
-                                    <option value="{{ $province->id }}">{{ $province->name }}</option>
-                                @endforeach
-                            </select>
-                            <select name="citycode" id="j_form_city1" data-toggle="selectpicker"  data-nextselect="#j_form_area1" data-refurl="/api/areas/list?parent_id={value}" data-emptytxt="--城市--">
-                                <option value="0">--城市--</option>
-                            </select>
-                            <select name="areacode" id="j_form_area1" data-toggle="selectpicker"  data-emptytxt="--区县--">
-                                <option value="0">--区县--</option>
-                            </select>
-                        </td>
-                        <td colspan="2">
-                            <label>门店状态</label>
-                            <select name="store_status" >
-                                <option value="">--请选择--</option>
-                                <option value="1">签约</option>
-                                <option value="2">新增</option>
-                                <option value="3">取消</option>
-                                <option value="4">冻结</option>
-                            </select>
-                        </td>
-                        <td>
-                            <label>机构类型</label>
-                            <select name="organization_type" >
-                                <option value="">--请选择--</option>
-                                <option value="1">药店</option>
-                                <option value="2">医疗机构</option>
-                                <option value="3">其他企业</option>
-                            </select>
-                        </td>
-                        <td >
-                            <label>经营方式</label>
-                            <select name="manage_type" >
-                                <option value="">--请选择--</option>
-                                <option value="1">连锁</option>
-                                <option value="2">非连锁</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td >
-                            <label>商家名称</label>
-                            <input type="text" name="a_merchant_name" id="">
-                        </td>
-                        <td >
-                            <label>签约人</label>
-                            <input type="text" name="contract_operator" id="">
-                        </td>
-                        <td >
-                            <label>门店编码</label>
-                            <input type="text" name="shop_code" id="">
-                        </td>
-                        <td >
-                            <label>门店名称</label>
-                            <input type="text" name="storename" id="">
-                        </td>
-                        <td >
-                            <label>门店简称</label>
-                            <input type="text" name="store_short_name" id="">
-                        </td>
-                        <td >
-                            <label>合同编号</label>
-                            <input type="text" name="contract_num" id="">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td >
-                            <label>门店联系人</label>
-                            <input type="text" name="store_contacts" id="">
-                        </td>
-                        <td colspan="2">
-                            <label>营业执照号</label>
-                            <input type="text" name="business_license_num" id="">
-                        </td>
-                        <td colspan="2">
-                            <label>药品经营许可证号</label>
-                            <input type="text" name="drug_license_num" id="">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3">
-                            <label>药证截止日期</label>
-                            <input type="text" name="search_drug_license_start_time" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
-                            -
-                            <input type="text" name="search_drug_license_end_time" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
-                        </td>
-                        <td colspan="3">
-                            <label>合同有效日期</label>
-                            <input type="text" name="search_contract_start_time" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
-                            -
-                            <input type="text" name="search_contract_end_time" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="6" style="text-align: center">
-                            <button type="submit" class="btn btn-default shousuo" data-icon="search" data-toggle="">搜索</button>
-                            <button type="reset" class="btn-default">清空</button>
-                        </td>
-                    </tr>
+                <tr>
+                    <td colspan="2">
+                        <label>地址信息</label>
+                        <select name="provincecode" data-toggle="selectpicker" data-nextselect="#j_form_city1" data-refurl="/api/areas/list?parent_id={value}">
+                            <option value="" selected>--省市--</option>
+                            @foreach($provinces as $province)
+                                <option value="{{ $province->id }}">{{ $province->name }}</option>
+                            @endforeach
+                        </select>
+                        <select name="citycode" id="j_form_city1" data-toggle="selectpicker"  data-nextselect="#j_form_area1" data-refurl="/api/areas/list?parent_id={value}" data-emptytxt="--城市--">
+                            <option value="0">--城市--</option>
+                        </select>
+                        <select name="areacode" id="j_form_area1" data-toggle="selectpicker"  data-emptytxt="--区县--">
+                            <option value="0">--区县--</option>
+                        </select>
+                    </td>
+                    <td colspan="2">
+                        <label>门店状态</label>
+                        <select name="store_status" >
+                            <option value="">--请选择--</option>
+                            <option value="1">签约</option>
+                            <option value="2">新增</option>
+                            <option value="3">取消</option>
+                            <option value="4">冻结</option>
+                        </select>
+                    </td>
+                    <td>
+                        <label>机构类型</label>
+                        <select name="organization_type" >
+                            <option value="">--请选择--</option>
+                            <option value="1">药店</option>
+                            <option value="2">医疗机构</option>
+                            <option value="3">其他企业</option>
+                        </select>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td >
+                        <label>经营方式</label>
+                        <select name="manage_type" >
+                            <option value="">--请选择--</option>
+                            <option value="1">连锁</option>
+                            <option value="2">非连锁</option>
+                        </select>
+                    </td>
+                    <td >
+                        <label>商家名称</label>
+                        <input type="text" name="a_merchant_name" id="">
+                    </td>
+                    <td >
+                        <label>签约人&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        <input type="text" name="contract_operator" id="">
+                    </td>
+                </tr>
+                <tr>
+
+                    <td >
+                        <label>门店编码</label>
+                        <input type="text" name="shop_code" id="">
+                    </td>
+                    <td >
+                        <label>门店名称</label>
+                        <input type="text" name="storename" id="">
+                    </td>
+                    <td >
+                        <label>门店简称&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        <input type="text" name="store_short_name" id="">
+                    </td>
+
+                </tr>
+                <tr>
+                    <td >
+                        <label>合同编号</label>
+                        <input type="text" name="contract_num" id="">
+                    </td>
+                    <td >
+                        <label>门店联系人</label>
+                        <input type="text" name="store_contacts" id="">
+                    </td>
+                    <td colspan="2">
+                        <label>营业执照号&nbsp;&nbsp;&nbsp;</label>
+                        <input type="text" name="business_license_num" id="">
+                    </td>
+
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label>药品经营许可证号</label>
+                        <input type="text" name="drug_license_num" id="">
+                    </td>
+                    <td colspan="3">
+                        <label>药证截止日期</label>
+                        <input type="text" name="search_drug_license_start_time" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
+                        -
+                        <input type="text" name="search_drug_license_end_time" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <label>合同有效日期</label>
+                        <input type="text" name="search_contract_start_time" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
+                        -
+                        <input type="text" name="search_contract_end_time" value="" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6" style="text-align: center">
+                        <button type="submit" class="btn btn-default shousuo" data-icon="search" data-toggle="">搜索</button>
+                        <button type="reset" class="btn-default">清空</button>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </fieldset>
