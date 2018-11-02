@@ -97,64 +97,65 @@ class GoodsController extends ApiController
 
         foreach ($items as $item){
 
-            //获取a端商品
-            $where = [];
+
             if(isset($item['nation_sn'])){
-                $where = ['nation_sn','=',$item['nation_sn']];
-            }elseif(isset($item['sn'])){
-                $where = ['sn','=',$item['sn']];
+                //获取a端商品
+                $goodsInfo = $this->goodsModel->where([
+                    ['nation_sn','=',$item['nation_sn']]
+                ])->first();
+
+                //不存在商品返回
+                if(!$goodsInfo || empty($item['sn']) || empty($item['nation_sn'])){
+                    continue;
+                }
+
+                //获取分类信息
+                $categoryInfo = $this->goodsCategoryModel->where([
+                    ['category_sn','=',$goodsInfo->category_goods_sn]
+                ])->first();
+
+                //不存在分类
+                if(!$categoryInfo){
+                    continue;
+                }
+
+                //查询b端是否有当前分类
+                $bCategoryInfo = $this->bCategoryModel->firstOrCreate([
+                    'uniacid' => $uniacid,
+                    'name' => $categoryInfo->thirdCategory->first()->category_name,
+                    'level' => 1
+                ]);
             }
 
-            if(empty($where)){
-                continue;
-            }
-            $goodsInfo = $this->goodsModel->where([
-                $where
-            ])->first();
-
-            //不存在商品返回
-            if(!$goodsInfo){
-                continue;
-            }
-
-            //获取分类信息
-            $categoryInfo = $this->goodsCategoryModel->where([
-                ['category_sn','=',$goodsInfo->category_goods_sn]
-            ])->first();
-
-            //不存在分类
-            if(!$categoryInfo){
-                continue;
-            }
-
-            //查询b端是否有当前分类
-            $bCategoryInfo = $this->bCategoryModel->firstOrCreate([
-                'uniacid' => $uniacid,
-                'name' => $categoryInfo->thirdCategory->first()->category_name,
-                'level' => 1
-            ]);
-
-            $sign = [];
-            if(isset($item['nation_sn'])){
-                $sign = [
-                    'productsn' => $item['nation_sn']
-                ];
-            }elseif(isset($item['sn'])){
-                $sign = [
-                    'goodssn' => $item['sn']
-                ];
-            }
             //导入当前商品
-            $this->bGoodsModel->firstOrCreate($sign,[
-                'uniacid'   => $uniacid,
-                'title' => $item['name'],
-                'guige' => $goodsInfo->specifications ?? '',
-                'goodssn'   => $item['sn'],
-                'productsn' => $item['nation_sn'],
-                'productprice'  => $item['price'],
-                'marketprice'   => $item['price'],
-                'total' => $item['inventory'],
-            ]);
+            if(isset($item['nation_sn'])){
+                $this->bGoodsModel->firstOrCreate([
+                    'productsn' => $item['nation_sn']
+                ],[
+                    'uniacid'   => $uniacid,
+                    'title' => $item['name']??'',
+//                'guige' => $goodsInfo->specifications ?? '',
+                    'goodssn'   => $item['sn']??'',
+                    'productsn' => $item['nation_sn']??'',
+                    'productprice'  => $item['price']??'',
+                    'marketprice'   => $item['price']??'',
+                    'total' => $item['inventory']??'',
+                ]);
+            }else{
+                $this->bGoodsModel->firstOrCreate([
+                    'title' => $item['name']??''
+                ],[
+                    'uniacid'   => $uniacid,
+                    'title' => $item['name']??'',
+//                'guige' => $goodsInfo->specifications ?? '',
+                    'goodssn'   => $item['sn']??'',
+                    'productsn' => $item['nation_sn']??'',
+                    'productprice'  => $item['price']??'',
+                    'marketprice'   => $item['price']??'',
+                    'total' => $item['inventory']??'',
+                ]);
+            }
+ 
 
             $success[] = $item;
         }
