@@ -52,9 +52,9 @@
                 <tr>
                     <td>
                         <label>合同有效日期</label>
-                        <input type="text" name="contract_start_time" value="0" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
+                        <input type="text" name="contract_start_time" date="0" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
                         -
-                        <input type="text" name="contract_end_time" value="0" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
+                        <input type="text" name="contract_end_time" date="0" data-toggle="datepicker" data-pattern="yyyy-MM-dd">
                     </td>
                 </tr>
                 <tr>
@@ -72,27 +72,27 @@
     // $('#js-role-time-data').datepicker({pattern:'dd/MM/yyyy', minDate:'2016-10-01'})
 
     //判断是否需要拉取数据
-    console.log(BJUI.URLDATA.shop_store);
-    if(BJUI.URLDATA.hasOwnProperty("shop_store") && BJUI.URLDATA.shop_store.hasOwnProperty("id")){
-        if(BJUI.URLDATA.shop_store.id >0){
-            var oo = {
-                url : '/api/shop_store/signing_info',
-                loadingmask:true,
-                data : {id:BJUI.URLDATA.shop_store.id},
-                callback:function(res){
-                    console.log(res);
-                    if(res.error) return $(this).alertmsg('error', res.info), !1;
-
-                    for(var i in res.data){
-                        if(i != 'merchant_logo'){
-                            $.CurrentNavtab.find('input[name='+i+']').val(res.data[i])
-                            $.CurrentNavtab.find('select[name='+i+']').val(res.data[i])
-                            $.CurrentNavtab.find('textarea[name='+i+']').val(res.data[i])
-                        }
-                    }
-                }
-            };
-            $(document).bjuiajax('doAjax', oo);
-        }
-    }
+    // console.log(BJUI.URLDATA.shop_store);
+    // if(BJUI.URLDATA.hasOwnProperty("shop_store") && BJUI.URLDATA.shop_store.hasOwnProperty("id")){
+    //     if(BJUI.URLDATA.shop_store.id >0){
+    //         var oo = {
+    //             url : '/api/shop_store/signing_info',
+    //             loadingmask:true,
+    //             data : {id:BJUI.URLDATA.shop_store.id},
+    //             callback:function(res){
+    //                 console.log(res);
+    //                 if(res.error) return $(this).alertmsg('error', res.info), !1;
+    //
+    //                 for(var i in res.data){
+    //                     if(i != 'merchant_logo'){
+    //                         $.CurrentNavtab.find('input[name='+i+']').val(res.data[i])
+    //                         $.CurrentNavtab.find('select[name='+i+']').val(res.data[i])
+    //                         $.CurrentNavtab.find('textarea[name='+i+']').val(res.data[i])
+    //                     }
+    //                 }
+    //             }
+    //         };
+    //         $(document).bjuiajax('doAjax', oo);
+    //     }
+    // }
 </script>
