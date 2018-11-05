@@ -67,6 +67,7 @@ class GoodsController extends ApiController
 
         $items = $request->items;
 
+//        file_put_contents('goods.txt',var_export($items,true),FILE_APPEND);
         $uniacInfo = $this->uniacModel->find($uniacid);
 
         if(!$uniacInfo){
@@ -98,14 +99,14 @@ class GoodsController extends ApiController
         foreach ($items as $item){
 
 
-            if(isset($item['nation_sn'])){
+            if(isset($item['barCode']) && $item['barCode']){
                 //获取a端商品
                 $goodsInfo = $this->goodsModel->where([
-                    ['nation_sn','=',$item['nation_sn']]
+                    ['nation_sn','=',$item['barCode']]
                 ])->first();
 
                 //不存在商品返回
-                if(!$goodsInfo || empty($item['sn']) || empty($item['nation_sn'])){
+                if(!$goodsInfo){
                     continue;
                 }
 
@@ -120,39 +121,42 @@ class GoodsController extends ApiController
                 }
 
                 //查询b端是否有当前分类
-                $bCategoryInfo = $this->bCategoryModel->firstOrCreate([
-                    'uniacid' => $uniacid,
-                    'name' => $categoryInfo->thirdCategory->first()->category_name,
-                    'level' => 1
-                ]);
+                if(isset($categoryInfo->thirdCategory->first()->category_name)){
+                    $bCategoryInfo = $this->bCategoryModel->firstOrCreate([
+                        'uniacid' => $uniacid,
+                        'name' => $categoryInfo->thirdCategory->first()->category_name,
+                        'level' => 1
+                    ]);
+                }
+
             }
 
             //导入当前商品
-            if(isset($item['nation_sn'])){
+            if(isset($item['barCode']) && $item['barCode']){
                 $this->bGoodsModel->firstOrCreate([
-                    'productsn' => $item['nation_sn']
+                    'productsn' => $item['barCode']
                 ],[
                     'uniacid'   => $uniacid,
-                    'title' => $item['name']??'',
+                    'title' => $item['goodsName']??'',
 //                'guige' => $goodsInfo->specifications ?? '',
-                    'goodssn'   => $item['sn']??'',
-                    'productsn' => $item['nation_sn']??'',
-                    'productprice'  => $item['price']??'',
-                    'marketprice'   => $item['price']??'',
-                    'total' => $item['inventory']??'',
+                    'goodssn'   => $item['goodsCode']??'',
+                    'productsn' => $item['barCode']??'',
+                    'productprice'  => $item['goodsRetailPrice']??'',
+                    'marketprice'   => $item['goodsRetailPrice']??'',
+                    'total' => $item['goodsStock']??'',
                 ]);
             }else{
                 $this->bGoodsModel->firstOrCreate([
-                    'title' => $item['name']??''
+                    'goodssn' => $item['goodsCode']??''
                 ],[
                     'uniacid'   => $uniacid,
-                    'title' => $item['name']??'',
+                    'title' => $item['goodsName']??'',
 //                'guige' => $goodsInfo->specifications ?? '',
-                    'goodssn'   => $item['sn']??'',
-                    'productsn' => $item['nation_sn']??'',
-                    'productprice'  => $item['price']??'',
-                    'marketprice'   => $item['price']??'',
-                    'total' => $item['inventory']??'',
+                    'goodssn'   => $item['goodsCode']??'',
+                    'productsn' => $item['barCode']??'',
+                    'productprice'  => $item['goodsRetailPrice']??'',
+                    'marketprice'   => $item['goodsRetailPrice']??'',
+                    'total' => $item['goodsStock']??'',
                 ]);
             }
  
@@ -161,9 +165,9 @@ class GoodsController extends ApiController
         }
 
         return $this->json([
-            'data' => $success,
+            'data' => 200,
             'info' => '请求成功',
-            'code' => 2010
+            'code' => 200
         ]);
 
     }
