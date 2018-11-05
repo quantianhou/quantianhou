@@ -52,9 +52,9 @@ class GoodsController extends ApiController
 
             if(!$tmp){
                 return $this->json([
-                    'error' => 2010,
+                    'error' => 2011,
                     'info' => '该商户不存在',
-                    'code' => 2010
+                    'code' => 2011
                 ]);
             };
 
@@ -72,25 +72,25 @@ class GoodsController extends ApiController
 
         if(!$uniacInfo){
             return $this->json([
-                'error' => 2010,
+                'error' => 2012,
                 'info' => '该商户不存在',
-                'code' => 2010
+                'code' => 2012
             ]);
         }
 
         if(!isset($items) || empty($items)){
             return $this->json([
-                'error' => 2010,
+                'error' => 2013,
                 'info' => 'items参数缺失',
-                'code' => 2010
+                'code' => 2013
             ]);
         }
 
         if(count($items) > 999){
             return $this->json([
-                'error' => 2010,
+                'error' => 2014,
                 'info' => 'items最大支持999个组',
-                'code' => 2010
+                'code' => 2014
             ]);
         }
 
