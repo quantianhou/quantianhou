@@ -13,6 +13,7 @@ class ErpCallBackController extends ApiController
         file_put_contents('1.txt',var_export($_POST,true),FILE_APPEND);
 
         $data = $request->data;
+        file_put_contents('2.txt',var_export($data,true),FILE_APPEND);
 
         if(empty($data)){
             exit('success');
@@ -65,11 +66,11 @@ class ErpCallBackController extends ApiController
 
                     $ids = '';
                     foreach ($goods as $good) {
-                        $ids .= $good->productsn.',';
+                        $ids .= $good->goodssn.',';
                     }
 
                     //推送接口
-                    $ids && self::getHttpResponseGET('http://47.98.124.157:8822/api/v1/goods_price_stock/query_goods_price_stocks?companyNo='.$merchent->merchant_code.'&storeNo='.$shop->erp_shop_code.'&goodsNo='.trim($ids,',').'&tokenUrl=http%3A%2F%2Fapi.test.ymkchen.com%2Fgoods%2Ferpback');
+                    $ids && self::getHttpResponseGET('http://47.98.124.157:8822/api/v1/goods_price_stock/query_goods_price_stocks?companyNo='.$merchent->merchant_code.'&storeId='.$shop->erp_shop_code.'&storeNo='.$shop->shop_code.'&goodsNo='.trim($ids,',').'&tokenUrl=http%3A%2F%2Fapi.test.ymkchen.com%2Fgoods%2Ferpback');
                 });
 
             }
