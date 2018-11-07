@@ -168,8 +168,8 @@ class ShopStoreController extends BaseController
                 'contract_operator' => $admin['username'],
                 'store_status' => 1,
                 'contract_time' =>  date('Y-m-d H:i:s'),
-                'contract_start_time' => $data['contract_start_time'],
-                'contract_end_time' => $data['contract_end_time']
+                'contract_start_time' =>date('Y-m-d',strtotime($data['contract_start_time'])),
+                'contract_end_time' => date('Y-m-d',strtotime($data['contract_end_time']))
             ];
 
             $res = $this->shopStores->updateByOtherColumn('id',$data['id'],$update_data);
