@@ -31,6 +31,9 @@ class ErpCallBackController extends ApiController
                 ['shop_id','=',$store->id],
                 ['goodssn','=',$v['goodsNo']]
             ])->first();
+            if(empty($good)){
+                continue;
+            }
             $good -> productprice = $v['goodsPrice'];
             $good -> total = $v['goodsStock'];
             $good -> save();

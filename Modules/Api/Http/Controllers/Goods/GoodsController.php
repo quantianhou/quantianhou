@@ -67,7 +67,7 @@ class GoodsController extends ApiController
 
         $items = $request->items;
 
-//        file_put_contents('goods.txt',var_export($items,true),FILE_APPEND);
+        file_put_contents('duan.txt',var_export($items,true),FILE_APPEND);
         $uniacInfo = $this->uniacModel->find($uniacid);
 
         if(!$uniacInfo){
