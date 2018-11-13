@@ -30,7 +30,7 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             $erp = new ErpCallBackController();
             $res = $erp->getjavadata();
-            file_put_contents('3.txt',$res,FILE_APPEND);
+            file_put_contents('/web/qth/3.txt',$res,FILE_APPEND);
 
         })->everyMinute();
     }
