@@ -66,8 +66,8 @@ class GoodsController extends ApiController
 
 
         $items = $request->items;
-
         file_put_contents('duan.txt',var_export($items,true),FILE_APPEND);
+
         $uniacInfo = $this->uniacModel->find($uniacid);
 
         if(!$uniacInfo){
@@ -98,6 +98,11 @@ class GoodsController extends ApiController
 
         foreach ($items as $item){
 
+            $item['goodsCode'] = $item['goodsCode'] ?? $item['goodscode'];
+            $item['barCode'] = $item['barCode'] ?? $item['barcode'];
+            $item['goodsName'] = $item['goodsName'] ?? $item['goodsname'];
+            $item['goodsRetailPrice'] = $item['goodsRetailPrice'] ?? $item['goodsretailprice'];
+            $item['goodsStock'] = $item['goodsStock'] ?? $item['goodsstock'];
 
             if(isset($item['barCode']) && $item['barCode']){
                 //获取a端商品
