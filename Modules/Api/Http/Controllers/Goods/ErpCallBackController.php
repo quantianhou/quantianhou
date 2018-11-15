@@ -74,8 +74,8 @@ class ErpCallBackController extends ApiController
                     }
 
                     //推送接口
-                    echo 'http://47.98.124.157:8822/api/v1/goods_price_stock/query_goods_price_stocks?companyNo='.$merchent->merchant_code.'&storeId='.$shop->erp_shop_code.'&storeNo='.$shop->shop_code.'&goodsNo='.trim($ids,',').'&tokenUrl=http%3A%2F%2Fapi.test.ymkchen.com%2Fgoods%2Ferpback<br />';
-                    $ids && self::getHttpResponseGET('http://47.98.124.157:8822/api/v1/goods_price_stock/query_goods_price_stocks?companyNo='.$merchent->merchant_code.'&storeId='.$shop->erp_shop_code.'&storeNo='.$shop->shop_code.'&goodsNo='.trim($ids,',').'&tokenUrl=http%3A%2F%2Fapi.test.ymkchen.com%2Fgoods%2Ferpback');
+                    echo 'http://47.98.124.157:8822/api/v1/goods_price_stock/query_goods_price_stocks?companyNo='.$merchent->merchant_code.'&storeId='.$shop->erp_shop_code.'&storeNo='.$shop->shop_code.'&goodsCode='.trim($ids,',').'&tokenUrl=http%3A%2F%2Fapi.test.ymkchen.com%2Fgoods%2Ferpback<br />';
+                    $ids && self::getHttpResponseGET('http://47.98.124.157:8822/api/v1/goods_price_stock/query_goods_price_stocks?companyNo='.$merchent->merchant_code.'&storeId='.$shop->erp_shop_code.'&storeNo='.$shop->shop_code.'&goodsCode='.trim($ids,',').'&tokenUrl=http%3A%2F%2Fapi.test.ymkchen.com%2Fgoods%2Ferpback');
                 });
 
             }
