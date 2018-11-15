@@ -14,6 +14,7 @@ class ErpCallBackController extends ApiController
 
         $data = $request->data;
         file_put_contents('2.txt',var_export($data,true),FILE_APPEND);
+        file_put_contents('22.txt',var_export($request->all(),true),FILE_APPEND);
 
         if(empty($data)){
             exit('success');
@@ -29,7 +30,7 @@ class ErpCallBackController extends ApiController
             //更新门店商品
             $good = GoodsModel::where([
                 ['shop_id','=',$store->id],
-                ['goodssn','=',$v['goodsNo']]
+                ['goodssn','=',$v['goodsCode']]
             ])->first();
             if(empty($good)){
                 continue;
@@ -73,6 +74,7 @@ class ErpCallBackController extends ApiController
                     }
 
                     //推送接口
+                    echo 'http://47.98.124.157:8822/api/v1/goods_price_stock/query_goods_price_stocks?companyNo='.$merchent->merchant_code.'&storeId='.$shop->erp_shop_code.'&storeNo='.$shop->shop_code.'&goodsNo='.trim($ids,',').'&tokenUrl=http%3A%2F%2Fapi.test.ymkchen.com%2Fgoods%2Ferpback<br />';
                     $ids && self::getHttpResponseGET('http://47.98.124.157:8822/api/v1/goods_price_stock/query_goods_price_stocks?companyNo='.$merchent->merchant_code.'&storeId='.$shop->erp_shop_code.'&storeNo='.$shop->shop_code.'&goodsNo='.trim($ids,',').'&tokenUrl=http%3A%2F%2Fapi.test.ymkchen.com%2Fgoods%2Ferpback');
                 });
 
