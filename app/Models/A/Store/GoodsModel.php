@@ -12,5 +12,6 @@ class GoodsModel extends Model
     protected $table = 'ewei_shop_goods';
 
     protected $guarded = [];
+    public $timestamps = false;
 
 }
