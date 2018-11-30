@@ -37,6 +37,7 @@ Route::group(['domain' => 'admin'.config('app.base_url')],function() {
             Route::post('options', 'GoodsController@options');        //下拉框选项
             Route::post('delete', 'GoodsController@delete');        //下拉框选项
             Route::post('export', 'ExcelController@export');
+            Route::any('pullimg', 'ExcelController@pullImg');
             Route::post('import', 'ExcelController@import');
             Route::post('import/extra', 'ExcelController@extra');
             Route::post('import/category', 'ExcelController@category');

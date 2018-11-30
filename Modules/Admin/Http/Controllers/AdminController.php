@@ -20,7 +20,7 @@ class AdminController extends Controller
         $this->middleware(function ($request, $next) {
             $this->admin = Session::get('admin');
 
-            if(empty($this->admin) && !$request->is('api/login/index')){
+            if(empty($this->admin) && !$request->is('api/login/index') && !$request->is('api/goods/pullimg')){
                 return response()->json([
                     'error' => 403,
                     'info' => '请登陆',

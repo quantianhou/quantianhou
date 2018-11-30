@@ -212,6 +212,19 @@ class ExcelController extends AdminController
         $goods = null;
     }
 
+    public function pullImg(){
+        $list = GoodsModel::where([
+            'images' => '[]'
+        ])->limit(20)->get();
+        foreach ($list as $val){
+            $val->images = self::getimg($val->sn);
+            sleep(1);
+//            echo $val->sn.' - '.$val->images.'<br />';
+            $val->save();
+        }
+
+    }
+
     private function getimg($sn){
 
         $s = [];
@@ -257,7 +270,7 @@ class ExcelController extends AdminController
             unset($t);
             return json_encode($s);
         }else{
-            return json_encode([]);
+            return '';
         }
     }
 
