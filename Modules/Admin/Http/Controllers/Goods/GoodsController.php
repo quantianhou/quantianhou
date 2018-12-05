@@ -36,10 +36,15 @@ class GoodsController extends AdminController
         $goods = $request->get('goods');
         $other = $request->get('other');
         $like = $request->get('like');
+        $has_imgaes = $request->get('has_imgaes');
         if(!empty($goods)){
             foreach ($goods as $k => $v){
                 $v && $filters[] = [$k,'=',$v];
             }
+        }
+
+        if($has_imgaes == 1){
+            $filters[] = [$k,'=',$v];
         }
 
         if(!empty($like)){

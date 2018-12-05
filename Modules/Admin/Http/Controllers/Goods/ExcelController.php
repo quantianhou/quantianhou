@@ -215,7 +215,7 @@ class ExcelController extends AdminController
     public function pullImg(){
         $list = GoodsModel::where([
             'images' => '[]'
-        ])->limit(20)->get();
+        ])->get();
         foreach ($list as $val){
             $val->images = self::getimg($val->sn);
             sleep(1);
