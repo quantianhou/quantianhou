@@ -29,6 +29,9 @@
             $('fieldset select').selectpicker('refresh');
         }
     }
+    var selectfff = function(){
+        $('#has_pic,#has_desc').selectpicker('refresh');
+    }
     $(this).bjuiajax('doAjax', obj)
     //刷新
     function refresh(){
@@ -282,7 +285,7 @@
                     <td>
                         <label for="single_name" class="control-label x85">&nbsp;</label>
                         <button id="goodlist" type="button" class="btn btn-default shousuo" data-icon="search" data-toggle="">搜索</button>
-                        <button type="reset" class="btn-default">清空</button>
+                        <button type="reset" class="btn-default" onclick="selectfff()">清空</button>
                     </td>
                 </tr>
 

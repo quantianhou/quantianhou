@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Modules\Api\Http\Controllers\Goods\ErpCallBackController;
 
 class Kernel extends ConsoleKernel
 {
@@ -26,6 +27,12 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $schedule->call(function () {
+            $erp = new ErpCallBackController();
+            $res = $erp->getjavadata();
+            file_put_contents('/web/qth/3.txt',$res,FILE_APPEND);
+
+        })->everyMinute();
     }
 
     /**
