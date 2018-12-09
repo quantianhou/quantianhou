@@ -107,6 +107,7 @@
                                 <option value="">--区县--</option>
                             </select>
                         </div>
+                        <input type="text" placeholder="请填写详细地址" name="address" size="30" data-rule="required"><span></span>
                     </td>
                 </tr>
 
@@ -150,26 +151,26 @@
 
                  <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>门店短信签名：</label>
+                        <label class="label-control"><!--span style="color:red">*</span-->门店短信签名：</label>
                     </td>
                     <td>
-                        <input type="text" placeholder="门店短信签名" name="store_sms_sign" size="30" data-rule="required"><span></span>
+                        <input type="text" placeholder="门店短信签名" name="store_sms_sign" size="30"><span></span>
                     </td>
                 </tr>
                  <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>企业负责人：</label>
+                        <label class="label-control"><!--span style="color:red">*</span-->企业负责人：</label>
                     </td>
                     <td>
-                        <input type="text" placeholder="企业负责人" name="company_person_name" size="30" data-rule="required"><span></span>
+                        <input type="text" placeholder="企业负责人" name="company_person_name" size="30"><span></span>
                     </td>
                 </tr>
                  <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>企业负责人电话：</label>
+                        <label class="label-control"><!--span style="color:red">*</span-->企业负责人电话：</label>
                     </td>
                     <td>
-                        <input type="text" placeholder="企业负责人电话" name="company_person_mobile" size="30" data-rule="required"><span></span>
+                        <input type="text" placeholder="企业负责人电话" name="company_person_mobile" size="30"><span></span>
                     </td>
                 </tr>
 
@@ -187,63 +188,63 @@
 
                   <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>邮政编码：</label>
+                        <label class="label-control"><!--span style="color:red">*</span-->邮政编码：</label>
                     </td>
                     <td>
-                        <input type="text" placeholder="请填写名称" name="post_code" size="30" data-rule="required"><span></span>
+                        <input type="text" placeholder="请填写名称" name="post_code" size="30"><span></span>
                     </td>
                 </tr>
 
                 <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>传真：</label>
+                        <label class="label-control"><!--span style="color:red">*</span-->传真：</label>
                     </td>
                     <td>
-                        <input type="text" placeholder="请填写名称" name="fax" size="30" data-rule="required"><span></span>
+                        <input type="text" placeholder="请填写名称" name="fax" size="30"><span></span>
                     </td>
                 </tr>
 
                 <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>质量负责人：</label>
+                        <label class="label-control"><!--span style="color:red">*</span-->质量负责人：</label>
                     </td>
                     <td>
-                        <input type="text" placeholder="请填写名称" name="quality_person" size="30" data-rule="required"><span></span>
+                        <input type="text" placeholder="请填写名称" name="quality_person" size="30"><span></span>
                     </td>
                 </tr>
                 <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>税务登记证号：</label>
+                        <label class="label-control"><!--span style="color:red">*</span-->税务登记证号：</label>
                     </td>
                     <td>
-                        <input type="text" placeholder="请填写名称" name="tax_register_num" size="30" data-rule="required"><span></span>
+                        <input type="text" placeholder="请填写名称" name="tax_register_num" size="30"><span></span>
                     </td>
                 </tr>
                 <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>组织机构代码：</label>
+                        <label class="label-control"><!--span style="color:red">*</span-->组织机构代码：</label>
                     </td>
                     <td>
-                        <input type="text" placeholder="请填写名称" name="institution_num" size="30" data-rule="required"><span></span>
+                        <input type="text" placeholder="请填写名称" name="institution_num" size="30"><span></span>
                     </td>
                 </tr>
 
                 {{--字段不知道是哪个--}}
                 <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>经度：</label>
+                        <label class="label-control"><!--span style="color:red">*</span-->经度：</label>
                     </td>
                     <td>
-                        <input type="text" placeholder="经度" name="lat" size="30" data-rule="required"><span></span>
+                        <input type="text" placeholder="经度" name="lat" size="30"><span></span>
                     </td>
                 </tr>
 
                  <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>维度：</label>
+                        <label class="label-control"><!--span style="color:red">*</span-->维度：</label>
                     </td>
                     <td>
-                        <input type="text" placeholder="维度" name="lng" size="30" data-rule="required"><span></span>
+                        <input type="text" placeholder="维度" name="lng" size="30"><span></span>
                     </td>
                 </tr>
 
@@ -268,15 +269,15 @@
                 </tr>
                    <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>机构简称：</label>
+                        <label class="label-control"><!--span style="color:red">*</span-->机构简称：</label>
                     </td>
                     <td>
-                        <input type="text" placeholder="机构简称" name="organization_introduce" size="30" data-rule="required"><span></span>
+                        <input type="text" placeholder="机构简称" name="organization_introduce" size="30"><span></span>
                     </td>
                 </tr>
                    <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>机构标签：</label>
+                        <label class="label-control"><!--span style="color:red">*</span-->机构标签：</label>
                     </td>
                     <td>
                         <input type="radio" name="tag" id="" checked value="1"> 24H
@@ -321,7 +322,7 @@
                     </td>
                     <td>
                         姓名： <input type="text" placeholder="请填写名称" name="legal_person_name" size="30" ><br>
-                        身份证号： <input type="text" name="legal_person_id_num" >
+                        身份证号： <input type="text" name="legal_person_id_num" value="0">
 
                         <div class="">
                             <button class="btn btn-success role-upload-image" data-field_name="legal_person_img[]">照片</button>
