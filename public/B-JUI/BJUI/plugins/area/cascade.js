@@ -16,7 +16,7 @@ var new_area = 0;
 var open_street = 0;
 
 //获取xml文件
-function cascdeInit(na,os,v1,v2,v3,v4,v5) {alert("aaa");
+function cascdeInit(na,os,v1,v2,v3,v4,v5) {
     id1= "sel-provance";
     id2= "sel-city";
     id3= "sel-area";
@@ -109,7 +109,7 @@ function selectCity(v5) {
         id4 += v5;
     }
     var dropElement1 = document.getElementById(id1);
-    var name = dropElement1.options[dropElement1.selectedIndex].value;     
+    var name = dropElement1.options[dropElement1.selectedIndex].value;
     countyNodes = TopnodeList[dropElement1.selectedIndex];      
     var province = document.getElementById(id2);
     var city = document.getElementById(id3);
