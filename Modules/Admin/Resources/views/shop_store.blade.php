@@ -467,5 +467,7 @@
             };
             $(document).bjuiajax('doAjax', oo);
         }
+    }else{
+        cascdeInit("1","0","","","","''");
     }
 </script>
