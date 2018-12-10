@@ -94,16 +94,16 @@
                     </td>
                     <td>
                         <div class="row-input">
-                            <select name="province" data-toggle="selectpicker" data-rule="required" data-nextselect="#j_form_city3" data-refurl="/api/areas/getListByParentName?name={value}">
+                            <select name="province" id="sel-provance" data-toggle="selectpicker" data-rule="required" data-nextselect="#sel-city" data-refurl="/api/areas/getListByParentName?name={value}">
                                 <option value="" selected>--省市--</option>
                                 @foreach($provinces as $province)
                                     <option value="{{ $province->name }}">{{ $province->name }}</option>
                                 @endforeach
                             </select>
-                            <select name="city" id="j_form_city3" data-toggle="selectpicker"  data-rule="required" data-nextselect="#j_form_area3" data-refurl="/api/areas/getListByParentName?name={value}" data-emptytxt="--城市--">
+                            <select name="city" id="sel-city" data-toggle="selectpicker"  data-rule="required" data-nextselect="#sel-area" data-refurl="/api/areas/getListByParentName?name={value}" data-emptytxt="--城市--">
                                 <option value="">--城市--</option>
                             </select>
-                            <select name="area" id="j_form_area3" data-toggle="selectpicker"  data-emptytxt="--区县--">
+                            <select name="area" id="sel-area" data-toggle="selectpicker"  data-emptytxt="--区县--">
                                 <option value="">--区县--</option>
                             </select>
                         </div>
@@ -441,6 +441,8 @@
                             $.CurrentNavtab.find('select[name=area]').append('<option value="'+d.label+'">'+d.label+'</option>');
                         }
                     }
+                    cascdeInit("1","1","青海省","西宁市","城东区","''");
+
                     for(var i in res.data){
                         if(i != 'merchant_logo'){
                             $.CurrentNavtab.find('input:hidden[name='+i+']').val(res.data[i]);

@@ -16,7 +16,7 @@ var new_area = 0;
 var open_street = 0;
 
 //获取xml文件
-function cascdeInit(na,os,v1,v2,v3,v4,v5) {
+function cascdeInit(na,os,v1,v2,v3,v4,v5) {alert("aaa");
     id1= "sel-provance";
     id2= "sel-city";
     id3= "sel-area";
