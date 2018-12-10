@@ -105,6 +105,7 @@
                             </select>
 
                         </div>
+                        <br/>
                         <input type="text" placeholder="请填写详细地址" name="address" size="30" data-rule="required"><span></span>
                         <select id="sel-street" class="select form-control" style="width:130px;display:none;">
                             <option value="" selected="true">请选择</option>
