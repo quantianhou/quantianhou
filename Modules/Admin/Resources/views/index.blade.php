@@ -54,6 +54,9 @@
 <!-- dragsort -->
 <script src="/B-JUI/BJUI/plugins/dragsort/jquery.dragsort-0.5.1.min.js"></script>
 
+<!-- fanhailogn add -->
+<script src="/B-JUI/BJUI/plugins/area/cascade.js"></script>
+
 <!--layer   -->
 <script src="/layer/layer.js"></script>
     <!-- toastr -->
