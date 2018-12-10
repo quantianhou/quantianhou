@@ -34,9 +34,9 @@ function cascdeInit(na,os,v1,v2,v3,v4,v5) {alert("aaa");
 
     //打开xlmdocm文档
     if (new_area == 1) {
-        var xmlfile = './AreaNew.xml?v=4';
+        var xmlfile = './B-JUI/BJUI/plugins/area/AreaNew.xml?v=4';
     } else {
-        var xmlfile = './Area.xml?v=4';
+        var xmlfile = './B-JUI/BJUI/plugins/area/AreaNew.xml?v=4';
     }
 
     xmlDoc = loadXmlFile(xmlfile);
