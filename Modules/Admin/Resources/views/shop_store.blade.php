@@ -94,16 +94,16 @@
                     </td>
                     <td>
                         <div class="row-input">
-                            <select name="provincecode" data-toggle="selectpicker" data-rule="required" data-nextselect="#j_form_city3" data-refurl="/api/areas/list?parent_id={value}">
+                            <select name="province" data-toggle="selectpicker" data-rule="required" data-nextselect="#j_form_city3" data-refurl="/api/areas/getListByParentName?name={value}">
                                 <option value="" selected>--省市--</option>
                                 @foreach($provinces as $province)
-                                    <option value="{{ $province->id }}">{{ $province->name }}</option>
+                                    <option value="{{ $province->name }}">{{ $province->name }}</option>
                                 @endforeach
                             </select>
-                            <select name="citycode" id="j_form_city3" data-toggle="selectpicker"  data-rule="required" data-nextselect="#j_form_area3" data-refurl="/api/areas/list?parent_id={value}" data-emptytxt="--城市--">
+                            <select name="city" id="j_form_city3" data-toggle="selectpicker"  data-rule="required" data-nextselect="#j_form_area3" data-refurl="/api/areas/getListByParentName?name={value}" data-emptytxt="--城市--">
                                 <option value="">--城市--</option>
                             </select>
-                            <select name="areacode" id="j_form_area3" data-toggle="selectpicker"  data-emptytxt="--区县--">
+                            <select name="area" id="j_form_area3" data-toggle="selectpicker"  data-emptytxt="--区县--">
                                 <option value="">--区县--</option>
                             </select>
                         </div>
@@ -432,13 +432,13 @@
                     for(var i in res.area.citys){
                         if(!isNaN(i)){
                             var d = res.area.citys[i];
-                            $.CurrentNavtab.find('select[name=citycode]').append('<option value="'+d.value+'">'+d.label+'</option>');
+                            $.CurrentNavtab.find('select[name=city]').append('<option value="'+d.label+'">'+d.label+'</option>');
                         }
                     }
                     for(var i in res.area.district){
                         if(!isNaN(i)){
                             var d = res.area.district[i];
-                            $.CurrentNavtab.find('select[name=areacode]').append('<option value="'+d.value+'">'+d.label+'</option>');
+                            $.CurrentNavtab.find('select[name=area]').append('<option value="'+d.label+'">'+d.label+'</option>');
                         }
                     }
                     for(var i in res.data){

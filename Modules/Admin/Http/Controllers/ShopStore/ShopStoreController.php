@@ -111,9 +111,9 @@ class ShopStoreController extends BaseController
         $result = $this->shopStores->getOne($id);
 
         $init = array('value'=>'','label'=>'所有');
-        $citys = $this->areas->getAreas($result['provincecode'], ['id', 'name'],1);
+        $citys = $this->areas->getAreasByParentName($result['province'], ['id', 'name'],1);
         array_unshift($citys, $init);
-        $district = $this->areas->getAreas($result['citycode'], ['id', 'name'],1);
+        $district = $this->areas->getAreasByParentName($result['city'], ['id', 'name'],1);
         array_unshift($district, $init);
         return [
             'statusCode' => 200,
@@ -279,9 +279,9 @@ class ShopStoreController extends BaseController
             'organization_code' => $request->get('organization_code', ''),
             'storename' => $request->get('storename', ''),
             'store_short_name' => $request->get('store_short_name', ''),
-            'provincecode' => $request->get('provincecode', ''),
-            'citycode' => $request->get('citycode', ''),
-            'areacode' => $request->get('areacode', ''),
+            'province' => $request->get('province', ''),
+            'city' => $request->get('city', ''),
+            'area' => $request->get('area', ''),
             'store_contacts' => $request->get('store_contacts', ''),
             'store_phone' => $request->get('store_phone', ''),
             'store_sms_sign' => $request->get('store_sms_sign', ''),

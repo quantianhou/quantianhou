@@ -16,6 +16,16 @@ class AreaController extends BaseController
 
     }
 
+    //通过地区名字来查找下级区域
+    public function getListByParentName(Request $request)
+    {
+        $name = $request->get('name', 0);
+        $areas = $this->areas->getAreasByParentName($name, ['id', 'name'],1);
+        $init = array('value'=>'','label'=>'所有');
+        array_unshift($areas, $init);
+        return $areas;
+    }
+
 
     /**
      *
@@ -37,6 +47,7 @@ class AreaController extends BaseController
         return $areas;
     }
 
+    
     /**
      * Show the form for creating a new resource.
      *
