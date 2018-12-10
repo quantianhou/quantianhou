@@ -41,7 +41,7 @@ class AreaRepository extends EloquentRepository
     }
 
     /**
-     * 查找地区通过parent_id
+     * fanhailong add 查找地区通过名字
      * @param int $parentId
      * @param array $colnums
      * @param int $ifJson
@@ -58,7 +58,7 @@ class AreaRepository extends EloquentRepository
             ->get($colnums);
 
         if ($ifJson) {
-            return $this->toAreaJson($result);
+            return $this->toAreaJsonUseText($result);
         }
         return $result;
     }
