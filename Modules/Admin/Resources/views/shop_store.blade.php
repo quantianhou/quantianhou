@@ -148,7 +148,7 @@
                         <label class="label-control"><span style="color:red">*</span>门店联系电话：</label>
                     </td>
                     <td>
-                        <input type="text" placeholder="门店联系人" name="store_phone" size="30" data-rule="required"><span></span>
+                        <input type="text" placeholder="门店联系人" name="tel" size="30" data-rule="required"><span></span>
                     </td>
                 </tr>
 
@@ -258,7 +258,7 @@
                     </td>
 
                     <td id="content_showimg">
-                        <div class="btn btn-success role-upload-image" data-field_name="organization_logo[]">上传</div>
+                        <div class="btn btn-success role-upload-image" data-field_name="logo[]">上传</div>
                     </td>
                 </tr>
                 <tr>
