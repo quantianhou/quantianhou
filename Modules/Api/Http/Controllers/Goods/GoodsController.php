@@ -4,6 +4,7 @@ namespace Modules\Api\Http\Controllers\Goods;
 
 use App\Models\B\Goods\CategoryModel;
 use App\Models\B\Uniac\UniacModel;
+use App\Models\Category\ThirdModel;
 use App\Models\Goods\GoodsModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -115,24 +116,14 @@ class GoodsController extends ApiController
                     continue;
                 }
 
-                //获取分类信息
-                $categoryInfo = $this->goodsCategoryModel->where([
-                    ['category_sn','=',$goodsInfo->category_goods_sn]
-                ])->first();
-
-                //不存在分类
-                if(!$categoryInfo){
-                    continue;
-                }
-
-                //查询b端是否有当前分类
-                if(isset($categoryInfo->thirdCategory->first()->category_name)){
+                $clist = ThirdModel::get();
+                $clist->map(function ($item) use($uniacid){
                     $bCategoryInfo = $this->bCategoryModel->firstOrCreate([
                         'uniacid' => $uniacid,
-                        'name' => $categoryInfo->thirdCategory->first()->category_name,
+                        'name' => $item->category_name,
                         'level' => 1
                     ]);
-                }
+                });
 
             }
 
@@ -175,6 +166,17 @@ class GoodsController extends ApiController
             'code' => 200
         ]);
 
+    }
+
+    public function test(){
+        $list = ThirdModel::get();
+        $list->map(function ($item){
+            $bCategoryInfo = $this->bCategoryModel->firstOrCreate([
+                'uniacid' => $uniacid,
+                'name' => $item->category_name,
+                'level' => 1
+            ]);
+        });
     }
 
 }

@@ -15,6 +15,7 @@ Route::group(['domain' => 'api'.config('app.base_url')],function() {
             //异步接受商品库存接口
             Route::any('/erp', 'ErpCallBackController@getjavadata');
             Route::any('/erpback', 'ErpCallBackController@erpback');
+            Route::any('/test', 'GoodsController@test');
 
         });
     });
