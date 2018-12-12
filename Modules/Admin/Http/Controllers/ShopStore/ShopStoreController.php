@@ -110,11 +110,19 @@ class ShopStoreController extends BaseController
         $id = $request->get('id');
         $result = $this->shopStores->getOne($id);
 
-        $init = array('value'=>'','label'=>'所有');
-        $citys = $this->areas->getAreasByParentName($result['province'], ['id', 'name'],1);
-        array_unshift($citys, $init);
-        $district = $this->areas->getAreasByParentName($result['city'], ['id', 'name'],1);
-        array_unshift($district, $init);
+        if(!empty($result['province'])){
+            $init = array('value'=>'','label'=>'所有');
+            $citys = $this->areas->getAreasByParentName($result['province'], ['id', 'name'],1);
+            array_unshift($citys, $init);
+        }else{
+            $citys = array();
+        }
+        if(!empty($result['province'])) {
+            $district = $this->areas->getAreasByParentName($result['city'], ['id', 'name'],1);
+            array_unshift($district, $init);
+        }else{
+            $district = array();
+        }
         return [
             'statusCode' => 200,
             'data' => $result,
