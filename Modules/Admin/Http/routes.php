@@ -77,6 +77,7 @@ Route::group(['domain' => 'admin'.config('app.base_url')],function() {
         Route::group(['namespace' => 'Area'], function () {
             Route::resource('areas', 'AreaController');
             Route::post('areas/list', 'AreaController@getList');
+            Route::post('areas/getListByParentName', 'AreaController@getListByParentName');
         });
 
 

@@ -111,9 +111,9 @@ class ShopStoreController extends BaseController
         $result = $this->shopStores->getOne($id);
 
         $init = array('value'=>'','label'=>'所有');
-        $citys = $this->areas->getAreas($result['provincecode'], ['id', 'name'],1);
+        $citys = $this->areas->getAreasByParentName($result['province'], ['id', 'name'],1);
         array_unshift($citys, $init);
-        $district = $this->areas->getAreas($result['citycode'], ['id', 'name'],1);
+        $district = $this->areas->getAreasByParentName($result['city'], ['id', 'name'],1);
         array_unshift($district, $init);
         return [
             'statusCode' => 200,
@@ -243,21 +243,21 @@ class ShopStoreController extends BaseController
             'erp_shop_code' => $request->get('erp_shop_code'),
             'manage_type' => $request->get('manage_type'),
             'organization_type' => $request->get('organization_type'),
-            'legal_person_id_num' => $request->get('legal_person_id_num'),
-            'legal_person_name' => $request->get('legal_person_name'),
+            'legal_person_id_num' => $request->get('legal_person_id_num','0'),
+            'legal_person_name' => $request->get('legal_person_name',''),
             'drug_license_img' => $this->formatImgUrl($request, 'drug_license_img'),
             'drug_license_expriy_date' => $request->get('drug_license_expriy_date'),
-            'drug_license_num' => $request->get('drug_license_num'),
+            'drug_license_num' => $request->get('drug_license_num',''),
             'business_license_img' => $this->formatImgUrl($request, 'business_license_img'),
             'business_license_expiry_date' => $request->get('business_license_expiry_date'),
             'business_license_num' => $request->get('business_license_num'),
-            'GSP_num' => $request->get('GSP_num'),
+            'GSP_num' => $request->get('GSP_num',''),
             'GSP_expriy_date' => $request->get('GSP_expriy_date'),
             'GSP_img' => $this->formatImgUrl($request, 'GSP_img'),
-            'food_licence_num' => $request->get('food_licence_num'),
+            'food_licence_num' => $request->get('food_licence_num',''),
             'food_licence_expriy_date' => $request->get('food_licence_expriy_date'),
             'food_licence_img' => $this->formatImgUrl($request, 'food_licence_img'),
-            'medical_institution_num' => $request->get('medical_institution_num'),
+            'medical_institution_num' => $request->get('medical_institution_num',''),
             'medical_institution_expriy_date' => $request->get('medical_institution_expriy_date'),
             'medical_institution_img' => $this->formatImgUrl($request, 'medical_institution_img'),
             'medical_app_num' => $request->get('medical_app_num'),
@@ -279,9 +279,9 @@ class ShopStoreController extends BaseController
             'organization_code' => $request->get('organization_code', ''),
             'storename' => $request->get('storename', ''),
             'store_short_name' => $request->get('store_short_name', ''),
-            'provincecode' => $request->get('provincecode', ''),
-            'citycode' => $request->get('citycode', ''),
-            'areacode' => $request->get('areacode', ''),
+            'province' => $request->get('province', ''),
+            'city' => $request->get('city', ''),
+            'area' => $request->get('area', ''),
             'store_contacts' => $request->get('store_contacts', ''),
             'store_phone' => $request->get('store_phone', ''),
             'store_sms_sign' => $request->get('store_sms_sign', ''),
@@ -291,7 +291,7 @@ class ShopStoreController extends BaseController
             'shop_code' => $this->makeCode(),
             'lat' => $request->get('lat', 0),
             'lng' => $request->get('lng', 0),
-
+            'address' => $request->get('address',''),
         ];
 
         return $data;

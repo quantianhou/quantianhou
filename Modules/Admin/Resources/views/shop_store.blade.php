@@ -44,11 +44,11 @@
                         <label class="label-control"><span style="color:red">*</span>归属商家：</label>
                     </td>
                     <td>
-                         <select name="a_merchant_id" data-toggle="selectpicker" data-rule="required" >
-                             <option value="">请选择</option>
-                             @foreach($merchants as $merchant)
-                               <option value="{{ $merchant['id'] }}">{{ $merchant['merchant_name'] }}</option>
-                             @endforeach
+                        <select name="a_merchant_id" data-toggle="selectpicker" data-rule="required" >
+                            <option value="">请选择</option>
+                            @foreach($merchants as $merchant)
+                                <option value="{{ $merchant['id'] }}">{{ $merchant['merchant_name'] }}</option>
+                            @endforeach
 
                         </select>
                     </td>
@@ -88,23 +88,27 @@
                     </td>
                 </tr>
 
-                 <tr>
+                <tr>
                     <td align="right" width="300px;">
                         <label class="label-control"><span style="color:red">*</span>详细地址：</label>
                     </td>
                     <td>
                         <div class="row-input">
-                            <select name="provincecode" data-toggle="selectpicker" data-rule="required" data-nextselect="#j_form_city3" data-refurl="/api/areas/list?parent_id={value}">
-                                <option value="" selected>--省市--</option>
-                                @foreach($provinces as $province)
-                                    <option value="{{ $province->id }}">{{ $province->name }}</option>
-                                @endforeach
+                            <select id="sel-provance" name="province" onChange="selectCity();" class="select form-control select-group" style="width:123px;display:inline;">
+                                <option value="" selected="true">省/直辖市</option>
                             </select>
-                            <select name="citycode" id="j_form_city3" data-toggle="selectpicker"  data-rule="required" data-nextselect="#j_form_area3" data-refurl="/api/areas/list?parent_id={value}" data-emptytxt="--城市--">
-                                <option value="">--城市--</option>
+                            <select id="sel-city" name="city" onChange="selectcounty(0)" class="select form-control select-group" style="width:135px;display:inline;">
+                                <option value="" selected="true">请选择</option>
                             </select>
-                            <select name="areacode" id="j_form_area3" data-toggle="selectpicker"  data-emptytxt="--区县--">
-                                <option value="">--区县--</option>
+                            <select id="sel-area" name="area" class="select form-control select-group" style="width:130px;display:inline;">
+                                <option value="" selected="true">请选择</option>
+                            </select>
+
+                        </div>
+                        <div style="margin-top:3px">
+                            <input type="text" placeholder="请填写详细地址" name="address" size="30" data-rule="required"><span></span>
+                            <select id="sel-street" class="select form-control" style="width:130px;display:none;">
+                                <option value="" selected="true">请选择</option>
                             </select>
                         </div>
                     </td>
@@ -148,107 +152,107 @@
                     </td>
                 </tr>
 
-                 <tr>
+                <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>门店短信签名：</label>
+                        <label class="label-control"><!--span style="color:red">*</span-->门店短信签名：</label>
                     </td>
                     <td>
-                        <input type="text" placeholder="门店短信签名" name="store_sms_sign" size="30" data-rule="required"><span></span>
+                        <input type="text" placeholder="门店短信签名" name="store_sms_sign" size="30"><span></span>
                     </td>
                 </tr>
-                 <tr>
+                <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>企业负责人：</label>
+                        <label class="label-control"><!--span style="color:red">*</span-->企业负责人：</label>
                     </td>
                     <td>
-                        <input type="text" placeholder="企业负责人" name="company_person_name" size="30" data-rule="required"><span></span>
+                        <input type="text" placeholder="企业负责人" name="company_person_name" size="30"><span></span>
                     </td>
                 </tr>
-                 <tr>
+                <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>企业负责人电话：</label>
+                        <label class="label-control"><!--span style="color:red">*</span-->企业负责人电话：</label>
                     </td>
                     <td>
-                        <input type="text" placeholder="企业负责人电话" name="company_person_mobile" size="30" data-rule="required"><span></span>
+                        <input type="text" placeholder="企业负责人电话" name="company_person_mobile" size="30"><span></span>
                     </td>
                 </tr>
 
-                 {{--<tr>--}}
-                    {{--<td align="right" width="300px;">--}}
-                        {{--<label class="label-control"><span style="color:red">*</span>GSP认证：</label>--}}
-                    {{--</td>--}}
-                    {{--<td>--}}
-                        {{--<input type="radio" name="GPS_status" id="" checked value="1"> 通过--}}
-                        {{--<input type="radio" name="GPS_status" id="" value="2"> 不通过--}}
-                    {{--</td>--}}
+                {{--<tr>--}}
+                {{--<td align="right" width="300px;">--}}
+                {{--<label class="label-control"><span style="color:red">*</span>GSP认证：</label>--}}
+                {{--</td>--}}
+                {{--<td>--}}
+                {{--<input type="radio" name="GPS_status" id="" checked value="1"> 通过--}}
+                {{--<input type="radio" name="GPS_status" id="" value="2"> 不通过--}}
+                {{--</td>--}}
                 {{--</tr>--}}
 
 
 
-                  <tr>
+                <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>邮政编码：</label>
+                        <label class="label-control"><!--span style="color:red">*</span-->邮政编码：</label>
                     </td>
                     <td>
-                        <input type="text" placeholder="请填写名称" name="post_code" size="30" data-rule="required"><span></span>
+                        <input type="text" placeholder="请填写名称" name="post_code" size="30"><span></span>
                     </td>
                 </tr>
 
                 <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>传真：</label>
+                        <label class="label-control"><!--span style="color:red">*</span-->传真：</label>
                     </td>
                     <td>
-                        <input type="text" placeholder="请填写名称" name="fax" size="30" data-rule="required"><span></span>
+                        <input type="text" placeholder="请填写名称" name="fax" size="30"><span></span>
                     </td>
                 </tr>
 
                 <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>质量负责人：</label>
+                        <label class="label-control"><!--span style="color:red">*</span-->质量负责人：</label>
                     </td>
                     <td>
-                        <input type="text" placeholder="请填写名称" name="quality_person" size="30" data-rule="required"><span></span>
+                        <input type="text" placeholder="请填写名称" name="quality_person" size="30"><span></span>
                     </td>
                 </tr>
                 <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>税务登记证号：</label>
+                        <label class="label-control"><!--span style="color:red">*</span-->税务登记证号：</label>
                     </td>
                     <td>
-                        <input type="text" placeholder="请填写名称" name="tax_register_num" size="30" data-rule="required"><span></span>
+                        <input type="text" placeholder="请填写名称" name="tax_register_num" size="30"><span></span>
                     </td>
                 </tr>
                 <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>组织机构代码：</label>
+                        <label class="label-control"><!--span style="color:red">*</span-->组织机构代码：</label>
                     </td>
                     <td>
-                        <input type="text" placeholder="请填写名称" name="institution_num" size="30" data-rule="required"><span></span>
+                        <input type="text" placeholder="请填写名称" name="institution_num" size="30"><span></span>
+                    </td>
+                </tr>
+
+                {{--字段不知道是哪个--}}
+                <tr>
+                    <td align="right" width="300px;">
+                        <label class="label-control"><!--span style="color:red">*</span-->经度：</label>
+                    </td>
+                    <td>
+                        <input type="text" placeholder="经度" name="lat" size="30"><span></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td align="right" width="300px;">
+                        <label class="label-control"><!--span style="color:red">*</span-->维度：</label>
+                    </td>
+                    <td>
+                        <input type="text" placeholder="维度" name="lng" size="30"><span></span>
                     </td>
                 </tr>
 
                 {{--字段不知道是哪个--}}
                 <tr>
-                    <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>经度：</label>
-                    </td>
-                    <td>
-                        <input type="text" placeholder="经度" name="lat" size="30" data-rule="required"><span></span>
-                    </td>
-                </tr>
-
-                 <tr>
-                    <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>维度：</label>
-                    </td>
-                    <td>
-                        <input type="text" placeholder="维度" name="lng" size="30" data-rule="required"><span></span>
-                    </td>
-                </tr>
-
-                {{--字段不知道是哪个--}}
-                 <tr>
                     <td align="right" width="300px;">
                         <label class="label-control">机构logo：</label>
                     </td>
@@ -257,7 +261,7 @@
                         <div class="btn btn-success role-upload-image" data-field_name="organization_logo[]">上传</div>
                     </td>
                 </tr>
-                  <tr>
+                <tr>
                     <td align="right" width="300px;">
                         <label class="label-control">机构门头照：</label>
                     </td>
@@ -266,17 +270,17 @@
                         <div class="btn btn-success role-upload-image" data-field_name="organization_front_img[]">上传</div>
                     </td>
                 </tr>
-                   <tr>
+                <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>机构简称：</label>
+                        <label class="label-control"><!--span style="color:red">*</span-->机构简称：</label>
                     </td>
                     <td>
-                        <input type="text" placeholder="机构简称" name="organization_introduce" size="30" data-rule="required"><span></span>
+                        <input type="text" placeholder="机构简称" name="organization_introduce" size="30"><span></span>
                     </td>
                 </tr>
-                   <tr>
+                <tr>
                     <td align="right" width="300px;">
-                        <label class="label-control"><span style="color:red">*</span>机构标签：</label>
+                        <label class="label-control"><!--span style="color:red">*</span-->机构标签：</label>
                     </td>
                     <td>
                         <input type="radio" name="tag" id="" checked value="1"> 24H
@@ -321,7 +325,7 @@
                     </td>
                     <td>
                         姓名： <input type="text" placeholder="请填写名称" name="legal_person_name" size="30" ><br>
-                        身份证号： <input type="text" name="legal_person_id_num" >
+                        身份证号： <input type="text" name="legal_person_id_num" value="0">
 
                         <div class="">
                             <button class="btn btn-success role-upload-image" data-field_name="legal_person_img[]">照片</button>
@@ -431,15 +435,17 @@
                     for(var i in res.area.citys){
                         if(!isNaN(i)){
                             var d = res.area.citys[i];
-                            $.CurrentNavtab.find('select[name=citycode]').append('<option value="'+d.value+'">'+d.label+'</option>');
+                            //$.CurrentNavtab.find('select[name=city]').append('<option value="'+d.label+'">'+d.label+'</option>');
                         }
                     }
                     for(var i in res.area.district){
                         if(!isNaN(i)){
                             var d = res.area.district[i];
-                            $.CurrentNavtab.find('select[name=areacode]').append('<option value="'+d.value+'">'+d.label+'</option>');
+                            //$.CurrentNavtab.find('select[name=area]').append('<option value="'+d.label+'">'+d.label+'</option>');
                         }
                     }
+                    cascdeInit("1","1",res.data.province,res.data.city,res.data.area,"''");
+
                     for(var i in res.data){
                         if(i != 'merchant_logo'){
                             $.CurrentNavtab.find('input:hidden[name='+i+']').val(res.data[i]);
@@ -453,11 +459,17 @@
                             var str = '<div style="display: inline-block; margin: 5px;"><input type="hidden" value="'+res.data[i]+'" name="'+i+'[]"><img width="100" height="100" src="http://qth-test.oss-cn-hangzhou.aliyuncs.com/'+res.data[i]+'"><a onclick="$(this).parent().remove()" style="display: block; text-align: center;">删除</a></div>';
                             $.CurrentNavtab.find('button[data-field_name="'+i+'[]"]').after(str);
                         }
+                        if(i != 'province' && i != 'city' && i !='area'){
+                            //$.CurrentNavtab.find('select').selectpicker('refresh');
+                            $.CurrentNavtab.find('select[name='+i+']').selectpicker('refresh');
+                        }
                     }
-                    $.CurrentNavtab.find('select').selectpicker('refresh');
+
                 }
             };
             $(document).bjuiajax('doAjax', oo);
         }
+    }else{
+        cascdeInit("1","0","","","","''");
     }
 </script>

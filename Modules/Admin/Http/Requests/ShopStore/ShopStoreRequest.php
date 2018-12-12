@@ -53,13 +53,13 @@ class ShopStoreRequest extends FormRequest
 //            'internet_med_tran_num' => 'required',
 //            'internet_med_tran_expriy_date' => 'required',
 //            'internet_med_tran_img' => 'required',
-            'company_person_name' => 'required',
-            'company_person_mobile' => 'required',
-            'post_code' => 'required',
-            'fax' => 'required',
-            'quality_person' => 'required',
-            'institution_num' => 'required',
-            'tax_register_num' => 'required',
+//            'company_person_name' => 'required',
+//            'company_person_mobile' => 'required',
+//            'post_code' => 'required',
+//            'fax' => 'required',
+//            'quality_person' => 'required',
+//            'institution_num' => 'required',
+//            'tax_register_num' => 'required',
         ];
     }
 

@@ -40,6 +40,29 @@ class AreaRepository extends EloquentRepository
         return $result;
     }
 
+    /**
+     * fanhailong add 查找地区通过名字
+     * @param int $parentId
+     * @param array $colnums
+     * @param int $ifJson
+     *
+     * @return array|\Illuminate\Support\Collection
+     */
+    public function getAreasByParentName($name = 0, $colnums = ['*'], $ifJson = 0)
+    {
+        $parentId = $this->model
+            ->where('name', $name)
+            ->first($colnums);
+        $result = $this->model
+            ->where('parent_id', $parentId->id)
+            ->get($colnums);
+
+        if ($ifJson) {
+            return $this->toAreaJsonUseText($result);
+        }
+        return $result;
+    }
+
     public function getOneArea($id = 0, $columns = ['*'])
     {
         $result = $this->model
@@ -64,6 +87,26 @@ class AreaRepository extends EloquentRepository
                    'value' => $item->id,
                    'label' => $item->name,
                ];
+            }
+        }
+        return $areas;
+    }
+
+    /**
+     * 组合联动，value和label都是文本，不用code
+     * @param Area $result
+     *
+     * @return array
+     */
+    private function toAreaJsonUseText($result)
+    {
+        $areas = [];
+        if ($result->isNotEmpty()) {
+            foreach ($result as $item) {
+                $areas[] = [
+                    'value' => $item->name,
+                    'label' => $item->name,
+                ];
             }
         }
         return $areas;
