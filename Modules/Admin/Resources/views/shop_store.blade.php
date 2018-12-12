@@ -258,7 +258,7 @@
                     </td>
 
                     <td class="content_showimg">
-                        <div class="btn btn-success role-upload-image" data-field_name="logo[]">上传</div>
+                        <button class="btn btn-success role-upload-image" data-field_name="logo[]">上传</button>
                     </td>
                 </tr>
                 <tr>
@@ -267,7 +267,7 @@
                     </td>
 
                     <td class="content_showimg">
-                        <div class="btn btn-success role-upload-image" data-field_name="organization_front_img[]">上传</div>
+                        <button class="btn btn-success role-upload-image" data-field_name="organization_front_img[]">上传</button>
                     </td>
                 </tr>
                 <tr>
@@ -454,7 +454,7 @@
                             $.CurrentNavtab.find('input:radio[name='+i+'][value="' + res.data[i] + '"]').prop("checked", "checked");
                             $.CurrentNavtab.find('textarea[name='+i+']').val(res.data[i]);
                         }
-                        if(i == 'merchant_logo' || i.indexOf('_img')!= -1){
+                        if(i == 'logo' || i == 'merchant_logo' || i.indexOf('_img')!= -1){
                             console.log(i);
                             var str = '<div style="display: inline-block; margin: 5px;"><input type="hidden" value="'+res.data[i]+'" name="'+i+'[]"><img width="100" height="100" src="http://qth-test.oss-cn-hangzhou.aliyuncs.com/'+res.data[i]+'"><a onclick="$(this).parent().remove()" style="display: block; text-align: center;">删除</a></div>';
                             $.CurrentNavtab.find('button[data-field_name="'+i+'[]"]').after(str);
