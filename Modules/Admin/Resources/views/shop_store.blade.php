@@ -95,13 +95,13 @@
                     <td>
                         <div class="row-input">
                             <select id="sel-provance" name="province" onChange="selectCity();" class="select form-control select-group" style="width:123px;display:inline;">
-                                <option value="" selected="true">省/直辖市</option>
+                                <option value="" selected="false">省/直辖市</option>
                             </select>
                             <select id="sel-city" name="city" onChange="selectcounty(0)" class="select form-control select-group" style="width:135px;display:inline;">
-                                <option value="" selected="true">请选择</option>
+                                <option value="" selected="false">请选择</option>
                             </select>
                             <select id="sel-area" name="area" class="select form-control select-group" style="width:130px;display:inline;">
-                                <option value="" selected="true">请选择</option>
+                                <option value="" selected="false">请选择</option>
                             </select>
 
                         </div>
@@ -257,7 +257,7 @@
                         <label class="label-control">机构logo：</label>
                     </td>
 
-                    <td id="content_showimg">
+                    <td class="content_showimg">
                         <div class="btn btn-success role-upload-image" data-field_name="logo[]">上传</div>
                     </td>
                 </tr>
@@ -266,7 +266,7 @@
                         <label class="label-control">机构门头照：</label>
                     </td>
 
-                    <td id="content_showimg">
+                    <td class="content_showimg">
                         <div class="btn btn-success role-upload-image" data-field_name="organization_front_img[]">上传</div>
                     </td>
                 </tr>
