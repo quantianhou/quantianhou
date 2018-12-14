@@ -95,20 +95,20 @@
                     <td>
                         <div class="row-input">
                             <select id="sel-provance" name="province" onChange="selectCity();" class="select form-control select-group" style="width:123px;display:inline;">
-                                <option value="" selected="true">省/直辖市</option>
+                                <option value="" selected="false">省/直辖市</option>
                             </select>
                             <select id="sel-city" name="city" onChange="selectcounty(0)" class="select form-control select-group" style="width:135px;display:inline;">
-                                <option value="" selected="true">请选择</option>
+                                <option value="" selected="false">请选择</option>
                             </select>
                             <select id="sel-area" name="area" class="select form-control select-group" style="width:130px;display:inline;">
-                                <option value="" selected="true">请选择</option>
+                                <option value="" selected="false">请选择</option>
                             </select>
 
                         </div>
                         <div style="margin-top:3px">
                             <input type="text" placeholder="请填写详细地址" name="address" size="30" data-rule="required"><span></span>
                             <select id="sel-street" class="select form-control" style="width:130px;display:none;">
-                                <option value="" selected="true">请选择</option>
+                                <option value="" selected="false">请选择</option>
                             </select>
                         </div>
                     </td>
@@ -148,7 +148,7 @@
                         <label class="label-control"><span style="color:red">*</span>门店联系电话：</label>
                     </td>
                     <td>
-                        <input type="text" placeholder="门店联系人" name="store_phone" size="30" data-rule="required"><span></span>
+                        <input type="text" placeholder="门店联系人" name="tel" size="30" data-rule="required"><span></span>
                     </td>
                 </tr>
 
@@ -257,8 +257,8 @@
                         <label class="label-control">机构logo：</label>
                     </td>
 
-                    <td id="content_showimg">
-                        <div class="btn btn-success role-upload-image" data-field_name="organization_logo[]">上传</div>
+                    <td class="content_showimg">
+                        <button class="btn btn-success role-upload-image" data-field_name="logo[]">上传</button>
                     </td>
                 </tr>
                 <tr>
@@ -266,8 +266,8 @@
                         <label class="label-control">机构门头照：</label>
                     </td>
 
-                    <td id="content_showimg">
-                        <div class="btn btn-success role-upload-image" data-field_name="organization_front_img[]">上传</div>
+                    <td class="content_showimg">
+                        <button class="btn btn-success role-upload-image" data-field_name="organization_front_img[]">上传</button>
                     </td>
                 </tr>
                 <tr>
@@ -454,7 +454,7 @@
                             $.CurrentNavtab.find('input:radio[name='+i+'][value="' + res.data[i] + '"]').prop("checked", "checked");
                             $.CurrentNavtab.find('textarea[name='+i+']').val(res.data[i]);
                         }
-                        if(i == 'merchant_logo' || i.indexOf('_img')!= -1){
+                        if(i == 'logo' || i == 'merchant_logo' || i.indexOf('_img')!= -1){
                             console.log(i);
                             var str = '<div style="display: inline-block; margin: 5px;"><input type="hidden" value="'+res.data[i]+'" name="'+i+'[]"><img width="100" height="100" src="http://qth-test.oss-cn-hangzhou.aliyuncs.com/'+res.data[i]+'"><a onclick="$(this).parent().remove()" style="display: block; text-align: center;">删除</a></div>';
                             $.CurrentNavtab.find('button[data-field_name="'+i+'[]"]').after(str);

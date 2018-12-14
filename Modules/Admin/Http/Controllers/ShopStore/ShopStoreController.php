@@ -110,11 +110,19 @@ class ShopStoreController extends BaseController
         $id = $request->get('id');
         $result = $this->shopStores->getOne($id);
 
-        $init = array('value'=>'','label'=>'所有');
-        $citys = $this->areas->getAreasByParentName($result['province'], ['id', 'name'],1);
-        array_unshift($citys, $init);
-        $district = $this->areas->getAreasByParentName($result['city'], ['id', 'name'],1);
-        array_unshift($district, $init);
+        if(!empty($result['province'])){
+            $init = array('value'=>'','label'=>'所有');
+            $citys = $this->areas->getAreasByParentName($result['province'], ['id', 'name'],1);
+            array_unshift($citys, $init);
+        }else{
+            $citys = array();
+        }
+        if(!empty($result['province'])) {
+            $district = $this->areas->getAreasByParentName($result['city'], ['id', 'name'],1);
+            array_unshift($district, $init);
+        }else{
+            $district = array();
+        }
         return [
             'statusCode' => 200,
             'data' => $result,
@@ -283,10 +291,10 @@ class ShopStoreController extends BaseController
             'city' => $request->get('city', ''),
             'area' => $request->get('area', ''),
             'store_contacts' => $request->get('store_contacts', ''),
-            'store_phone' => $request->get('store_phone', ''),
+            'tel' => $request->get('tel', ''),
             'store_sms_sign' => $request->get('store_sms_sign', ''),
             'organization_introduce' => $request->get('organization_introduce', ''),
-            'organization_logo' => $this->formatImgUrl($request, 'organization_logo'),
+            'logo' => $this->formatImgUrl($request, 'logo'),
             'organization_front_img' => $this->formatImgUrl($request, 'organization_front_img'),
             'shop_code' => $this->makeCode(),
             'lat' => $request->get('lat', 0),
