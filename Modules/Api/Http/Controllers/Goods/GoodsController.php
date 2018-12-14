@@ -105,27 +105,14 @@ class GoodsController extends ApiController
             $item['goodsRetailPrice'] = $item['goodsRetailPrice'] ?? $item['goodsretailprice'];
             $item['goodsStock'] = $item['goodsStock'] ?? $item['goodsstock'];
 
-            if(isset($item['barCode']) && $item['barCode']){
-                //获取a端商品
-                $goodsInfo = $this->goodsModel->where([
-                    ['nation_sn','=',$item['barCode']]
-                ])->first();
-
-                //不存在商品返回
-                if(!$goodsInfo){
-                    continue;
-                }
-
-                $clist = ThirdModel::get();
-                $clist->map(function ($item) use($uniacid){
-                    $bCategoryInfo = $this->bCategoryModel->firstOrCreate([
-                        'uniacid' => $uniacid,
-                        'name' => $item->category_name,
-                        'level' => 1
-                    ]);
-                });
-
-            }
+            $clist = ThirdModel::get();
+            $clist->map(function ($item) use($uniacid){
+                $bCategoryInfo = $this->bCategoryModel->firstOrCreate([
+                    'uniacid' => $uniacid,
+                    'name' => $item->category_name,
+                    'level' => 1
+                ]);
+            });
 
             //导入当前商品
             if(isset($item['barCode']) && $item['barCode']){
