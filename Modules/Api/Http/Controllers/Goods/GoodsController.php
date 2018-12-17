@@ -117,9 +117,9 @@ class GoodsController extends ApiController
             //导入当前商品
             if(isset($item['barCode']) && $item['barCode']){
                 $this->bGoodsModel->firstOrCreate([
-                    'productsn' => $item['barCode']
-                ],[
+                    'productsn' => $item['barCode'],
                     'uniacid'   => $uniacid,
+                ],[
                     'title' => $item['goodsName']??'',
 //                'guige' => $goodsInfo->specifications ?? '',
                     'goodssn'   => $item['goodsCode']??'',
@@ -130,9 +130,9 @@ class GoodsController extends ApiController
                 ]);
             }else{
                 $this->bGoodsModel->firstOrCreate([
-                    'goodssn' => $item['goodsCode']??''
-                ],[
+                    'goodssn' => $item['goodsCode']??'',
                     'uniacid'   => $uniacid,
+                ],[
                     'title' => $item['goodsName']??'',
 //                'guige' => $goodsInfo->specifications ?? '',
                     'goodssn'   => $item['goodsCode']??'',
