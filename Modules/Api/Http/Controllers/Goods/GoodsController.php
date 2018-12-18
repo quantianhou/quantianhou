@@ -114,15 +114,31 @@ class GoodsController extends ApiController
                 ]);
             });
 
+            $goodsInfo = GoodsModel::where('nation_sn',$item['barCode'])->first();
+            $bigimgnees = null;
+            if($goodsInfo && $goodsInfo->images){
+                $bigimg = json_decode($goodsInfo->images,true);
+                if($bigimg['big']){
+                    $bigimgnees = $bigimg['big'][0];
+                    $dir = str_replace(strrchr($bigimgnees,'/'),'',$bigimgnees);
+                    is_dir('/web/weishop/attachment/'.$dir) || mkdir('/web/weishop/attachment/'.$dir,0777,true);
+                    copy('/web/qth/public/'.$bigimgnees,'/web/weishop/attachment/'.$bigimgnees);
+                }
+            };
             //导入当前商品
             if(isset($item['barCode']) && $item['barCode']){
                 $this->bGoodsModel->firstOrCreate([
                     'productsn' => $item['barCode'],
                     'uniacid'   => $uniacid,
                 ],[
-                    'title' => $item['goodsName']??'',
-//                'guige' => $goodsInfo->specifications ?? '',
+                    'title' => $goodsInfo['show_name'] ?? $item['goodsName'],
+                    'guige' => $goodsInfo['specifications']??'',
                     'goodssn'   => $item['goodsCode']??'',
+                    'thumb'   => $bigimgnees??'',
+                    'thumb_url'   => $bigimgnees?serialize($bigimgnees):'',
+                    'unit'   => $goodsInfo['specifications']??'',
+                    'subtitle'   => $goodsInfo['show_name']??'',
+                    'content'   => $goodsInfo['extra']['goods_desc']??'',
                     'productsn' => $item['barCode']??'',
                     'productprice'  => $item['goodsRetailPrice']??'',
                     'marketprice'   => $item['goodsRetailPrice']??'',
@@ -133,9 +149,14 @@ class GoodsController extends ApiController
                     'goodssn' => $item['goodsCode']??'',
                     'uniacid'   => $uniacid,
                 ],[
-                    'title' => $item['goodsName']??'',
-//                'guige' => $goodsInfo->specifications ?? '',
+                    'title' => $goodsInfo['show_name'] ?? $item['goodsName'],
+                    'guige' => $goodsInfo['specifications']??'',
                     'goodssn'   => $item['goodsCode']??'',
+                    'thumb'   => $bigimgnees??'',
+                    'thumb_url'   => $bigimgnees?serialize($bigimgnees):'',
+                    'unit'   => $goodsInfo['specifications']??'',
+                    'subtitle'   => $goodsInfo['show_name']??'',
+                    'content'   => $goodsInfo['extra']['goods_desc']??'',
                     'productsn' => $item['barCode']??'',
                     'productprice'  => $item['goodsRetailPrice']??'',
                     'marketprice'   => $item['goodsRetailPrice']??'',

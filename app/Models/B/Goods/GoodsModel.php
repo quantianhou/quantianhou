@@ -9,6 +9,6 @@ class GoodsModel extends BaseModel {
 
     public $timestamps = false;
 
-    protected $fillable = ['uniacid','title','guige','goodssn','productsn','productprice','marketprice','total'];
+    protected $fillable = ['uniacid','title','guige','goodssn','content','thumb','thumb_url','productsn','productprice','marketprice','total'];
 
 }
