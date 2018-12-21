@@ -139,7 +139,7 @@
                         <label class="label-control"><span style="color:red">*</span>门店联系人：</label>
                     </td>
                     <td>
-                        <input type="text" placeholder="门店联系人" name="store_contacts" size="30" data-rule="required"><span></span>
+                        <input type="text" placeholder="门店联系人" name="realname" size="30" data-rule="required"><span></span>
                     </td>
                 </tr>
 
@@ -148,7 +148,7 @@
                         <label class="label-control"><span style="color:red">*</span>门店联系电话：</label>
                     </td>
                     <td>
-                        <input type="text" placeholder="门店联系人" name="tel" size="30" data-rule="required"><span></span>
+                        <input type="text" placeholder="门店联系人" name="mobile" size="30" data-rule="required"><span></span>
                     </td>
                 </tr>
 

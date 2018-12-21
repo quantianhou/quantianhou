@@ -239,6 +239,7 @@ class ShopStoreController extends BaseController
             return $this->success($result, 200, '修改成功');
         }else{
             $data['store_status'] = 2;
+            $data['type'] = 3;
             $result = $this->shopStores->create($data);
             return $this->success($result, 200, '添加成功');
         }
@@ -290,8 +291,8 @@ class ShopStoreController extends BaseController
             'province' => $request->get('province', ''),
             'city' => $request->get('city', ''),
             'area' => $request->get('area', ''),
-            'store_contacts' => $request->get('store_contacts', ''),
-            'tel' => $request->get('tel', ''),
+            'realname' => $request->get('realname', ''),
+            'mobile' => $request->get('mobile', ''),
             'store_sms_sign' => $request->get('store_sms_sign', ''),
             'organization_introduce' => $request->get('organization_introduce', ''),
             'logo' => $this->formatImgUrl($request, 'logo'),
