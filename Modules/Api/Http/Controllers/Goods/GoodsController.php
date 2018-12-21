@@ -130,6 +130,7 @@ class GoodsController extends ApiController
                 $this->bGoodsModel->firstOrCreate([
                     'productsn' => $item['barCode'],
                     'uniacid'   => $uniacid,
+                    'deleted'   => 0,
                 ],[
                     'title' => $goodsInfo['show_name'] ?? $item['goodsName'],
                     'guige' => $goodsInfo['specifications']??'',
@@ -148,6 +149,7 @@ class GoodsController extends ApiController
                 $this->bGoodsModel->firstOrCreate([
                     'goodssn' => $item['goodsCode']??'',
                     'uniacid'   => $uniacid,
+                    'deleted'   => 0,
                 ],[
                     'title' => $goodsInfo['show_name'] ?? $item['goodsName'],
                     'guige' => $goodsInfo['specifications']??'',
