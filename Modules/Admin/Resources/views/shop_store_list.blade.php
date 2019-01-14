@@ -154,6 +154,9 @@
                 {name: 'contract_num', width: 70, align:'center', label: '合同编号'},
                 {name: 'contract_operator', width: 70, align:'center', label: '签约人'},
                 {name: 'contract_time', width: 70, align:'center', label: '签约时间'},
+				{name: 'contract_time', width: 70, align:'center', label: '签约时间'},
+				{name: 'contract_start_time', width: 70, align:'center', label: '签约开始有效期'},
+				{name: 'contract_end_time', width: 70, align:'center', label: '签约结束有效期'},
                 {name: 'contract_cancel_operator', width: 70, align:'center', label: '取消签约人'},
                 {name: 'contract_cancel_time', width: 70, align:'center', label: '取消签约时间'},
                 {{--{name: 'adid', width: 120,label:'操作',align:'center',render: operating},--}}
