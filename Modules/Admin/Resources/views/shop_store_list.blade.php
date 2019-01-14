@@ -227,8 +227,8 @@
         }
         var id = selectedData[0]['id'];
         var _tmp_store_status = selectedData[0]['store_status'];
-
-        if(_tmp_store_status != 2)
+		//2是新增，3是取消，这两个状态才允许签约
+        if(_tmp_store_status != 2 && _tmp_store_status != 3)
         {
             BJUI.alertmsg('error', "选择的记录的门店状态不能进行签约！");return ;
         }
