@@ -456,8 +456,13 @@
                         }
                         if(i == 'logo' || i == 'merchant_logo' || i.indexOf('_img')!= -1){
                             console.log(i);
-                            var str = '<div style="display: inline-block; margin: 5px;"><input type="hidden" value="'+res.data[i]+'" name="'+i+'[]"><img width="100" height="100" src="http://qth-test.oss-cn-hangzhou.aliyuncs.com/'+res.data[i]+'"><a onclick="$(this).parent().remove()" style="display: block; text-align: center;">删除</a></div>';
-                            $.CurrentNavtab.find('button[data-field_name="'+i+'[]"]').after(str);
+							if(i == 'logo' && res.data[i].indexOf("resource.ymkchen.com") != -1 ){
+								var str = '<div style="display: inline-block; margin: 5px;"><input type="hidden" value="'+res.data[i]+'" name="'+i+'[]"><img width="100" height="100" src="'+res.data[i]+'"><a onclick="$(this).parent().remove()" style="display: block; text-align: center;">删除</a></div>';
+								$.CurrentNavtab.find('button[data-field_name="'+i+'[]"]').after(str);
+							}else{
+								var str = '<div style="display: inline-block; margin: 5px;"><input type="hidden" value="'+res.data[i]+'" name="'+i+'[]"><img width="100" height="100" src="http://qth-test.oss-cn-hangzhou.aliyuncs.com/'+res.data[i]+'"><a onclick="$(this).parent().remove()" style="display: block; text-align: center;">删除</a></div>';
+								$.CurrentNavtab.find('button[data-field_name="'+i+'[]"]').after(str);
+							}
                         }
                         if(i != 'province' && i != 'city' && i !='area'){
                             //$.CurrentNavtab.find('select').selectpicker('refresh');
