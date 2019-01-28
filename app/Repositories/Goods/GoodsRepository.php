@@ -28,7 +28,8 @@ class GoodsRepository extends EloquentRepository
             //修改
             $goodsInfo = $this->model->find($goods['id']);
             $this->update($goods['id'],$goods);
-            return $goodsInfo->extra()->update($extra);
+            $goodsInfo->extra()->delete();
+            return $goodsInfo->extra()->create($extra);
         }else{
             //新增
             $goodsInfo = $this->model->create($goods);
