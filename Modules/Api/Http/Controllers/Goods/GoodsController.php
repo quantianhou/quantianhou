@@ -114,7 +114,7 @@ class GoodsController extends ApiController
                 ]);
             });
 
-            $goodsInfo = GoodsModel::where('nation_sn',$item['barCode'])->first();
+            $goodsInfo = GoodsModel::where('sn',$item['barCode'])->first();
             $bigimgnees = null;
             if($goodsInfo && $goodsInfo->images){
                 $bigimg = json_decode($goodsInfo->images,true);
