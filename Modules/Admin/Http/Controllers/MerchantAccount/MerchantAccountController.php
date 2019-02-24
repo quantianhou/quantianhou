@@ -94,8 +94,10 @@ class MerchantAccountController extends AdminController
             $full_address .= $v['address_detail'];
             $list[$k]['full_address'] = $full_address;
 
-            $add_admin_info = $this->adminRepository->getNameByAdminId($v['add_admin_id']);
-            $list[$k]['add_admin'] = $add_admin_info->username;
+			if(!empty($v['add_admin_id'])){
+				$add_admin_info = $this->adminRepository->getNameByAdminId($v['add_admin_id']);
+				$list[$k]['add_admin'] = $add_admin_info->username;
+			}
 
             //看当前账号最后更新人
 //            $last_update_admin = $this->actionLog->getOneLog($v['id']);
