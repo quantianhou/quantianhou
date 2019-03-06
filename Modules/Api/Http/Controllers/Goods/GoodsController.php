@@ -4,6 +4,7 @@ namespace Modules\Api\Http\Controllers\Goods;
 
 use App\Models\B\Goods\CategoryModel;
 use App\Models\B\Uniac\UniacModel;
+use App\Models\Category\RelationModel;
 use App\Models\Category\ThirdModel;
 use App\Models\Goods\GoodsModel;
 use Illuminate\Http\Request;
@@ -115,6 +116,22 @@ class GoodsController extends ApiController
             });
 
             $goodsInfo = GoodsModel::where('sn',$item['barCode'])->first();
+            $category = \App\Models\Category\GoodsModel::where('category_sn',$goodsInfo['category_goods_sn'])->frist();
+
+            $aCId = $category->id ?? 0;
+            $relationCategory = RelationModel::where('category_goods_id',$aCId)->first();
+            $tCID = $relationCategory->category_third_id ?? 0;
+            $tCInfo = ThirdModel::where('id',$tCID)->first();
+
+            $tName = $tCInfo->category_name ?? '';
+
+            $bCategoryInfoAA = $this->bCategoryModel->where([
+                'uniacid' => $uniacid,
+                'name' => $tName,
+                'level' => 1
+            ]);
+
+            //查询第三方的对应分类ID
             $bigimgnees = null;
             if($goodsInfo && $goodsInfo->images){
                 $bigimg = json_decode($goodsInfo->images,true);
@@ -137,6 +154,7 @@ class GoodsController extends ApiController
                     'goodssn'   => $item['goodsCode']??'',
                     'thumb'   => $bigimgnees??'',
                     'thumb_url'   => 'a:0:{}',
+                    'cates' => $bCategoryInfoAA['id'] ?? '',
                     'unit'   => $goodsInfo['specifications']??'',
                     'subtitle'   => $goodsInfo['show_name']??'',
                     'content'   => $goodsInfo['extra']['goods_desc']??'',
@@ -156,6 +174,7 @@ class GoodsController extends ApiController
                     'goodssn'   => $item['goodsCode']??'',
                     'thumb'   => $bigimgnees??'',
                     'thumb_url'   => 'a:0:{}',
+                    'cates' => $bCategoryInfoAA['id'] ?? '',
                     'unit'   => $goodsInfo['specifications']??'',
                     'subtitle'   => $goodsInfo['show_name']??'',
                     'content'   => $goodsInfo['extra']['goods_desc']??'',
