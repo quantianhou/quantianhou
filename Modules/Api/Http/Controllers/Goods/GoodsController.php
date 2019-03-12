@@ -36,7 +36,7 @@ class GoodsController extends ApiController
      * 商品同步
      */
     public function index(Request $request){
-
+info('innnnnnnnnnnnnnnnnnnnnn');
         if(!isset($request->uniacid)){
             //通过code获取uniacid
             $merchant_code = $request->merchant_code;
@@ -116,7 +116,7 @@ class GoodsController extends ApiController
             });
 
             $goodsInfo = GoodsModel::where('sn',$item['barCode'])->first();
-            $category = \App\Models\Category\GoodsModel::where('category_sn',$goodsInfo['category_goods_sn'])->frist();
+            $category = \App\Models\Category\GoodsModel::where('category_sn',$goodsInfo['category_goods_sn'])->first();
 
             $aCId = $category->id ?? 0;
             $relationCategory = RelationModel::where('category_goods_id',$aCId)->first();
@@ -129,8 +129,8 @@ class GoodsController extends ApiController
                 'uniacid' => $uniacid,
                 'name' => $tName,
                 'level' => 1
-            ]);
-
+            ])->first();
+info($bCategoryInfoAA);
             //查询第三方的对应分类ID
             $bigimgnees = null;
             if($goodsInfo && $goodsInfo->images){
@@ -185,7 +185,7 @@ class GoodsController extends ApiController
                 ]);
             }
  
-
+info($item);
             $success[] = $item;
         }
 
